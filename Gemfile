@@ -23,8 +23,12 @@ group :development, :test do
   gem 'web-console', '~> 2.0'
   gem 'spring'
   gem 'capybara', '~> 2.4.4'
-  gem 'launchy', '~> 2.4.3'
+  gem 'launchy', '~> 2.4.3'                           
   gem 'rspec-rails', '~> 2.14.2' # 2.99+ breaks rspec_junit_formatter
   gem 'unicorn', '~> 4.8.3'  
 end
 
+group :staging do
+  gem 'activerecord-postgresql-adapter'
+  gem 'rake', '~> 10.4.0'
+end
