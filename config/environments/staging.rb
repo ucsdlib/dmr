@@ -1,4 +1,4 @@
-Hydra::Application.configure do
+Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # Code is not reloaded between requests
@@ -12,7 +12,11 @@ Hydra::Application.configure do
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_files = false
 
-  # Compress JavaScripts and CSS
+  # Compress JavaScripts and CSS.
+  # config.assets.js_compressor = :uglifier
+  # config.assets.css_compressor = :sass
+
+   # Compress JavaScripts and CSS
   config.assets.compress = true
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
@@ -25,18 +29,20 @@ Hydra::Application.configure do
   config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += ['home-page.js','home-page.css']
+  #config.assets.precompile += ['','']
 
    # action mailer 
-  config.action_mailer.delivery_method = :sendmail
+  #config.action_mailer.delivery_method = :sendmail
   # Defaults to:
   # config.action_mailer.sendmail_settings = {
   #   location: '/usr/sbin/sendmail',
   #   arguments: '-i -t'
   # }
+  
+  config.action_mailer.delivery_method = :sendmail
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default_options = {from: 'dlp@ucsd.edu'}
+  #config.action_mailer.default_options = {from: 'xxx@ucsd.edu'}
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found)
@@ -48,7 +54,4 @@ Hydra::Application.configure do
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
 
-  # environment-specific DAMS config
-  # ip-based role assignment
-  #config.shibboleth = true
 end
