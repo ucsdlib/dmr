@@ -13,7 +13,7 @@ Hydra::Application.configure do
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
 
-   # action mailer 
+    # action mailer 
   config.action_mailer.delivery_method = :sendmail
   # Defaults to:
   # config.action_mailer.sendmail_settings = {
@@ -22,7 +22,7 @@ Hydra::Application.configure do
   # }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
-  #config.action_mailer.default_options = {from: 'dlp@ucsd.edu'}
+  config.action_mailer.default_options = {from: 'dlp@ucsd.edu'}
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
@@ -36,5 +36,6 @@ Hydra::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
-  #config.shibboleth = true
+  #config.shibboleth = false
 end
+
