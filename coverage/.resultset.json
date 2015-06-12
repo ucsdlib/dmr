@@ -1,0 +1,22 @@
+{
+  "RSpec": {
+    "coverage": {
+      "/Users/Vivian_Chu/git/dmr/app/helpers/application_helper.rb": [
+        1,
+        null
+      ],
+      "/Users/Vivian_Chu/git/dmr/app/helpers/welcome_helper.rb": [
+        1,
+        null
+      ],
+      "/Users/Vivian_Chu/git/dmr/app/controllers/application_controller.rb": [
+        1,
+        null,
+        null,
+        1,
+        null
+      ]
+    },
+    "timestamp": 1434131089
+  }
+}

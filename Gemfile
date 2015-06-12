@@ -10,12 +10,14 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem "bootstrap-sass", '~> 2.3.0'
+gem 'coveralls', require: false
 
 # Deploy with Capistrano
 gem 'capistrano', '~> 3.3.3'
 gem 'capistrano-rails', '~> 1.1.2'
 gem 'capistrano-rbenv', '~> 2.0.2'
 gem 'capistrano-bundler', '~> 1.1.3'
+gem 'equivalent-xml', '~> 0.5.1'
 
 group :development, :test do
   gem 'byebug'
@@ -25,5 +27,7 @@ group :development, :test do
   gem 'capybara', '~> 2.4.4'
   gem 'launchy', '~> 2.4.3'                           
   gem 'rspec-rails', '~> 2.14.2' # 2.99+ breaks rspec_junit_formatter
-  gem 'unicorn', '~> 4.8.3'  
+  gem 'unicorn', '~> 4.8.3'
+  gem 'simplecov'
+  gem 'shoulda-matchers', require: false, github: 'thoughtbot/shoulda-matchers', branch: 'master'  
 end
