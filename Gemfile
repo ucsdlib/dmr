@@ -10,6 +10,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem "bootstrap-sass", '~> 2.3.0'
 gem 'coveralls', require: false
+gem 'pg'
 
 # Deploy with Capistrano
 gem 'capistrano', '~> 3.3.3'
@@ -34,6 +35,7 @@ group :development, :test do
   gem 'launchy', '~> 2.4.3'                           
   gem 'unicorn', '~> 4.8.3'
   gem 'simplecov'
+   gem 'pry'
 end
 
 group :test do
