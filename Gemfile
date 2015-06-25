@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
 gem 'rails', '4.2.2'
-gem 'sqlite3'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
@@ -21,15 +20,23 @@ gem 'equivalent-xml', '~> 0.5.1'
 
 gem 'activesupport', '~> 4.2.2'
 
+group :development do
+  gem 'sqlite3'
+  gem 'spring'
+end
+
 group :development, :test do
+  gem 'rspec-rails', '3.1'
   gem 'byebug'
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
-  gem 'spring'
   gem 'capybara', '~> 2.4.4'
   gem 'launchy', '~> 2.4.3'                           
-  gem 'rspec-rails', '~> 2.14.2' # 2.99+ breaks rspec_junit_formatter
   gem 'unicorn', '~> 4.8.3'
   gem 'simplecov'
-  gem 'shoulda-matchers', require: false, github: 'thoughtbot/shoulda-matchers', branch: 'master'  
+end
+
+group :test do
+  gem 'database_cleaner', '1.2.0'
+  gem 'shoulda-matchers', require: false, github: 'thoughtbot/shoulda-matchers', branch: 'master'
 end
