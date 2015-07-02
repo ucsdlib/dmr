@@ -1,0 +1,21 @@
+<h1>Edit Media Record</h1>
+<% if @media.errors.any? %>
+  <div id="error_msg">
+	<h4>The form contains <%= pluralize(@media.errors.count, "error") %></h4>
+	<ul>
+	<% @media.errors.full_messages.each do |msg| %>
+		<li><%= msg %></li> 
+	<% end %>
+	</ul>
+  </div>
+<% end %>
+<%= form_for @media, :required=>true do |f| %>
+  <p><%= label_tag 'media[title]', "Title" %><%= text_field_tag 'media[title]', @media.title%><p>
+  <p><%= label_tag 'media[director]', "Director" %><%= text_field_tag 'media[director]', @media.director%><p>
+  <p><%= label_tag 'media[call_number]', "Call Number" %><%= text_field_tag 'media[call_number]',@media.call_number%><p>
+  <p><%= label_tag 'media[year]', "Year" %><%= text_field_tag 'media[year]', @media.year%><p>
+  <p><%= label_tag 'media[file_name]', "File name" %><%= text_field_tag 'media[file_name]', @media.file_name%><p>
+
+  <%=f.submit "Save Media" %>
+  <%= link_to "Cancel", medium_path( @media.id )%>
+<%end%>
