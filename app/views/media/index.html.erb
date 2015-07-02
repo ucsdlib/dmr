@@ -1,0 +1,13 @@
+<h1>Listing Media</h1>
+
+<% @medias.each do |m| %>
+  <p>Title: <%= m.title %></p> 
+  <p>Director: <%= m.director %></p>
+  <p>Call Number: <%= m.call_number %></p>
+  <p>Year: <%= m.year %></p>
+  <p>File name: <%= m.file_name %></p>
+  <%= link_to "View", medium_path(m.id)%>
+  <%= link_to "Edit", edit_medium_path(m.id)%>
+  <hr/>
+
+<% end %>

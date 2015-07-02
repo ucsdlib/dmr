@@ -11,6 +11,7 @@ gem 'jbuilder'
 gem "bootstrap-sass", '~> 3.2.0	'
 gem 'coveralls', require: false
 gem 'pg'
+gem 'fabrication'
 
 # Deploy with Capistrano
 gem 'capistrano', '~> 3.3.3'

@@ -1,0 +1,7 @@
+<h1>Media Record Core Data</h1>
+  <p>Title: <%= @media.title %>  </p> 
+  <p>Director: <%= @media.director %>  </p>
+  <p>Call Number: <%= @media.call_number %>  </p>
+  <p>Year: <%= @media.year %>  </p>
+  <p>File name: <%= @media.file_name %>  </p>
+<%= link_to "Edit", edit_medium_path(@media.id)%>
