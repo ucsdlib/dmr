@@ -2,5 +2,10 @@
 # for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
 
 require File.expand_path('../config/application', __FILE__)
+require 'inch/rake'
 
 Rails.application.load_tasks
+
+Inch::Rake::Suggest.new("doc:suggest") do |suggest|
+  suggest.args << "--private"  
+end

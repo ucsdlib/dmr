@@ -1,3 +1,7 @@
+##
+# @author tchu
+#
+
 class WelcomeController < ApplicationController
   def index
   end

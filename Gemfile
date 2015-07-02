@@ -12,6 +12,8 @@ gem "bootstrap-sass", '~> 3.2.0	'
 gem 'coveralls', require: false
 gem 'pg'
 gem 'fabrication'
+gem 'yard'
+gem 'inch', require: false
 
 # Deploy with Capistrano
 gem 'capistrano', '~> 3.3.3'

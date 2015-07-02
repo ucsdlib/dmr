@@ -1,6 +1,6 @@
-#---
-# @author tchu@ucsd.edu
-#---
+##
+# @author tchu
+#
 
 class Media < ActiveRecord::Base
   validates :title, presence: true

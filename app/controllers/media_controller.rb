@@ -1,6 +1,6 @@
-#---
-# @author tchu@ucsd.edu
-#---
+##
+# @author tchu
+#
 
 class MediaController < ApplicationController
 
@@ -39,6 +39,11 @@ class MediaController < ApplicationController
   end
        
   private
+    ##
+    # Specify which parameters are allowed into Media controller actions to prevent wrongful mass assignment.
+    #
+    # @!visibility private
+      
     def media_params
       params.require(:media).permit(:title, :director, :call_number, :year, :file_name)
     end
