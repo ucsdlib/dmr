@@ -1,0 +1,7 @@
+app/models/media.rb 3590cea944a4b7cba413f3abf37e91d4a9d14e41
+app/helpers/media_helper.rb ef91b65ab2f2cc80161d6d2af95eb53a8277b978
+app/helpers/welcome_helper.rb b3c45555250a22c4d4dc5659be11c1ba391832c3
+app/helpers/application_helper.rb eef3d3adce96afe8b14c19b6135323f47543d979
+app/controllers/media_controller.rb 7abc364ef3d7d66d73dfad517906cb7de29aa242
+app/controllers/welcome_controller.rb bdcd1f523edc22fc35e35903b2b844325e0b5e1c
+app/controllers/application_controller.rb 7afa8bd02d2c49fd8df3c6e372b8520c9f916e8e

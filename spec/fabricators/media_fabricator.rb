@@ -1,3 +1,7 @@
+##
+# @author tchu
+#
+
 Fabricator(:media) do 
   title 'Test Media'
   director 'Test Director'

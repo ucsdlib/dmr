@@ -1,6 +1,6 @@
-#---
-# @author tchu@ucsd.edu
-#---
+##
+# @author tchu
+#
 
 require 'spec_helper'
 
