@@ -14,3 +14,12 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+$(function(){
+  jQuery.ajax({
+    url: "https://lib-jira.ucsd.edu:8443/s/570923a7ebac454f838812ae4e331542-T/en_USfs3qxk/64016/6/1.4.25/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs.js?locale=en-US&collectorId=ced3438f",
+    type: "get",
+    cache: true,
+    dataType: "script"
+  });
+});
