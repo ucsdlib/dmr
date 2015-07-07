@@ -1,0 +1,13 @@
+/*---------------------*/
+/* UCSD LIBRARY HEADER */
+/*---------------------*/
+
+.pull-right {float: right;}
+.container-fluid::before, .container-fluid::after {content: "";display: table;line-height: 0;}
+.container-fluid::after {clear: both;}
+.container-fluid {padding-left: 20px;padding-right: 20px;}
+.ucsd-head {background:image-url("bg.jpg") repeat 0 0;border-bottom:#e8f3ff solid 1px;}
+.ucsd-head-logo {padding:20px 0;}
+article, aside, details, figcaption, figure, footer, header, hgroup, nav, section {display: block;}
+.ucsd-head .brand {color: #fff;display: block;float: left;font-size: 24px;margin: 32px 0 0;padding: 0;text-transform: uppercase;}
+a {color: #016691;text-decoration: none;}
