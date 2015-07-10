@@ -1,13 +1,23 @@
 <h1>Listing Media</h1>
-
+<table class="table table-striped table-hover">
+  <thead>
+	<tr>
+	  <th>Title</th>
+	  <th>Director</th>
+	  <th>Call Number</th>
+	  <th>Year</th>
+	  <th>File Name</th>
+	</tr>
+  </thead>
+  <tbody>
 <% @medias.each do |m| %>
-  <p>Title: <%= m.title %></p> 
-  <p>Director: <%= m.director %></p>
-  <p>Call Number: <%= m.call_number %></p>
-  <p>Year: <%= m.year %></p>
-  <p>File name: <%= m.file_name %></p>
-  <%= link_to "View", medium_path(m.id)%>
-  <%= link_to "Edit", edit_medium_path(m.id)%>
-  <hr/>
-
+  <tr>
+    <td><%= link_to "#{m.title}", medium_path(m.id)%></td>
+    <td><%= m.director %></td>
+    <td><%= m.call_number %></td>
+    <td><%= m.year %></td>
+    <td><%= m.file_name %></td>
+  </tr>
 <% end %>
+  <tbody>
+</table>
