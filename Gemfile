@@ -14,6 +14,7 @@ gem 'pg'
 gem 'fabrication'
 gem 'yard'
 gem 'inch', require: false
+gem 'rspec-activemodel-mocks'
 
 # Deploy with Capistrano
 gem 'capistrano', '~> 3.3.3'
