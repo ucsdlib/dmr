@@ -9,7 +9,7 @@ class MediaController < ApplicationController
   # @return [String] the resulting webpage of all Media objects
   #
   def index
-    @medias = Media.order(:created_at)
+    @medias = Media.all
   end
 
   ##

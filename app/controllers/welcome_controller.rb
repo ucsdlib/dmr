@@ -3,7 +3,6 @@
 #
 
 class WelcomeController < ApplicationController
-  layout "application"
   ##
   # Handles GET index request
   #
