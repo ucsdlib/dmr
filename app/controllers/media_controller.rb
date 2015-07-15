@@ -9,7 +9,7 @@ class MediaController < ApplicationController
   # @return [String] the resulting webpage of all Media objects
   #
   def index
-    @medias = Media.order(:created_at)
+    @medias = Media.last(20)
   end
 
   ##
@@ -72,7 +72,18 @@ class MediaController < ApplicationController
       render :edit
     end   
   end
-       
+
+  ##
+  # Handles GET delete a Media object
+  #
+  # @return [String] - redirect to the Media index page
+  #
+  def destroy
+    media = Media.find(params[:id])
+    media.destroy 
+    redirect_to media_path
+  end
+         
   private
     ##
     # Specify which parameters are allowed into Media controller actions to prevent wrongful mass assignment.

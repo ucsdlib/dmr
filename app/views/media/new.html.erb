@@ -1,42 +1,16 @@
-<h1>New Media Record Core Data</h1>
-
-<% if @media.errors.any? %>
-  <div id="error_msg">
-	<h4>The form contains <%= pluralize(@media.errors.count, "error") %></h4>
-	<ul>
-	<% @media.errors.full_messages.each do |msg| %>
-		<li><%= msg %></li> 
-	<% end %>
-	</ul>
+<div class="container-fluid">
+  <div class="row">
+	<div class="col-xs-6">
+	  <h3>New Media Record Core Data</h3>
+	  <%= render :partial => 'shared/error_messages' , :locals => {:obj => @media}%>
+	  <p class="required">* Required field </p>
+	
+	  <%= bootstrap_form_for :media, url: media_path do |f| %>
+        <%= render :partial => 'shared/media_form_fields' , :locals => {:f => f}%>
+	    <input class="btn btn-primary" type="reset" value="Cancel"/>
+	    <%= link_to "Add to Course Reserve List", media_path, class: "btn btn-primary"%>
+	    <%= link_to "Return to Search Results", media_path, class: "btn btn-primary"%>
+	  <% end %>
+	</div>
   </div>
-<% end %>
-
-<%= form_for :media, url: media_path do |f| %>
-  <p>
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
-  </p>
- 
-  <p>
-    <%= f.label :director %><br>
-    <%= f.text_field :director %>
-  </p>
-
-  <p>
-    <%= f.label :call_number %><br>
-    <%= f.text_field :call_number %>
-  </p>
-
-  <p>
-    <%= f.label :year %><br>
-    <%= f.text_field :year %>
-  </p>
- 
-  <p>
-    <%= f.label :file_name %><br>
-    <%= f.text_field :file_name %>
-  </p>     
-  <p>
-    <%= f.submit %>
-  </p>
-<% end %>
+</div>	  
