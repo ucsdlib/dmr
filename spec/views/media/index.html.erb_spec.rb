@@ -1,23 +1,14 @@
 require 'spec_helper'
 
 describe "media/index" do
-  before(:each) do
-    assign(:medias, [
-      stub_model(Media,
-        :title => "Test Media 1",
-        :director => "Test Director",
-        :year => "2015",
-        :call_number => "11111111",
-        :file_name => "file1.mp4"        
-      ),
-      stub_model(Media,
-        :title => "Test Media 2",
-        :director => "Test Director",
-        :year => "2015",
-        :call_number => "22222222",
-        :file_name => "file2.mp4"    
-      )
-    ])
+  before(:all) do
+    @media1 = Media.create title: "Test Media 1", director: "Test Director", year: "2015", call_number: "11111111", file_name: "file1.mp4"
+    @media2 = Media.create title: "Test Media 2", director: "Test Director", year: "2015", call_number: "22222222", file_name: "file2.mp4"    
+    assign(:medias, [@media1,@media2])
+  end
+  after(:all) do
+    @media1.delete
+    @media2.delete
   end
 
   it "renders a list of media" do

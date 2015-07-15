@@ -45,6 +45,7 @@ feature "Media" do
     fill_in "Call Number", :with => "bb22222222"
     fill_in "File Name", :with => "test.mp4"
     click_on "Save"
+    expect(page).to have_content('Media was successfully created.')
 
     # Check that changes are saved
     visit media_path
@@ -71,7 +72,8 @@ feature "Media" do
     fill_in "Call Number", :with => "33333333"    
     fill_in "File Name", :with => "toystoryUpdate.mp4"   
     click_on('Save')
-    
+    expect(page).to have_content('Media successfully updated.')
+        
     # Check that changes are saved
     expect(page).to have_selector('h3', :text => 'Media Record Core Data')
     expect(page).to have_selector("input#media_title[value='Test Media 1 Update']")
@@ -90,7 +92,9 @@ feature "Media" do
     visit edit_medium_path(@media1)
     expect(page).to have_selector("input#media_title[value='Test Media 1']")
     click_on('Delete')
+    expect(page).to have_content('Media was successfully destroyed.')
     expect(Media.count).to eq(1)
+    visit media_path
     expect(page).to_not have_content('Test Media 1')           
   end              
 end

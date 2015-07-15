@@ -41,7 +41,7 @@ class MediaController < ApplicationController
   def create
     @media = Media.new(media_params)
     if @media.save
-      redirect_to media_path, notice: 'A new Media Record has been created!'
+      redirect_to media_path, notice: 'Media was successfully created.'
     else
       render :new
     end
@@ -67,7 +67,7 @@ class MediaController < ApplicationController
   def update 
     @media = Media.find(params[:id])
     if @media.update_attributes(media_params) 
-      redirect_to edit_medium_path(@media), :flash => { :notice => "The Media Record has been updated." }
+      redirect_to edit_medium_path(@media), :flash => { :notice => "Media successfully updated." }
     else
       render :edit
     end   
@@ -81,7 +81,7 @@ class MediaController < ApplicationController
   def destroy
     media = Media.find(params[:id])
     media.destroy 
-    redirect_to media_path
+    redirect_to media_path, :flash => { :notice => "Media was successfully destroyed." }
   end
          
   private
