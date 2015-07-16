@@ -116,5 +116,20 @@ describe MediaController do
       end
     end
     
-  end    
+  end
+  
+  describe "DELETE destroy" do
+    before(:each) do
+      @media = Fabricate(:media)        
+      delete :destroy, id: @media
+    end
+
+    it "redirects to the media index page" do
+      expect(response).to redirect_to media_path
+    end
+
+    it "deletes the media" do
+      expect(Media.count).to eq(0)
+    end
+  end      
 end

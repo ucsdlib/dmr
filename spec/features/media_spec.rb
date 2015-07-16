@@ -22,18 +22,79 @@ feature "Media" do
     expect(page).to have_content('Test Media 2')
   end
   
-  scenario "visits the media show page" do
+  scenario "is on the media show page" do
     visit media_path
     expect(page).to have_content('Test Media 1')
     expect(page).to have_content('Test Media 2')
     
     click_on('Test Media 1')
-    expect(page).to have_selector('h2', :text => 'Media Record Core Data')
+    expect(page).to have_selector('h3', :text => 'Media Record Core Data')
     expect(page).to have_content('Test Media 1')
     expect(page).to have_content('Test Director 1')
     expect(page).to have_content('2015')
     expect(page).to have_content('11111111')
     expect(page).to have_content('toystory.mp4')
     page.find('.media-thumbnail')['src'].should have_content "/media/#{@media1.id}/#{@media1.file_name.gsub('.mp4','.jpg')}" 
-  end  
+  end
+  
+  scenario "is on create new media record page" do
+    visit new_medium_path
+    fill_in "Title", :with => "Test Media 3"
+    fill_in "Director", :with => "Test Director 3"
+    fill_in "Year", :with => "2015"
+    fill_in "Call Number", :with => "bb22222222"
+    fill_in "File Name", :with => "test.mp4"
+    click_on "Save"
+    expect(page).to have_content('Media was successfully created.')
+
+    # Check that changes are saved
+    visit media_path
+    expect(page).to have_content('Test Media 3')
+    expect(page).to have_content('Test Director 3')
+    expect(page).to have_content('bb22222222')
+    expect(page).to have_content('test.mp4')                  
+  end
+  
+  scenario "is on the media page to be edited" do
+    visit edit_medium_path(@media1)
+    expect(page).to have_selector('h3', :text => 'Media Record Core Data')
+    expect(page).to have_selector("input#media_title[value='Test Media 1']")
+    expect(page).to have_selector("input#media_director[value='Test Director 1']")
+    expect(page).to have_selector("input#media_year[value='2015']")
+    expect(page).to have_selector("input#media_call_number[value='11111111']")
+    expect(page).to have_selector("input#media_file_name[value='toystory.mp4']")
+    page.find('.media-thumbnail')['src'].should have_content "/media/#{@media1.id}/#{@media1.file_name.gsub('.mp4','.jpg')}" 
+
+    # Update values
+    fill_in "Title", :with => "Test Media 1 Update"
+    fill_in "Director", :with => "Test Director 1 Update"
+    fill_in "Year", :with => "2017"
+    fill_in "Call Number", :with => "33333333"    
+    fill_in "File Name", :with => "toystoryUpdate.mp4"   
+    click_on('Save')
+    expect(page).to have_content('Media successfully updated.')
+        
+    # Check that changes are saved
+    expect(page).to have_selector('h3', :text => 'Media Record Core Data')
+    expect(page).to have_selector("input#media_title[value='Test Media 1 Update']")
+    expect(page).to have_selector("input#media_director[value='Test Director 1 Update']")
+    expect(page).to have_selector("input#media_year[value='2017']")
+    expect(page).to have_selector("input#media_call_number[value='33333333']")
+    expect(page).to have_selector("input#media_file_name[value='toystoryUpdate.mp4']")             
+  end
+  
+  scenario "wants to delete a media record" do
+    visit media_path   
+    expect(page).to have_content('Test Media 1')
+    expect(page).to have_content('Test Media 2')  
+    expect(Media.count).to eq(2)
+    
+    visit edit_medium_path(@media1)
+    expect(page).to have_selector("input#media_title[value='Test Media 1']")
+    click_on('Delete')
+    expect(page).to have_content('Media was successfully destroyed.')
+    expect(Media.count).to eq(1)
+    visit media_path
+    expect(page).to_not have_content('Test Media 1')           
+  end              
 end

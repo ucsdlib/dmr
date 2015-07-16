@@ -1,6 +1,9 @@
 // Place all the styles related to the Media controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-div#error_msg {color:red}
-.media-thumbnail {padding-top:100px;}
+p.required {color:#d00;font-size:x-small;}
+.media-thumbnail {padding-top:60px; max-height:200px; max-width:200px; vertical-align:middle; display:block;}
 .col-xs-6 {width:720px;}
+.required .form-group .control-label:after {color:#d00; content:" *";}
+label.required:after {color:#d00; content:" *";}
+.alert {background-color:#FFFFCC; padding-top:0px;color:#d00;font-size:x-small;}

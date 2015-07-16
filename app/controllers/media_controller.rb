@@ -9,7 +9,7 @@ class MediaController < ApplicationController
   # @return [String] the resulting webpage of all Media objects
   #
   def index
-    @medias = Media.order(:created_at)
+    @medias = Media.last(20)
   end
 
   ##
@@ -41,7 +41,7 @@ class MediaController < ApplicationController
   def create
     @media = Media.new(media_params)
     if @media.save
-      redirect_to media_path, notice: 'A new Media Record has been created!'
+      redirect_to media_path, notice: 'Media was successfully created.'
     else
       render :new
     end
@@ -67,12 +67,23 @@ class MediaController < ApplicationController
   def update 
     @media = Media.find(params[:id])
     if @media.update_attributes(media_params) 
-      redirect_to edit_medium_path(@media), :flash => { :notice => "The Media Record has been updated." }
+      redirect_to edit_medium_path(@media), :flash => { :notice => "Media successfully updated." }
     else
       render :edit
     end   
   end
-       
+
+  ##
+  # Handles GET delete a Media object
+  #
+  # @return [String] - redirect to the Media index page
+  #
+  def destroy
+    media = Media.find(params[:id])
+    media.destroy 
+    redirect_to media_path, :flash => { :notice => "Media was successfully destroyed." }
+  end
+         
   private
     ##
     # Specify which parameters are allowed into Media controller actions to prevent wrongful mass assignment.

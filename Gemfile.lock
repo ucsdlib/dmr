@@ -42,6 +42,7 @@ GEM
       debug_inspector (>= 0.0.1)
     bootstrap-sass (3.2.0.2)
       sass (~> 3.2)
+    bootstrap_form (2.2.0)
     builder (3.2.2)
     byebug (5.0.0)
       columnize (= 0.9.0)
@@ -246,6 +247,7 @@ PLATFORMS
 DEPENDENCIES
   activesupport (~> 4.2.2)
   bootstrap-sass (~> 3.2.0)
+  bootstrap_form
   byebug
   capistrano (~> 3.3.3)
   capistrano-bundler (~> 1.1.3)

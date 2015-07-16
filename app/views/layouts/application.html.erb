@@ -8,7 +8,9 @@
 </head>
 <body>
   <%= render :partial => 'shared/header'%>
-
+  <section id="messages" class="row-fluid">
+    <%= render :partial=>'shared/flash_messages' %>
+  </section>
   <section id="home-container">
     <%= yield %>
   </section>

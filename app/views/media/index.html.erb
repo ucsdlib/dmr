@@ -10,14 +10,15 @@
 	</tr>
   </thead>
   <tbody>
-<% @medias.each do |m| %>
-  <tr>
-    <td><%= link_to "#{m.title}", medium_path(m.id)%></td>
-    <td><%= m.director %></td>
-    <td><%= m.call_number %></td>
-    <td><%= m.year %></td>
-    <td><%= m.file_name %></td>
-  </tr>
-<% end %>
+    <% @medias.each do |m| %>
+      <tr>
+        <td><%= link_to "#{m.title}", medium_path(m.id)%></td>
+        <td><%= m.director %></td>
+        <td><%= m.call_number %></td>
+        <td><%= m.year %></td>
+        <td><%= m.file_name %></td>
+      </tr>
+    <% end %>
   <tbody>
 </table>
+<%= link_to "Create New Media Record", new_medium_path, class: "btn btn-primary"%>
