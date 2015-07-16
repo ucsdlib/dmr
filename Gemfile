@@ -14,7 +14,6 @@ gem 'pg'
 gem 'fabrication'
 gem 'yard'
 gem 'inch', require: false
-gem 'rspec-activemodel-mocks'
 gem 'bootstrap_form'
 
 # Deploy with Capistrano

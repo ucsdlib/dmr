@@ -2,17 +2,12 @@ require 'spec_helper'
 
 describe "media/new" do
   before(:each) do
-    assign(:media, stub_model(Media,
-        :title => "Test Media 1",
-        :director => "Test Director",
-        :year => "2015",
-        :call_number => "7777777",
-        :file_name => "toystory.mp4"        
-      ).as_new_record)
+    @media = Fabricate(:media)
+    assign(:media, @media)
   end
-
+  
   it "renders new page form" do
-    render
+    render :template => "media/new.html.erb"
 
     # Run the generator again with the --webrat flag if you want to use webrat matchers
     assert_select "form[action=?][method=?]", media_path, "post" do

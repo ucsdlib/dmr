@@ -2,15 +2,12 @@ require 'spec_helper'
 
 describe "media/edit" do
   before(:each) do
-    @media = assign(:media, stub_model(Media,
-        :title => "Test Media 1",
-        :director => "Test Director",
-        :year => "2015",
-        :call_number => "11111111",
-        :file_name => "toystory.mp4"
-    ))
+    @media = Media.create title: "Test Media 1", director: "Test Director", year: "2015", call_number: "11111111", file_name: "toystory.mp4"
   end
-  
+  after(:all) do
+    @media.delete
+  end
+    
   it "renders the edit page form" do
     render
     
