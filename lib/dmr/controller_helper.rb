@@ -1,3 +1,9 @@
+#---
+# @author Vivian <tchu@ucsd.edu>
+#---
+
+require 'open-uri'
+
 module Dmr
   module ControllerHelper 
     ##
@@ -26,7 +32,7 @@ module Dmr
         headers['Last-Modified'] = Time.now.ctime.to_s
       
         self.response_body = Enumerator.new do |blk|
-          File.open("#{Rails.configuration.file_path}#{fileid}", "rb") do |seg|
+          open("#{Rails.configuration.file_path}#{fileid}", "rb") do |seg|
             blk << seg.read
           end
         end

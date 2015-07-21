@@ -1,6 +1,6 @@
-##
-# @author tchu
-#
+#---
+# @author Vivian <tchu@ucsd.edu>
+#---
 
 class MediaController < ApplicationController
   ##
@@ -9,7 +9,7 @@ class MediaController < ApplicationController
   # @return [String] the resulting webpage of all Media objects
   #
   def index
-    @medias = Media.last(20)
+    @media = Media.order('created_at DESC').limit(10)
   end
 
   ##
@@ -83,7 +83,17 @@ class MediaController < ApplicationController
     media.destroy 
     redirect_to media_path, :flash => { :notice => "Media was successfully destroyed." }
   end
-         
+ 
+  ##
+  # Handles GET search a Media object
+  #
+  def search
+    if params[:search] && !params[:search].blank?
+      @media = Media.search(params[:search]).order(:title).page(params[:page]).per(10)
+      @search_count = @media.count
+    end
+  end
+           
   private
     ##
     # Specify which parameters are allowed into Media controller actions to prevent wrongful mass assignment.

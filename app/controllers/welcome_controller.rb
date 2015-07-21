@@ -1,6 +1,6 @@
-##
-# @author tchu
-#
+#---
+# @author Vivian <tchu@ucsd.edu>
+#---
 
 class WelcomeController < ApplicationController
   layout "application"

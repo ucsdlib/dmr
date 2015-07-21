@@ -1,6 +1,6 @@
-##
-# @author tchu
-#
+#---
+# @author Vivian <tchu@ucsd.edu>
+#---
 
 class FileController < ApplicationController
   include Dmr::ControllerHelper
