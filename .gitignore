@@ -16,3 +16,7 @@
 !/log/.keep
 /tmp
 .project
+config/database.yml
+config/secrets.yml
+.coveralls.yml
+.DS_Store

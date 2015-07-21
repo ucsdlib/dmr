@@ -1,0 +1,18 @@
+<div class="container-fluid">
+  <div class="row">
+	<div class="col-xs-6">
+	  <h3>Media Record Core Data</h3>
+	  <%= render :partial => 'shared/error_messages' , :locals => {:obj => @media}%>
+	  <p class="required">* Required field </p>
+	  
+	  <%= bootstrap_form_for @media, :required=>true do |f| %>
+	    <%= render :partial => 'shared/media_form_fields' , :locals => {:f => f}%>
+	    <%= link_to "Play File", media_path, class: "btn btn-primary"%>
+	    <%= link_to "Delete", @media, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary"%>	     
+	    <%= link_to "Add to Course Reserve List", media_path, class: "btn btn-primary"%>
+	    <%= link_to "Return to Search Results", media_path, class: "btn btn-primary"%>
+	  <%end%>
+	</div>
+    <%= render :partial => 'shared/thumbnail' , :locals => {:obj => @media}%>
+  </div>
+</div>

@@ -12,4 +12,10 @@
  *
  *= require_tree .
  *= require_self
+ *= header
+ *= media
+ *= welcome
+ *= general
+ *= footer
+ *= rails_bootstrap_forms
  */
