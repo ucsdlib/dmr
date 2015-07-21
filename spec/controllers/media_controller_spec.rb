@@ -1,5 +1,5 @@
 #---
-# by tchu@ucsd.edu
+# @author Vivian <tchu@ucsd.edu>
 #---
 
 require 'spec_helper'
@@ -131,5 +131,26 @@ describe MediaController do
     it "deletes the media" do
       expect(Media.count).to eq(0)
     end
-  end      
+  end
+  
+  describe "GET search" do
+    before(:each) do
+      @media = Fabricate(:media) 
+    end
+    
+    it "returns Media objects if there is a match" do
+      get :search, search: "Test", search_option: "media"
+      expect(assigns(:media)).to eq([@media])
+    end
+
+    it "returns nil if there is no match" do
+      get :search, search_term: "abcd", search_option: "media"
+      expect(assigns(:media)).to eq(nil)
+    end
+    
+    it "returns number of Media objects if there is a match" do
+      get :search, search: "Test", search_option: "media"
+      expect(assigns(:search_count)).to eq(1)
+    end    
+  end        
 end

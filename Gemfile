@@ -15,6 +15,7 @@ gem 'fabrication'
 gem 'yard'
 gem 'inch', require: false
 gem 'bootstrap_form'
+gem 'kaminari'
 
 # Deploy with Capistrano
 gem 'capistrano', '~> 3.3.3'

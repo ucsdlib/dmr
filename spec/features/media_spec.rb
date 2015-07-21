@@ -12,7 +12,7 @@ feature "Media" do
   
   scenario "is on media index page" do
     visit media_path
-    expect(page).to have_selector('h1', :text => 'Listing Media')
+    expect(page).to have_selector('h3', :text => 'Listing Media')
     expect(page).to have_selector('th[1]', :text => 'Title')
     expect(page).to have_selector('th[2]', :text => 'Director')
     expect(page).to have_selector('th[3]', :text => 'Call Number')
@@ -23,11 +23,7 @@ feature "Media" do
   end
   
   scenario "is on the media show page" do
-    visit media_path
-    expect(page).to have_content('Test Media 1')
-    expect(page).to have_content('Test Media 2')
-    
-    click_on('Test Media 1')
+    visit medium_path(@media1)
     expect(page).to have_selector('h3', :text => 'Media Record Core Data')
     expect(page).to have_content('Test Media 1')
     expect(page).to have_content('Test Director 1')
@@ -96,5 +92,17 @@ feature "Media" do
     expect(Media.count).to eq(1)
     visit media_path
     expect(page).to_not have_content('Test Media 1')           
-  end              
+  end   
+  
+  scenario "wants to search for a media record with a matching search term" do
+    visit search_media_path( {:search => 'Test'} )  
+    expect(page).to have_content('Test Media 1')
+    expect(page).to have_content('Test Media 2')
+    expect(page).to have_content('Displaying all 2 media')        
+  end
+  
+  scenario "wants to search for a media record with no matching search term" do    
+    visit search_media_path( {:search => 'abcdef'} )
+    expect(page).to have_content('There were no results for the search: "abcdef"')        
+  end                  
 end

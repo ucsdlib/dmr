@@ -25,7 +25,7 @@
         null,
         null,
         1,
-        8,
+        7,
         null,
         null,
         null,
@@ -98,6 +98,16 @@
         3,
         3,
         3,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1,
+        5,
+        4,
+        4,
+        null,
         null,
         null,
         1,
@@ -129,6 +139,17 @@
         1,
         1,
         1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1,
+        4,
+        null,
+        null,
         null
       ],
       "/Users/Vivian_Chu/git/dmr/app/controllers/file_controller.rb": [
@@ -151,6 +172,12 @@
         null
       ],
       "/Users/Vivian_Chu/git/dmr/lib/dmr/controller_helper.rb": [
+        null,
+        null,
+        null,
+        null,
+        1,
+        null,
         1,
         1,
         null,
@@ -196,6 +223,6 @@
         null
       ]
     },
-    "timestamp": 1437065603
+    "timestamp": 1437519880
   }
 }

@@ -4,7 +4,7 @@ describe "media/edit" do
   before(:each) do
     @media = Media.create title: "Test Media 1", director: "Test Director", year: "2015", call_number: "11111111", file_name: "toystory.mp4"
   end
-  after(:all) do
+  after(:each) do
     @media.delete
   end
     
