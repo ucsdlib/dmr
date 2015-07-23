@@ -1,6 +1,6 @@
 <% if @search_count && @search_count > 0%>
   <%= render :partial => 'shared/display_paginate' , :locals => {:obj => @media}%>
-  <%= render :partial => 'shared/search_result' , :locals => {:obj => @media}%>
+  <%= render :partial => 'search_result' , :locals => {:obj => @media}%>
   <div class="text-center">
     <%= link_to "Add to Course Reserve List", media_path, class: "btn btn-primary"%>
   </div>  

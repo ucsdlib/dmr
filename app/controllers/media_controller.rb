@@ -52,7 +52,7 @@ class MediaController < ApplicationController
   #
   # @return [String] the resulting webpage with the Media object
   #  
-  def edit 
+  def edit
     @media = Media.find(params[:id]) 
   end
 
@@ -91,6 +91,7 @@ class MediaController < ApplicationController
     if params[:search] && !params[:search].blank?
       @media = Media.search(params[:search]).order(:title).page(params[:page]).per(10)
       @search_count = @media.count
+      session[:search] = params[:search]
     end
   end
            

@@ -98,11 +98,25 @@ feature "Media" do
     visit search_media_path( {:search => 'Test'} )  
     expect(page).to have_content('Test Media 1')
     expect(page).to have_content('Test Media 2')
-    expect(page).to have_content('Displaying all 2 media')        
+    expect(page).to have_content('Showing all 2 media')        
   end
   
   scenario "wants to search for a media record with no matching search term" do    
     visit search_media_path( {:search => 'abcdef'} )
     expect(page).to have_content('There were no results for the search: "abcdef"')        
-  end                  
+  end
+
+  scenario "wants to return to search results page after viewing a media record" do
+    visit search_media_path( {:search => 'Test'} )  
+    expect(page).to have_content('Test Media 1')
+    expect(page).to have_content('Test Media 2')
+    expect(page).to have_content('Showing all 2 media')   
+    click_on('Test Media 1')
+    expect(page).to have_selector('h3', :text => 'Media Record Core Data')
+    expect(page).to have_content('Return to Search Results')
+    click_on('Return to Search Results')
+    expect(page).to have_content('Test Media 1')
+    expect(page).to have_content('Test Media 2')
+    expect(page).to have_content('Showing all 2 media')           
+  end                    
 end
