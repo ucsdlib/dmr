@@ -1,19 +1,14 @@
-##
-# @author tchu
-#
+#---
+# @author Vivian <tchu@ucsd.edu>
+#---
 
 require 'spec_helper'
 
-# Specs in this file have access to a helper object that includes
-# the MediaHelper. For example:
-#
-# describe MediaHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
-#     end
-#   end
-# end
-#RSpec.describe MediaHelper, :type => :helper do
-#  pending "add some examples to (or delete) #{__FILE__}"
-#end
+describe MediaHelper do
+  describe "Wowza URL" do
+    it "Builds Wowza URL" do
+      @media = Fabricate(:media)
+      expect(helper.grabWowzaURL(@media.file_name,@media.id)).to include "lib-streaming.ucsd.edu:1935/dmr/_definst_/"
+    end
+  end
+end

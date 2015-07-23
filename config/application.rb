@@ -31,6 +31,8 @@ module Dmr
     config.autoload_paths += %W(#{config.root}/lib)
     # DMR-specific config 
     #config.file_path = '/mnt/isilon/DMR/MP4_Archive/'
-    config.file_path = 'https://library.ucsd.edu/dmrthumbs/'    
+    config.file_path = 'https://library.ucsd.edu/dmrthumbs/'
+    config.wowza_baseurl = 'lib-streaming.ucsd.edu:1935/dmr/_definst_/'
+    config.wowza_directory = '/pub/data2/DMR/'    
   end
 end

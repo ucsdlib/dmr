@@ -10,7 +10,7 @@
 	    <%= link_to "Play File", media_path, class: "btn btn-primary"%>
 	    <%= link_to "Delete", @media, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary"%>	     
 	    <%= link_to "Add to Course Reserve List", media_path, class: "btn btn-primary"%>
-	    <%= link_to "Return to Search Results", search_media_path(:search => session[:search], :search_option => "media" ), class: "btn btn-primary"%>
+	    <%= link_to "Return to Search Results", search_media_path(:search => session[:search]), class: "btn btn-primary"%>
 	  <%end%>
 	</div>
     <%= render :partial => 'shared/thumbnail' , :locals => {:obj => @media}%>
