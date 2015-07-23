@@ -1,12 +1,12 @@
 <div class="container-fluid">
   <div class="row">
 	<div class="col-xs-6">
-	  <%= render :partial => 'shared/media_show' , :locals => {:obj => @media}%>
+	  <%= render :partial => 'media_show' , :locals => {:obj => @media}%>
 	  <%= link_to "Play File", edit_medium_path(@media.id), class: "btn btn-primary"%>
 	  <%= link_to "Edit", edit_medium_path(@media.id), class: "btn btn-primary"%>
 	  <%= link_to "Delete", @media, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary"%>
 	  <%= link_to "Add to Course Reserve List", media_path, class: "btn btn-primary"%>
-	  <%= link_to "Return to Search Results", media_path, class: "btn btn-primary"%>
+	  <%= link_to "Return to Search Results", search_media_path(:search => session[:search]), class: "btn btn-primary"%>
 	</div>
 	<%= render :partial => 'shared/thumbnail' , :locals => {:obj => @media}%>
   </div>
