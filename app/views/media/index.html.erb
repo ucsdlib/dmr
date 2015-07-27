@@ -12,7 +12,7 @@
   <tbody>
     <% @media.each do |m| %>
       <tr>
-        <td><%= link_to "#{m.title}", medium_path(m.id)%></td>
+        <td><%= link_to "#{m.title}", edit_medium_path(m.id)%></td>
         <td><%= m.director %></td>
         <td><%= m.call_number %></td>
         <td><%= m.year %></td>

@@ -19,6 +19,7 @@ class MediaController < ApplicationController
   #
   def show
     @media = Media.find(params[:id])
+    render :layout => false
   end
 
   ##

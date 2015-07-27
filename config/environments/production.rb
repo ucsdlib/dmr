@@ -85,4 +85,6 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   #config.shibboleth = true
+  config.wowza_baseurl = 'lib-streaming.ucsd.edu:1935/dmr/_definst_/'
+  config.wowza_directory = '/pub/data2/DMR/'    
 end

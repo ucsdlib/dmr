@@ -1,0 +1,29 @@
+<%
+   wowzaURL = grabWowzaURL(obj.file_name,obj.id) if !obj.nil?
+%>
+
+<% if wowzaURL != nil %>
+
+	<div id="dar-video">Loading the player...</div>
+
+	<script type="text/javascript">
+		jwplayer("dar-video").setup({
+			playlist:
+			[{
+				sources:
+				[
+					{file: "rtmp://<%=wowzaURL%>"},
+					{file: "http://<%=wowzaURL%>/playlist.m3u8"}
+				]
+			}],
+			width: "100%",
+			height: "100%",
+			aspectratio: "16:9",
+			rtmp: {bufferlength: 3},
+			analytics: {enabled: false},
+			primary: "flash",
+			fallback: false
+		});
+	</script>
+
+<% end %>
