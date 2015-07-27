@@ -24,13 +24,8 @@ feature "Media" do
   
   scenario "is on the media show page" do
     visit medium_path(@media1)
-    expect(page).to have_selector('h3', :text => 'Media Record Core Data')
-    expect(page).to have_content('Test Media 1')
-    expect(page).to have_content('Test Director 1')
-    expect(page).to have_content('2015')
-    expect(page).to have_content('11111111')
-    expect(page).to have_content('toystory.mp4')
-    page.find('.media-thumbnail')['src'].should have_content "/media/#{@media1.id}/#{@media1.file_name.gsub('.mp4','.jpg')}" 
+    expect(page).to have_selector('h3', :text => @media1.title)
+    expect(page).to have_content('Loading the player...')
   end
   
   scenario "is on create new media record page" do
@@ -118,5 +113,13 @@ feature "Media" do
     expect(page).to have_content('Test Media 1')
     expect(page).to have_content('Test Media 2')
     expect(page).to have_content('Showing all 2 media')           
-  end                    
+  end
+
+  scenario "wants to click on 'Play File' button on the media edit page" do
+    visit edit_medium_path(@media1)
+    expect(page).to have_selector("input#media_title[value='Test Media 1']")
+    click_on('Play File')      
+    expect(page).to have_selector('h3', :text => @media1.title)
+    expect(page).to have_content('Loading the player...')
+  end                        
 end
