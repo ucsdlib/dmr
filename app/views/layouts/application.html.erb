@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Dmr</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
+<%= render :partial => 'shared/head'%>
 <body>
+  <% @search_box_display = 'true' if @search_box_display.nil? %>  
+ 
+  <header>
+    <%= render :partial => 'shared/header'%>
+    <% if @menu_display.nil?%>
+      <%= render :partial => 'shared/menu', :locals => {:display_search => "#{@search_box_display}"}%>
+    <% end %>  
+  </header>
+  <section id="messages" class="row-fluid">
+    <%= render :partial=>'shared/flash_messages' %>
+  </section>
+  <section id="home-container">
+    <%= yield %>
+  </section>
 
-<%= yield %>
-
+  <%= render :partial => 'shared/footer' %>
 </body>
 </html>

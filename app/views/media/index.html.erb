@@ -1,0 +1,23 @@
+<h3>Listing Media</h3>
+<table class="table table-striped table-hover">
+  <thead>
+	<tr>
+	  <th>Title</th>
+	  <th>Director</th>
+	  <th>Call Number</th>
+	  <th>Year</th>
+	  <th>File Name</th>
+	</tr>
+  </thead>
+  <tbody>
+    <% @media.each do |m| %>
+      <tr>
+        <td><%= link_to "#{m.title}", edit_medium_path(m.id)%></td>
+        <td><%= m.director %></td>
+        <td><%= m.call_number %></td>
+        <td><%= m.year %></td>
+        <td><%= m.file_name %></td>
+      </tr>
+    <% end %>
+  <tbody>
+</table>

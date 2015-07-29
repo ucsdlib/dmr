@@ -1,0 +1,8 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+body {margin:0;}
+.navbar-default {background-color: #bcd6e6;background-image: linear-gradient(to bottom, #e1ecff, #bcd6e6);background-repeat: repeat-x;}
+.navbar-default .navbar-nav > li > a {color: #004b6e;}
+fieldset.search {display: block;margin: 0 auto;padding: 2%;position: relative;width: 70%;text-align: center;}
+.content {padding:5%}

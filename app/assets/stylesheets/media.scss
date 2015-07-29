@@ -1,0 +1,16 @@
+// Place all the styles related to the Media controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+p.required {color:#d00;font-size:x-small;}
+.media-thumbnail {margin-top:100px; max-height:200px; max-width:200px; vertical-align:middle; display:block;}
+.search-thumbnail {max-height:30px; max-width:30px; vertical-align:middle; display:block;}
+.col-xs-6 {width:720px;}
+.required .form-group .control-label:after {color:#d00; content:" *";}
+label.required:after {color:#d00; content:" *";}
+.alert {background-color:#FFFFCC; padding-top:0px;color:#d00;}
+input.btn-search {border: medium none;border-radius: 0;color: #fff;display: inline-block;
+font-family: "Glyphicons Halflings";font-size: 1em;height: 28px;width: 50px;}
+/*fieldset.search {background-color: #fff;border: 3px solid #fff;box-shadow: 0 0 1px rgba(0, 0, 0, 0.75);
+display: block;margin: 0 auto;padding: 0;position: relative;width: 100%;text-align: right;}*/
+.object-panel, .col-sm-10{background-color: #e9e9e9;border: 1px solid #d9d9d9;border-radius: 4px;
+box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);margin: 50px 50px 20px 50px;padding: 0 3% 3% 3%;}
