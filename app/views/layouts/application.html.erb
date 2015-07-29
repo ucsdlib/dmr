@@ -2,8 +2,14 @@
 <html>
 <%= render :partial => 'shared/head'%>
 <body>
-  <%= render :partial => 'shared/header'%>
-  <%= render :partial => 'shared/search_box'%>
+  <% @search_box_display = 'true' if @search_box_display.nil? %>  
+ 
+  <header>
+    <%= render :partial => 'shared/header'%>
+    <% if @menu_display.nil?%>
+      <%= render :partial => 'shared/menu', :locals => {:display_search => "#{@search_box_display}"}%>
+    <% end %>  
+  </header>
   <section id="messages" class="row-fluid">
     <%= render :partial=>'shared/flash_messages' %>
   </section>
