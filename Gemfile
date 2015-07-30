@@ -9,7 +9,6 @@ gem 'turbolinks'
 gem 'jbuilder'
 #gem 'sdoc', '~> 0.4.0', group: :doc
 gem "bootstrap-sass", '~> 3.2.0	'
-gem 'coveralls', require: false
 gem 'pg'
 gem 'fabrication'
 gem 'yard'
@@ -39,12 +38,12 @@ group :development, :test do
   gem 'capybara', '~> 2.4.4'
   gem 'launchy', '~> 2.4.3'                           
   gem 'unicorn', '~> 4.8.3'
-  gem 'simplecov'
-   gem 'pry'
+  gem 'pry'
 end
 
 group :test do
   gem 'database_cleaner', '1.2.0'
  # gem 'shoulda-matchers', require: false, github: 'thoughtbot/shoulda-matchers', branch: 'master'
   gem 'shoulda-matchers', '2.8.0.rc2'
+  gem "codeclimate-test-reporter", require: nil
 end
