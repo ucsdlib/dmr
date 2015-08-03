@@ -3,6 +3,8 @@
 #---
 
 class Media < ActiveRecord::Base
+  has_many :reports
+  has_many :courses, through: :reports
   validates :title, presence: true
   validates :call_number, presence: true
   validates :year, length: { maximum: 4 }, format: { :with => /\d\z/, :message => "must be in number format" }
