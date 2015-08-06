@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150803222206) do
+ActiveRecord::Schema.define(version: 20150804224608) do
 
   create_table "courses", force: :cascade do |t|
     t.string   "quarter"
@@ -38,5 +38,8 @@ ActiveRecord::Schema.define(version: 20150803222206) do
     t.integer  "course_id"
     t.integer  "media_id"
   end
+
+  add_index "reports", ["course_id"], name: "index_reports_on_course_id"
+  add_index "reports", ["media_id"], name: "index_reports_on_media_id"
 
 end

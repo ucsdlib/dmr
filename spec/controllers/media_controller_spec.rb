@@ -43,7 +43,7 @@ describe MediaController do
         assigns(:media).should be_persisted
       end
   
-      it "redirects to the created page" do
+      it "redirects to the Media index page" do
         response.should redirect_to(media_url)
       end       
     end
@@ -64,7 +64,25 @@ describe MediaController do
       it "render the :new template" do
         expect(response).to render_template :new
       end
-    end    
+    end
+    
+    describe "with has_many through association" do
+      before do
+        @media = Fabricate(:media)
+        @course = Fabricate(:course)
+        @course2 = Fabricate(:course)
+      end    
+      it "creates a new Media with 2 Course objects" do
+        @media.reports.create(course: @course)
+        @media.reports.create(course: @course2)
+        expect(Media.count).to eq(1) 
+        expect(Course.count).to eq(2)       
+        expect(@media.courses.size).to eq(2)
+        expect(@media.reports.size).to eq(2) 
+        expect(@media.courses.map(&:course)).to include('Test Course')  
+        expect(response.status).to eq( 200 )
+      end
+    end         
   end
  
   describe "GET edit" do
@@ -120,7 +138,11 @@ describe MediaController do
   
   describe "DELETE destroy" do
     before(:each) do
-      @media = Fabricate(:media)        
+      @media = Fabricate(:media) 
+      @course = Fabricate(:course)
+      @course2 = Fabricate(:course)
+      @media.reports.create(course: @course)
+      @media.reports.create(course: @course2)      
       delete :destroy, id: @media
     end
 
@@ -131,6 +153,15 @@ describe MediaController do
     it "deletes the media" do
       expect(Media.count).to eq(0)
     end
+    
+    it "destroys the requested media reports" do
+      expect(@media.reports.size).to eq(0)
+    end
+    
+    it "does not destroy the requested media course objects" do
+      expect(@media.courses.size).to eq(0)
+      expect(Course.count).to eq(2)
+    end    
   end
   
   describe "GET search" do

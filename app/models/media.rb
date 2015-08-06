@@ -3,7 +3,7 @@
 #---
 
 class Media < ActiveRecord::Base
-  has_many :reports
+  has_many :reports, dependent: :delete_all
   has_many :courses, through: :reports
   validates :title, presence: true
   validates :call_number, presence: true
