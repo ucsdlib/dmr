@@ -5,141 +5,163 @@
 require 'spec_helper'
 
 describe CoursesController do
-
-  # This should return the minimal set of attributes required to create a valid
-  # Course. As you add validations to Course, be sure to
-  # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
-
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
-
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # CoursesController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
-
   describe "GET index" do
     it "assigns all courses as @courses" do
-      course = Course.create! valid_attributes
-      get :index, {}, valid_session
-      expect(assigns(:courses)).to eq([course])
+      @course = Fabricate(:course)
+      get :index 
+      expect(Course.count).to eq(1)
+      expect(assigns(:courses)).to eq([@course])
     end
   end
 
   describe "GET show" do
     it "assigns the requested course as @course" do
-      course = Course.create! valid_attributes
-      get :show, {:id => course.to_param}, valid_session
-      expect(assigns(:course)).to eq(course)
+      @course = Fabricate(:course)
+      get :show, {:id => @course.id}
+      assigns(:course).should eq(@course)
+      expect(assigns(:course)).to eq(@course)      
     end
   end
 
   describe "GET new" do
     it "assigns a new course as @course" do
-      get :new, {}, valid_session
+      get :new
       expect(assigns(:course)).to be_a_new(Course)
     end
   end
 
   describe "GET edit" do
     it "assigns the requested course as @course" do
-      course = Course.create! valid_attributes
-      get :edit, {:id => course.to_param}, valid_session
-      expect(assigns(:course)).to eq(course)
+      @course = Fabricate(:course)
+      get :edit, {:id => @course.id}
+      expect(assigns(:course)).to eq(@course)
     end
   end
 
-  describe "POST create" do
+  describe "POST create" do      
     describe "with valid params" do
+      before do
+        post :create, course: Fabricate.attributes_for(:course)
+      end    
       it "creates a new Course" do
-        expect {
-          post :create, {:course => valid_attributes}, valid_session
-        }.to change(Course, :count).by(1)
+        expect(Course.count).to eq(1)
       end
 
       it "assigns a newly created course as @course" do
-        post :create, {:course => valid_attributes}, valid_session
         expect(assigns(:course)).to be_a(Course)
         expect(assigns(:course)).to be_persisted
       end
 
-      it "redirects to the created course" do
-        post :create, {:course => valid_attributes}, valid_session
-        expect(response).to redirect_to(Course.last)
+      it "redirects to the course index page" do
+        expect(response).to redirect_to(courses_url)
       end
     end
 
     describe "with invalid params" do
+      before do
+        post :create, course: {year: "abcd"}
+      end    
+      
       it "assigns a newly created but unsaved course as @course" do
-        post :create, {:course => invalid_attributes}, valid_session
         expect(assigns(:course)).to be_a_new(Course)
       end
-
+      
+      it "does not create a new Course" do
+        expect(Course.count).to eq(0)
+      end
+      
       it "re-renders the 'new' template" do
-        post :create, {:course => invalid_attributes}, valid_session
-        expect(response).to render_template("new")
+        expect(response).to render_template :new
       end
     end
+    
+    describe "with has_many through association" do
+      before do
+        @media = Fabricate(:media)
+        @media2 = Fabricate(:media)
+        @course = Fabricate(:course)
+      end    
+      it "creates a new Course with 2 Media objects" do
+        @course.reports.create(media: @media)
+        @course.reports.create(media: @media2)
+        expect(Course.count).to eq(1)   
+        expect(Media.count).to eq(2)    
+        expect(@course.media.size).to eq(2)
+        expect(@course.reports.size).to eq(2) 
+        expect(@course.media.map(&:title)).to include('Test Media')  
+        expect(response.status).to eq( 200 )
+      end
+    end   
   end
 
   describe "PUT update" do
     describe "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+      before(:each) do     
+        @course = Fabricate(:course)        
+        put :update, id: @course, course: Fabricate.attributes_for(:course, instructor: 'Test Instructor Update')
+        @course.reload        
+      end
 
       it "updates the requested course" do
-        course = Course.create! valid_attributes
-        put :update, {:id => course.to_param, :course => new_attributes}, valid_session
-        course.reload
-        skip("Add assertions for updated state")
+        expect(@course.instructor).to eq('Test Instructor Update')
       end
 
       it "assigns the requested course as @course" do
-        course = Course.create! valid_attributes
-        put :update, {:id => course.to_param, :course => valid_attributes}, valid_session
-        expect(assigns(:course)).to eq(course)
+        expect(assigns(:course)).to eq(@course)
       end
 
       it "redirects to the course" do
-        course = Course.create! valid_attributes
-        put :update, {:id => course.to_param, :course => valid_attributes}, valid_session
-        expect(response).to redirect_to(course)
+        expect(response).to redirect_to(edit_course_path(@course))
       end
     end
 
     describe "with invalid params" do
+      before(:each) do
+        @course = Fabricate(:course)        
+        put :update, id: @course, course: Fabricate.attributes_for(:course, year: 'abcd')
+        @course.reload                  
+      end 
+      
+      it "does not update the requested course" do
+        expect(@course.year).to eq('2015')
+      end 
+             
       it "assigns the course as @course" do
-        course = Course.create! valid_attributes
-        put :update, {:id => course.to_param, :course => invalid_attributes}, valid_session
-        expect(assigns(:course)).to eq(course)
+        expect(assigns(:course)).to eq(@course)
       end
 
       it "re-renders the 'edit' template" do
-        course = Course.create! valid_attributes
-        put :update, {:id => course.to_param, :course => invalid_attributes}, valid_session
-        expect(response).to render_template("edit")
+        expect(response).to render_template :edit
       end
     end
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested course" do
-      course = Course.create! valid_attributes
-      expect {
-        delete :destroy, {:id => course.to_param}, valid_session
-      }.to change(Course, :count).by(-1)
+    before(:each) do
+      @course = Fabricate(:course)
+      @media = Fabricate(:media)
+      @media2 = Fabricate(:media)
+      @course.reports.create(media: @media)
+      @course.reports.create(media: @media2)                    
+      delete :destroy, id: @course
     end
 
     it "redirects to the courses list" do
-      course = Course.create! valid_attributes
-      delete :destroy, {:id => course.to_param}, valid_session
-      expect(response).to redirect_to(courses_url)
+      expect(response).to redirect_to courses_path
     end
+
+    it "destroys the requested course" do
+      expect(Course.count).to eq(0)
+    end
+    
+    it "destroys the requested course reports" do
+      expect(@course.reports.size).to eq(0)
+    end
+    
+    it "does not destroy the requested course media objects" do
+      expect(@course.media.size).to eq(0)
+      expect(Media.count).to eq(2)
+    end         
   end
 
 end

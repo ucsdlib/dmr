@@ -3,10 +3,11 @@
 #---
 
 class MediaController < ApplicationController
+  before_action :set_media, only: [:show, :edit, :update, :destroy]
   ##
-  # Handles GET index request to display all Media objects from the database
+  # Handles GET index request to display the last 10 Media objects from the database
   #
-  # @return [String] the resulting webpage of all Media objects
+  # @return [String] the resulting webpage of the last 10 Media objects
   #
   def index
     @media = Media.order('created_at DESC').limit(10)
@@ -18,7 +19,6 @@ class MediaController < ApplicationController
   # @return [String] the resulting webpage of a single object
   #
   def show
-    @media = Media.find(params[:id])
     render :layout => false
   end
 
@@ -54,7 +54,6 @@ class MediaController < ApplicationController
   # @return [String] the resulting webpage with the Media object
   #  
   def edit
-    @media = Media.find(params[:id]) 
   end
 
   ##
@@ -66,7 +65,6 @@ class MediaController < ApplicationController
   # @return [String] the edit Media form
   #
   def update 
-    @media = Media.find(params[:id])
     if @media.update_attributes(media_params) 
       redirect_to edit_medium_path(@media), :flash => { :notice => "Media successfully updated." }
     else
@@ -80,8 +78,7 @@ class MediaController < ApplicationController
   # @return [String] - redirect to the Media index page
   #
   def destroy
-    media = Media.find(params[:id])
-    media.destroy 
+    @media.destroy 
     redirect_to media_path, :flash => { :notice => "Media was successfully destroyed." }
   end
  
@@ -103,7 +100,20 @@ class MediaController < ApplicationController
     # @!visibility private
     #  
     def media_params
-      params.require(:media).permit(:title, :director, :call_number, :year, :file_name)
+      params.require(:media).permit(:title, :director, :call_number, :year, :file_name, course_ids: [])
     end
-  
+
+    ##
+    # Specify which Reports parameters are allowed into Media controller actions to prevent wrongful mass assignment.
+    #
+    # @!visibility private
+    # 
+    #def reports_params
+    #  params.require(:report).permit(:course_id)
+    #end
+
+    # Use callbacks to share common setup or constraints between actions.
+    def set_media
+      @media = Media.find(params[:id])
+    end        
 end

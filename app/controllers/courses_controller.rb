@@ -1,64 +1,94 @@
+#---
+# @author Vivian <tchu@ucsd.edu>
+#---
+
 class CoursesController < ApplicationController
   before_action :set_course, only: [:show, :edit, :update, :destroy]
 
-  # GET /courses
-  # GET /courses.json
+  ##
+  # Handles GET index request to display the last 10 Course objects from the database
+  # GET /courses/index  
+  #
+  # @return [String] the resulting webpage of the last 10 Course objects
+  #
   def index
     @courses = Course.all
   end
 
+  ##
+  # Handles GET show request to display the details of a single Course object
   # GET /courses/1
-  # GET /courses/1.json
+  #
+  # @return [String] the resulting webpage of a single object
+  #
   def show
   end
 
+  ##
+  # Handles GET new request to a new Course object
   # GET /courses/new
+  #
+  # @return [String] for creating a new Course
+  #
   def new
     @course = Course.new
   end
 
-  # GET /courses/1/edit
-  def edit
-  end
-
+  ##
+  # Handles POST create a Course object
   # POST /courses
-  # POST /courses.json
+  #
+  # @note if successful
+  # @return [String] - redirect to the resulting webpage of all Course objects
+  # @note if failure
+  # @return [String] the new Course form
+  #  
   def create
     @course = Course.new(course_params)
 
-    respond_to do |format|
-      if @course.save
-        format.html { redirect_to @course, notice: 'Course was successfully created.' }
-        format.json { render :show, status: :created, location: @course }
-      else
-        format.html { render :new }
-        format.json { render json: @course.errors, status: :unprocessable_entity }
-      end
+    if @course.save
+      redirect_to courses_path, notice: 'Course was successfully created.'
+    else
+      render :new
     end
+ 
   end
 
+  ##
+  # Handles GET edit a Course object
+  # GET /courses/1/edit
+  #
+  # @return [String] the resulting webpage with the Course object
+  #    
+  def edit
+  end
+
+  ##
+  # Handles PUT update a Course object  
   # PATCH/PUT /courses/1
-  # PATCH/PUT /courses/1.json
+  #
+  # @note if successful
+  # @return [String] - redirect to the resulting webpage
+  # @note if failure
+  # @return [String] the edit Course form
+  #  
   def update
-    respond_to do |format|
-      if @course.update(course_params)
-        format.html { redirect_to @course, notice: 'Course was successfully updated.' }
-        format.json { render :show, status: :ok, location: @course }
-      else
-        format.html { render :edit }
-        format.json { render json: @course.errors, status: :unprocessable_entity }
-      end
+    if @course.update_attributes(course_params) 
+      redirect_to edit_course_path(@course), :flash => { :notice => "Course successfully updated." }
+    else
+      render :edit
     end
   end
 
+  ##
+  # Handles GET delete a Course object
   # DELETE /courses/1
-  # DELETE /courses/1.json
+  #
+  # @return [String] - redirect to the Object index page
+  #  
   def destroy
     @course.destroy
-    respond_to do |format|
-      format.html { redirect_to courses_url, notice: 'Course was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to courses_path, :flash => { :notice => "Course was successfully destroyed." }
   end
 
   private
@@ -69,6 +99,7 @@ class CoursesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def course_params
-      params.require(:course).permit(:quarter, :year, :course, :instructor)
+      params.require(:course).permit(:quarter, :year, :course, :instructor, media_ids: [])
     end
+   
 end
