@@ -6,10 +6,13 @@
 	  <p class="required">* Required field </p>
 	
 	  <%= bootstrap_form_for :media, url: media_path do |f| %>
-        <%= render :partial => 'shared/media_form_fields' , :locals => {:f => f}%>
-	    <input class="btn btn-primary" type="reset" value="Cancel"/>
-	    <%= link_to "Add to Course Reserve List", media_path, class: "btn btn-primary"%>
-	    <%= link_to "Return to Search Results", media_path, class: "btn btn-primary"%>
+        <%= render :partial => 'media_form' , :locals => {:f => f}%>
+        <div class="center-block">
+          <%= f.primary "Save"%>
+	      <input class="btn btn-primary" type="reset" value="Cancel"/>
+	      <%= link_to "Add to Course Reserve List", media_path, class: "btn btn-primary"%>
+	      <%= link_to "Return to Search Results", media_path, class: "btn btn-primary"%>
+	    </div>
 	  <% end %>
 	</div>
   </div>

@@ -42,7 +42,7 @@ class MediaController < ApplicationController
   def create
     @media = Media.new(media_params)
     if @media.save
-      redirect_to media_path, notice: 'Media was successfully created.'
+      redirect_to edit_medium_path(@media), notice: 'Media was successfully created.'
     else
       render :new
     end
