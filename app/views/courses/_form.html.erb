@@ -1,33 +1,13 @@
-<%= form_for(@course) do |f| %>
-  <% if @course.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
-
-      <ul>
-      <% @course.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :quarter %><br>
-    <%= f.text_field :quarter %>
-  </div>
-  <div class="field">
-    <%= f.label :year %><br>
-    <%= f.text_field :year %>
-  </div>
-  <div class="field">
-    <%= f.label :course %><br>
-    <%= f.text_field :course %>
-  </div>
-  <div class="field">
-    <%= f.label :instructor %><br>
-    <%= f.text_field :instructor %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+<div class="required">
+  <%#= f.text_field :quarter, label: "Quarter"%>
+  <%= f.select :quarter, [["Spring", "Spring"], ["Summer", "Summer"],["Fall", "Fall"], ["Winter", "Winter"]], { label: "Quarter" }, { class: "selectpicker"} %>
+</div>
+<div class="required">
+  <%= f.text_field :year, label: "Year"%>
+</div>
+<div class="required">
+  <%= f.text_field :course, label: "Course"%>
+</div>
+<div class="required">
+  <%= f.text_field :instructor, label: "Instructor"%>
+</div>

@@ -1,11 +1,11 @@
 <% if obj.errors.any? %>
-  <div class="alert alert-block alert-error">
-    <button type="button" class="close" data-dismiss="alert">&#215;</button>
-    <h5>The form contains <%= pluralize(obj.errors.count, "error") %></h5>
-    <ul>
-      <% obj.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li> 
+     <div id="error_explanation">
+      <h2><%= pluralize(obj.errors.count, "error") %> prohibited this record from being saved:</h2>
+
+      <ul>
+      <% obj.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
       <% end %>
-    </ul>
-  </div>
+      </ul>
+    </div>
 <% end %>

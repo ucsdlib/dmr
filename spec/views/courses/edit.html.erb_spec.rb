@@ -15,7 +15,7 @@ describe "courses/edit" do
 
     assert_select "form[action=?][method=?]", course_path(@course), "post" do
 
-      assert_select "input#course_quarter[name=?]", "course[quarter]"
+      assert_select "select#course_quarter[name=?]", "course[quarter]"
 
       assert_select "input#course_year[name=?]", "course[year]"
 

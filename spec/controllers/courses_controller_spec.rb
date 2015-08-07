@@ -53,7 +53,7 @@ describe CoursesController do
       end
 
       it "redirects to the course index page" do
-        expect(response).to redirect_to(courses_url)
+        expect(response).to redirect_to(edit_course_path(Course.last))
       end
     end
 

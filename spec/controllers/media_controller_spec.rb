@@ -44,7 +44,7 @@ describe MediaController do
       end
   
       it "redirects to the Media index page" do
-        response.should redirect_to(media_url)
+        response.should redirect_to(edit_medium_path(Media.last))
       end       
     end
     
