@@ -1,0 +1,30 @@
+<table class="table table-striped table-hover table-bordered">
+  <thead>
+    <tr>
+      <th class="col-xs-1"></th>
+      <th class="col-xs-1">No</th>
+      <th class="col-xs-3">Title</th>
+      <th class="col-xs-2">Director</th>
+      <th class="col-xs-2">Call Number</th>
+      <th class="col-xs-1">Year</th>
+      <th class="col-xs-1">File Name</th>
+    </tr>
+  </thead>
+  <tbody>		    
+    <% if @course.reports and @course.reports.size > 0 %>
+      <% counter = 0 %>
+      <% @course.media.each do |m| %>
+        <% counter += 1 %> 
+        <tr>
+          <td><%= check_box_tag 'media_ids[]', m.id %></td>
+          <td><%= counter %></td>          
+          <td><%= m.title %></td>
+          <td><%= m.director %></td>
+          <td><%= m.call_number %></td>
+          <td><%= m.year %></td>
+          <td><%= m.file_name %></td>
+        </tr>
+      <% end %>
+    <% end %>    
+  <tbody>
+</table>	    

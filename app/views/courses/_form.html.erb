@@ -1,12 +1,12 @@
 <div class="required">
+  <%= f.text_field :course, label: "Course"%>
+</div>
+<div class="required">
   <%#= f.text_field :quarter, label: "Quarter"%>
   <%= f.select :quarter, [["Spring", "Spring"], ["Summer", "Summer"],["Fall", "Fall"], ["Winter", "Winter"]], { label: "Quarter" }, { class: "selectpicker"} %>
 </div>
 <div class="required">
   <%= f.text_field :year, label: "Year"%>
-</div>
-<div class="required">
-  <%= f.text_field :course, label: "Course"%>
 </div>
 <div class="required">
   <%= f.text_field :instructor, label: "Instructor"%>

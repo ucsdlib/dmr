@@ -46,7 +46,8 @@ class CoursesController < ApplicationController
   def create
     @course = Course.new(course_params)
 
-    if @course.save   
+    if @course.save  
+      session[:current_course] = "#{@course.id}"
       redirect_to edit_course_path(@course), notice: 'Course was successfully created.'
     else
       render :new
@@ -91,6 +92,42 @@ class CoursesController < ApplicationController
     redirect_to courses_path, :flash => { :notice => "Course was successfully destroyed." }
   end
 
+  ##
+  # Handles set a current Course object
+  # /courses/set_current_course?id=1
+  #
+  # @return [String] - redirect to the Course edit page
+  # 
+  def set_current_course
+    if (params[:id])
+      session[:current_course] = params[:id]
+      redirect_to edit_course_path(params[:id].to_s), :flash => { :notice => "Current Course Reserve List was successfully set." }
+    end
+  end
+
+  ##
+  # Handles POST a set of media ids to be added to the current Course object
+  # POST /courses/add_to_course
+  #
+  # @return [String] - redirect to the Course edit page if successful
+  #   
+  def add_to_course
+    if(session[:current_course] != nil)
+      media_ids = params[:media_ids].collect {|id| id.to_i} if params[:media_ids]
+      @course = Course.find_by_id(session[:current_course].to_i)
+      current_course_media_ids = @course.media.map(&:id) if @course.media
+      if media_ids && @course
+        media_ids.each do |id|
+          med = Media.find_by_id(id)
+          @course.reports.create(media: med) if med && !current_course_media_ids.include?(id)
+        end
+      end
+      redirect_to edit_course_path(@course), :flash => { :notice => "Media was successfully added to the current Course Reserve List." }
+    else
+      redirect_to courses_path, :flash => { :notice => "No current Course Reserve List is set.  Please set the Course Reserve List first." }
+    end
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_course
