@@ -164,4 +164,45 @@ describe CoursesController do
     end         
   end
 
+  describe "GET set_current_course" do
+    before(:each) do
+      @course = Fabricate(:course)                
+    end
+
+    it "sets the last created course as current Course Reserve List automatically" do
+      post :create, course: Fabricate.attributes_for(:course)  
+      expect(session[:current_course].to_i).to eq(Course.last.id)
+    end
+
+    it "sets the first created course as current Course Reserve List" do
+      get :set_current_course, id: @course.id  
+      expect(session[:current_course].to_i).to eq(@course.id)
+    end
+  end
+  
+  describe "POST add_to_course" do
+    before(:each) do
+      @course = Fabricate(:course)
+      @media = Fabricate(:media)
+      @media2 = Fabricate(:media)
+      @media3 = Fabricate(:media)
+      get :set_current_course, id: @course.id                
+    end
+    
+    it "adds a media object to the current Course Reserve List" do       
+      post :add_to_course, media_ids: ["#{@media.id}"]             
+      expect(session[:current_course].to_i).to eq(@course.id)
+      expect(response).to redirect_to edit_course_path(@course)
+      expect(@course.media.size).to eq(1) 
+      expect(@course.media.map(&:title)).to include('Test Media')        
+    end
+    
+    it "adds multiple media objects to the current Course Reserve List" do       
+      post :add_to_course, media_ids: ["#{@media.id}","#{@media2.id}","#{@media3.id}"]            
+      expect(session[:current_course].to_i).to eq(@course.id)
+      expect(response).to redirect_to edit_course_path(@course)
+      expect(@course.media.size).to eq(3) 
+      expect(@course.media.map(&:title)).to include('Test Media')        
+    end    
+  end  
 end

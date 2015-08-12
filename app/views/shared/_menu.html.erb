@@ -19,8 +19,10 @@
             <ul class="dropdown-menu">
               <li><a href="<%= new_course_path%>">Create New Course Reserve List</a></li>
               <li role="separator" class="divider"></li>
-              <li><a href="#">View Current Course Reserve List</a></li>              
-              <li role="separator" class="divider"></li>
+              <% if (session[:current_course] != nil)%>
+                <li><a href="<%= edit_course_path(session[:current_course].to_s)%>">View Current Course Reserve List</a></li>              
+                <li role="separator" class="divider"></li>
+              <% end %>
               <li><a href="<%= courses_path%>">View Last 10 Course Reserve List</a></li>
             </ul>
           </li>

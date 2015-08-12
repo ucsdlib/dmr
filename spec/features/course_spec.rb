@@ -3,11 +3,15 @@ require 'spec_helper'
 feature "Course" do
   before(:all) do
     @course1 = Course.create course: "Test Course 1", instructor: "Test Instructor 1", year: "2015", quarter: "Spring"
-    @course2 = Course.create course: "Test Course 2", instructor: "Test Instructor 2", year: "2015", quarter: "Summer"   
+    @course2 = Course.create course: "Test Course 2", instructor: "Test Instructor 2", year: "2015", quarter: "Summer"
+    @media1 = Media.create title: "Test Media 1", director: "Test Director 1", year: "2015", call_number: "11111111", file_name: "toystory.mp4"
+    @media2 = Media.create title: "Test Media 2", director: "Test Director 2", year: "2016", call_number: "77777777", file_name: "file2.mp4"          
   end
   after(:all) do
     @course1.delete
     @course2.delete
+    @media1.delete
+    @media2.delete    
   end
   
   scenario "is on course index page" do
@@ -53,8 +57,6 @@ feature "Course" do
     expect(page).to have_selector("input#course_instructor[value='Test Instructor 1']")
     expect(page).to have_selector("input#course_year[value='2015']")
     expect(page).to have_selector("select#course_quarter/option[@selected='selected'][value='Spring']")
-    #expect(page).to should have_select("course_quarter", :selected => 'Spring')
-    #find("select#course_quarter").value.should eq('Spring')
     
     # Update values
     page.select('Summer', match: :first)
@@ -80,5 +82,62 @@ feature "Course" do
     expect(Course.count).to eq(1)
     visit courses_path
     expect(page).to_not have_content('Test Course 1')           
-  end                      
+  end
+  
+  scenario "wants to set current Course Reserve List" do
+    visit edit_course_path(@course1)
+    click_on "Set Current Course"
+    expect(page).to have_content('Current Course Reserve List was successfully set.')
+    click_on "View Current Course Reserve List"
+    current_path.should == edit_course_path(@course1)        
+  end
+
+  scenario "wants to add a media object to the current Course Reserve List when no current course is set" do
+    visit edit_medium_path(@media1)
+    click_on "Add to Course Reserve List"
+    expect(page).to have_content('No current Course Reserve List is set. Please set the Course Reserve List first.')     
+  end  
+    
+  scenario "wants to add a media object to the current Course Reserve List from media edit page" do
+    # set current course
+    visit edit_course_path(@course1)
+    click_on "Set Current Course"
+    
+    #add to course list  
+    visit edit_medium_path(@media1)
+    click_on "Add to Course Reserve List"
+    
+    #Check that changes are saved
+    expect(page).to have_content('Media was successfully added to the current Course Reserve List.')
+    current_path.should == edit_course_path(@course1)
+    expect(@course1.media.size).to eq(1)
+    expect(page).to have_content('Test Media 1')
+    expect(page).to have_content('Test Director 1')         
+  end
+  
+  scenario "wants to add multiple media objects to the current Course Reserve List from media search results page" do
+    # set current course 
+    visit edit_course_path(@course1)
+    click_on "Set Current Course"  
+
+    # search for media objects
+    visit search_media_path( {:search => 'Test'} )  
+    expect(page).to have_content('Test Media 1')
+    expect(page).to have_content('Test Media 2')
+    expect(page).to have_content('Showing all 2 media')   
+        
+    # add to course list    
+    find("input[type='checkbox'][value='#{@media1.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media2.id}']").set(true)
+    click_on "Add to Course Reserve List"
+    
+    #Check that changes are saved
+    expect(page).to have_content('Media was successfully added to the current Course Reserve List.')
+    current_path.should == edit_course_path(@course1)
+    expect(@course1.media.size).to eq(2)
+    expect(page).to have_content('Test Media 1')
+    expect(page).to have_content('Test Director 1')
+    expect(page).to have_content('Test Media 2')
+    expect(page).to have_content('Test Director 2')                    
+  end                             
 end

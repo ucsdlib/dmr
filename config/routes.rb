@@ -9,6 +9,11 @@ Rails.application.routes.draw do
      get 'search', to: 'media#search'
    end 
   end
-  resources :courses
+  resources :courses do
+   collection do
+     post 'add_to_course', to: 'courses#add_to_course'
+     get 'set_current_course', to: 'courses#set_current_course'
+   end 
+  end
   get "media/:id/:ds", :to => 'file#show', :constraints => { :ds => /[^\/]+/ }, :as => 'file'
 end

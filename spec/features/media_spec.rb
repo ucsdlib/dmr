@@ -13,11 +13,11 @@ feature "Media" do
   scenario "is on media index page" do
     visit media_path
     expect(page).to have_selector('h3', :text => 'Listing Media')
-    expect(page).to have_selector('th[1]', :text => 'Title')
-    expect(page).to have_selector('th[2]', :text => 'Director')
-    expect(page).to have_selector('th[3]', :text => 'Call Number')
-    expect(page).to have_selector('th[4]', :text => 'Year')
-    expect(page).to have_selector('th[5]', :text => 'File Name')     
+    expect(page).to have_selector('th[3]', :text => 'Title')
+    expect(page).to have_selector('th[4]', :text => 'Director')
+    expect(page).to have_selector('th[5]', :text => 'Call Number')
+    expect(page).to have_selector('th[6]', :text => 'Year')
+    expect(page).to have_selector('th[7]', :text => 'File Name')     
     expect(page).to have_content('Test Media 1')
     expect(page).to have_content('Test Media 2')
   end
