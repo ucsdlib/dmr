@@ -12,9 +12,6 @@ describe "courses/show" do
 
   it "renders attributes in <p>" do
     render
-    expect(rendered).to match(/Quarter/)
-    expect(rendered).to match(/Year/)
-    expect(rendered).to match(/Course/)
-    expect(rendered).to match(/Instructor/)
+    expect(rendered).to match(/Course Quarter 2015/)
   end
 end

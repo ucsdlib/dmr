@@ -1,0 +1,46 @@
+<!--JWPlayer player config. and script-->
+
+<div id="player">
+</div>
+<% if @course.reports and @course.reports.size > 0 %> 
+  <script type="text/javascript">
+    jwplayer("player").setup({
+	  //mode: [
+	  <!--need to add <video> tag to enable HTML5 -->
+		//{type: 'html 5'},
+		//{type: 'flash', src: 'http://libraries.ucsd.edu/jwplayer/player.swf'}],
+      playlist: [{
+      <% @course.media.each do |m| %>
+        <%  wowzaURL = grabWowzaURL(m.file_name,m.id) if !m.nil?%>
+        <% if wowzaURL != nil %>
+          <% thumbnailURL = "#{Rails.configuration.file_path}#{m.file_name.gsub('.mp4','.jpg')}"%>      
+	      sources: [
+	        {file: "rtmp://<%=wowzaURL%>"},
+	        {file: "http://<%=wowzaURL%>/playlist.m3u8"},
+	      ],
+	      <!--title of media file-->
+	      title: "<%= m.title %>",
+	  
+	      <!--add image: to display thumbnail-->
+	      image: "<%= thumbnailURL%>"
+	  
+          },{
+        <% end %>
+      <% end %>
+	
+      }],
+      rtmp: {
+        bufferlength: 5,
+      },
+
+	  listbar: {
+        position: 'right',
+        size: 384,
+      },
+      height: 360,
+	  width: '1024',
+	  skin: 'roundster',
+    });
+
+  </script>
+<% end %>

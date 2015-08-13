@@ -22,6 +22,7 @@ class CoursesController < ApplicationController
   # @return [String] the resulting webpage of a single object
   #
   def show
+    render :layout => false
   end
 
   ##
