@@ -27,10 +27,7 @@ feature "Course" do
   
   scenario "is on the course show page" do
     visit course_path(@course1)
-    expect(page).to have_content('Test Course 1')
-    expect(page).to have_content('Test Instructor 1')
-    expect(page).to have_content('2015')
-    expect(page).to have_content('Spring')
+    expect(page).to have_content('Test Course 1 Spring 2015')
   end
   
   scenario "is on create new course page" do

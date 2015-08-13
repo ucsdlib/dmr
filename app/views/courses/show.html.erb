@@ -1,24 +1,15 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Quarter:</strong>
-  <%= @course.quarter %>
-</p>
-
-<p>
-  <strong>Year:</strong>
-  <%= @course.year %>
-</p>
-
-<p>
-  <strong>Course:</strong>
-  <%= @course.course %>
-</p>
-
-<p>
-  <strong>Instructor:</strong>
-  <%= @course.instructor %>
-</p>
-
-<%= link_to 'Edit', edit_course_path(@course) %> |
-<%= link_to 'Back', courses_path %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <%= render :partial => 'shared/report_header'%>
+  <body>
+    <%= render :partial => 'shared/report_menu'%>		
+	<div id="tdr_content" class="tdr_fonts">
+		<div id="tdr_content_content">
+		  <!-- BEGIN CUSTOM CONTENT AREA (MAIN BODY) -->					
+          <%= render :partial => 'video_playlist'%>
+	      <!-- END CUSTOM CONTENT AREA (MAIN BODY) -->				
+		</div><!-- /tdr_content_content -->
+	</div><!-- /tdr_content -->
+    <%= render :partial => 'shared/report_footer'%>		
+  </body>
+</html>
