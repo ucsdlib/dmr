@@ -204,5 +204,26 @@ describe CoursesController do
       expect(@course.media.size).to eq(3) 
       expect(@course.media.map(&:title)).to include('Test Media')        
     end    
-  end  
+  end
+  
+  describe "GET search" do
+    before(:each) do
+      @course = Fabricate(:course)
+    end
+    
+    it "returns Course objects if there is a match" do
+      get :search, search: "Test", search_option: "courses"
+      expect(assigns(:courses)).to eq([@course])
+    end
+
+    it "returns nil if there is no match" do
+      get :search, search_term: "abcd", search_option: "courses"
+      expect(assigns(:courses)).to eq(nil)
+    end
+    
+    it "returns number of Course objects if there is a match" do
+      get :search, search: "Test", search_option: "courses"
+      expect(assigns(:course_search_count)).to eq(1)
+    end    
+  end     
 end

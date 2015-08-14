@@ -16,9 +16,10 @@
           </thead>
           <tbody>
             <% obj.each do |m| %>
+              <% thumbnailURL = "#{Rails.configuration.file_path}#{m.file_name.gsub('.mp4','.jpg')}"%>
               <tr>
                 <td><%= check_box_tag 'media_ids[]', m.id %></td>
-                <td><%=image_tag "/media/#{m.id}/#{m.file_name.gsub('.mp4','.jpg')}", :alt => '', :class => 'search-thumbnail' %></td>          
+                <td><%=image_tag "#{thumbnailURL}", :alt => '', :class => 'search-thumbnail' %></td>          
                 <td><%= link_to "#{m.title}", edit_medium_path(m.id)%></td>
                 <td><%= m.director %></td>
                 <td><%= m.call_number %></td>

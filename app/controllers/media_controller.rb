@@ -83,13 +83,18 @@ class MediaController < ApplicationController
   end
  
   ##
-  # Handles GET search a Media object
+  # Handles GET search for Media object
   #
   def search
-    if params[:search] && !params[:search].blank?
-      @media = Media.search(params[:search]).order(:title).page(params[:page]).per(10)
-      @search_count = @media.count
-      session[:search] = params[:search]
+    if params[:search] && !params[:search].blank? 
+      session[:search] = params[:search]    
+      session[:search_option] = params[:search_option] if params[:search_option]
+      if(params[:search_option] && params[:search_option].include?("courses"))
+        redirect_to :controller => 'courses', :action => 'search', :search => params[:search], :search_option => params[:search_option]
+      else
+        @media = Media.search(params[:search]).order(:title).page(params[:page]).per(10)
+        @search_count = @media.count
+      end
     end
   end
            

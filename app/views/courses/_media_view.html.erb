@@ -1,18 +1,18 @@
-<table class="table table-striped table-hover table-bordered">
-  <thead>
-    <tr>
-      <th class="col-xs-1"></th>
-      <th class="col-xs-1">No</th>
-      <th class="col-xs-3">Title</th>
-      <th class="col-xs-2">Director</th>
-      <th class="col-xs-2">Call Number</th>
-      <th class="col-xs-1">Year</th>
-      <th class="col-xs-1">File Name</th>
-    </tr>
-  </thead>
-  <tbody>		    
-    <% if @course.reports and @course.reports.size > 0 %>
-      <% counter = 0 %>
+<% if @course.reports and @course.reports.size > 0 %>
+  <% counter = 0 %>
+  <table class="table table-striped table-hover table-bordered">
+    <thead>
+      <tr>
+        <th class="col-xs-1"></th>
+        <th class="col-xs-1">No</th>
+        <th class="col-xs-3">Title</th>
+        <th class="col-xs-2">Director</th>
+        <th class="col-xs-2">Call Number</th>
+        <th class="col-xs-1">Year</th>
+        <th class="col-xs-1">File Name</th>
+      </tr>
+    </thead>
+    <tbody>		    
       <% @course.media.each do |m| %>
         <% counter += 1 %> 
         <tr>
@@ -24,7 +24,12 @@
           <td><%= m.year %></td>
           <td><%= m.file_name %></td>
         </tr>
-      <% end %>
-    <% end %>    
-  <tbody>
-</table>	    
+      <% end %>  
+    <tbody>
+  </table>
+  <div class="center-block">
+    <%= link_to "Remove Item(s)", courses_path, class: "btn btn-primary"%>
+    <%= link_to "Move Up", courses_path, class: "btn btn-primary"%>
+    <%= link_to "Move Down", courses_path, class: "btn btn-primary"%>
+  </div>  
+<% end %>  	    

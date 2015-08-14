@@ -4,12 +4,7 @@
       <%= text_field_tag :search, params[:search], placeholder: "Search Media or Courses ...", size: 50 %>   
       <%= submit_tag "", name: nil, class: "btn btn-primary btn-search" %>
       <div>
-        <label class="radio-inline">
-          <input type="radio" name="search_option" value="media" checked="checked">Media
-        </label>
-        <label class="radio-inline">
-          <input type="radio" name="search_option"  value="courses">Courses
-        </label>
+        <%= render :partial => 'shared/search_option'%>
       </div>     
     </fieldset>
   <% end %>
