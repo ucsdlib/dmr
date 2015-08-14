@@ -3,6 +3,7 @@
 #---
 
 class CoursesController < ApplicationController
+  include Dmr::ControllerHelper
   before_action :set_course, only: [:show, :edit, :update, :destroy]
 
   ##
@@ -94,6 +95,18 @@ class CoursesController < ApplicationController
   end
 
   ##
+  # Handles GET search for Course object
+  #
+  def search
+    if params[:search] && !params[:search].blank?
+      @courses = Course.search(params[:search]).order(:course).page(params[:page]).per(10)
+      @course_search_count = @courses.count
+      session[:search] = params[:search]
+      session[:search_option] = params[:search_option] if params[:search_option]
+    end
+  end
+  
+  ##
   # Handles set a current Course object
   # /courses/set_current_course?id=1
   #
@@ -114,15 +127,7 @@ class CoursesController < ApplicationController
   #   
   def add_to_course
     if(session[:current_course] != nil)
-      media_ids = params[:media_ids].collect {|id| id.to_i} if params[:media_ids]
-      @course = Course.find_by_id(session[:current_course].to_i)
-      current_course_media_ids = @course.media.map(&:id) if @course.media
-      if media_ids && @course
-        media_ids.each do |id|
-          med = Media.find_by_id(id)
-          @course.reports.create(media: med) if med && !current_course_media_ids.include?(id)
-        end
-      end
+      add_media_to_course(params[:media_ids],session[:current_course])
       redirect_to edit_course_path(@course), :flash => { :notice => "Media was successfully added to the current Course Reserve List." }
     else
       redirect_to courses_path, :flash => { :notice => "No current Course Reserve List is set.  Please set the Course Reserve List first." }

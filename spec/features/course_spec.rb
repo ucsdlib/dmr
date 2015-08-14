@@ -136,5 +136,27 @@ feature "Course" do
     expect(page).to have_content('Test Director 1')
     expect(page).to have_content('Test Media 2')
     expect(page).to have_content('Test Director 2')                    
-  end                             
+  end
+  
+  scenario "wants to search for courses with a matching search term" do
+    visit search_courses_path( {:search => 'Test'} )  
+    expect(page).to have_content('Test Course 1')
+    expect(page).to have_content('Test Course 2')
+    expect(page).to have_content('Showing all 2 courses')        
+  end
+  
+  scenario "wants to search for courses with no matching search term" do    
+    visit search_courses_path( {:search => 'abcdef'} )
+    expect(page).to have_content('There were no results for the search: "abcdef"')        
+  end
+  
+  scenario "wants to select 'courses' option to search for courses" do
+    visit search_courses_path( {:search => 'Test',:search_option => 'courses'} )  
+    expect(page).to have_content('Test Course 1')
+    expect(page).to have_content('Test Course 2')
+    expect(page).to have_content('Showing all 2 courses')
+    
+    #Check that the search_option radio button is still selected
+    find("input[name='search_option'][type='radio'][value='courses']").should be_checked        
+  end                                
 end

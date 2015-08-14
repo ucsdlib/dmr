@@ -7,19 +7,15 @@
 	  
       <%= bootstrap_form_for @course, :required=>true do |f| %>
 	    <%= render :partial => 'form' , :locals => {:f => f}%>
-		<%= render :partial => 'media_view' , :locals => {:f => f}%>
 	    <div class="center-block">
 	      <%= f.primary "Save"%>
 	      <%= link_to "Delete", @course, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary"%>
 	      <%= link_to "Clone", courses_path, class: "btn btn-primary"%>
-	      <%= link_to "View", course_path(@course), class: "btn btn-primary"%>	     
-	      <%#= link_to "Add Item(s) to List", root_path, class: "btn btn-primary"%>
-	      <%= link_to "Remove Item(s)", courses_path, class: "btn btn-primary"%>
-	      <%= link_to "Move Up", courses_path, class: "btn btn-primary"%>
-	      <%= link_to "Move Down", courses_path, class: "btn btn-primary"%>
+	      <%= link_to "View", course_path(@course), class: "btn btn-primary"%>
 	      <%= link_to "Send List", courses_path, class: "btn btn-primary"%>
 	      <%= link_to "Set Current Course", set_current_course_courses_path(:id => "#{@course.id}"), class: "btn btn-primary"%>
 	    </div>
+	    <%= render :partial => 'media_view' , :locals => {:f => f}%>
 	  <%end%>
     </div>
   </div>

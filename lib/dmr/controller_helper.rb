@@ -45,5 +45,25 @@ module Dmr
         self.response_body = "#{fileid} is not found"
       end
     end
+    
+    ##
+    # Adds media objects to current course list
+    #
+    # @param filename [Array] set of Media's ids
+    # @param current_course [String] Current Course ID
+    #
+    ##
+
+    def add_media_to_course(med_ids,current_course)
+      media_ids = med_ids.collect {|id| id.to_i} if med_ids
+      @course = Course.find_by_id(current_course.to_i) if current_course
+      current_course_media_ids = @course.media.map(&:id) if @course.media
+      if media_ids && @course
+        media_ids.each do |id|
+          med = Media.find_by_id(id)
+          @course.reports.create(media: med) if med && !current_course_media_ids.include?(id)
+        end
+      end    
+    end    
   end
 end

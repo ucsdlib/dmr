@@ -89,14 +89,14 @@ feature "Media" do
     expect(page).to_not have_content('Test Media 1')           
   end   
   
-  scenario "wants to search for a media record with a matching search term" do
+  scenario "wants to search for media with a matching search term" do
     visit search_media_path( {:search => 'Test'} )  
     expect(page).to have_content('Test Media 1')
     expect(page).to have_content('Test Media 2')
     expect(page).to have_content('Showing all 2 media')        
   end
   
-  scenario "wants to search for a media record with no matching search term" do    
+  scenario "wants to search for media with no matching search term" do    
     visit search_media_path( {:search => 'abcdef'} )
     expect(page).to have_content('There were no results for the search: "abcdef"')        
   end
@@ -121,5 +121,15 @@ feature "Media" do
     click_on('Play File')      
     expect(page).to have_selector('h3', :text => @media1.title)
     expect(page).to have_content('Loading the player...')
-  end                        
+  end
+  
+  scenario "wants to select 'media' option to search for media" do
+    visit search_media_path( {:search => 'Test',:search_option => 'media'} )  
+    expect(page).to have_content('Test Media 1')
+    expect(page).to have_content('Test Media 2')
+    expect(page).to have_content('Showing all 2 media')
+    
+    #Check that the search_option radio button is still selected
+    find("input[name='search_option'][type='radio'][value='media']").should be_checked        
+  end                          
 end
