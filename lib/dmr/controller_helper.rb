@@ -39,10 +39,6 @@ module Dmr
 
         dur = (Time.now.to_f - start) * 1000
         logger.info sprintf("Served file #{filename} in %0.1fms", dur)
-      else
-        headers['Content-Type'] = 'text/html'   
-        headers['Last-Modified'] = Time.now.ctime.to_s      
-        self.response_body = "#{fileid} is not found"
       end
     end
     

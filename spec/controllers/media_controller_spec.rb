@@ -182,6 +182,11 @@ describe MediaController do
     it "returns number of Media objects if there is a match" do
       get :search, search: "Test", search_option: "media"
       expect(assigns(:search_count)).to eq(1)
-    end    
+    end 
+    
+    it "redirects to the Course search if courses search option is selected" do
+      get :search, search: "Test", search_option: "courses"
+      expect(response).to redirect_to :controller => 'courses', :action => 'search', :search => "Test", :search_option => "courses"
+    end   
   end        
 end
