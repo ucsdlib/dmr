@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row">
+	<div class="object-panel">
+	  <h3>Course Reserve List</h3>
+	  <%= render :partial => 'shared/error_messages' , :locals => {:obj => @course}%>
+	  <p class="required">* Required field </p>
+	
+	  <%= bootstrap_form_for :course, url: courses_path do |f| %>
+        <%= render :partial => 'form' , :locals => {:f => f}%>
+	    <div class="center-block">
+	      <%= f.primary "Start Course Reserve List"%>        
+	      <input class="btn btn-primary" type="reset" value="Cancel"/>
+	    </div>
+	  <% end %>
+	</div>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="content">
+  <%= form_tag search_media_path, method: "GET" do%>
+    <fieldset class="search">
+      <%= text_field_tag :search, params[:search], placeholder: "Search Media or Courses ...", size: 50 %>   
+      <%= submit_tag "", name: nil, class: "btn btn-primary btn-search" %>
+      <div>
+        <%= render :partial => 'shared/search_option'%>
+      </div>     
+    </fieldset>
+  <% end %>
+</div>

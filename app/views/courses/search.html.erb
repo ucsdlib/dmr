@@ -1,0 +1,6 @@
+<% if @course_search_count && @course_search_count > 0%>
+  <%= render :partial => 'shared/display_paginate' , :locals => {:obj => @courses}%>
+  <%= render :partial => 'search_result' , :locals => {:obj => @courses}%> 
+<% elsif @course_search_count && @course_search_count == 0%>
+  <div class="text-center">There were no results for the search: "<%= params[:search]%>"</div>
+<% end %>

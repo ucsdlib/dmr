@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="row">
+      <div class="panel panel-default">
+        <table class="table table-striped table-hover table-bordered">
+          <thead>
+            <tr>
+              <th class="col-xs-4">Course</th>
+              <th class="col-xs-2">Quarter</th>
+              <th class="col-xs-2">Year</th>
+              <th class="col-xs-1">Instructor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% obj.each do |c| %>
+              <tr>    
+                <td><%= link_to "#{c.course}", edit_course_path(c.id)%></td>
+                <td><%= c.quarter %></td>
+                <td><%= c.year %></td>
+                <td><%= c.instructor %></td>
+              </tr>
+            <% end %>
+          <tbody>
+        </table>
+      </div>
+    </div>
+</div>
