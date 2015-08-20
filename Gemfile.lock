@@ -90,6 +90,7 @@ GEM
     fabrication (2.12.2)
     globalid (0.3.5)
       activesupport (>= 4.1.0)
+    hashie (3.4.1)
     i18n (0.7.0)
     inch (0.6.3)
       pry
@@ -119,11 +120,17 @@ GEM
     mini_portile (0.6.2)
     minitest (5.7.0)
     multi_json (1.11.0)
+    net-ldap (0.11)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.2)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
+    omniauth (1.2.2)
+      hashie (>= 1.2, < 4)
+      rack (~> 1.0)
+    omniauth-shibboleth (1.2.0)
+      omniauth (>= 1.0.0)
     pg (0.18.2)
     pry (0.10.1)
       coderay (~> 1.1.0)
@@ -251,6 +258,9 @@ DEPENDENCIES
   jquery-rails
   kaminari
   launchy (~> 2.4.3)
+  net-ldap
+  omniauth
+  omniauth-shibboleth
   pg
   pry
   rails (= 4.2.2)

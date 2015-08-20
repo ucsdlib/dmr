@@ -3,6 +3,7 @@
 #---
 
 class MediaController < ApplicationController
+  #before_filter :authenticate
   before_action :set_media, only: [:show, :edit, :update, :destroy]  
   ##
   # Handles GET index request to display the last 10 Media objects from the database
@@ -85,16 +86,14 @@ class MediaController < ApplicationController
   ##
   # Handles GET search for Media object
   #
-  def search
-    if params[:search] && !params[:search].blank? 
-      if(params[:search_option] && params[:search_option].include?("courses"))
-        redirect_to :controller => 'courses', :action => 'search', :search => params[:search], :search_option => params[:search_option]
-      else
-        @media = Media.search(params[:search]).order(:title).page(params[:page]).per(10)
-        @search_count = @media.count
-        session[:search] = params[:search] if params[:search]  
-        session[:search_option] = params[:search_option] if params[:search_option]
-      end
+  def search  
+    if(params[:search_option] && params[:search_option].include?("courses"))
+      redirect_to :controller => 'courses', :action => 'search', :search => params[:search], :search_option => params[:search_option]
+    elsif params[:search] && !params[:search].blank? 
+      @media = Media.search(params[:search]).order(:title).page(params[:page]).per(10)
+      @search_count = @media.count
+      session[:search] = params[:search] if params[:search]  
+      session[:search_option] = params[:search_option] if params[:search_option]
     end
   end
            

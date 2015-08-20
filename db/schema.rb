@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150804224608) do
+ActiveRecord::Schema.define(version: 20150818204511) do
 
   create_table "courses", force: :cascade do |t|
     t.string   "quarter"
@@ -41,5 +41,18 @@ ActiveRecord::Schema.define(version: 20150804224608) do
 
   add_index "reports", ["course_id"], name: "index_reports_on_course_id"
   add_index "reports", ["media_id"], name: "index_reports_on_media_id"
+
+  create_table "users", force: :cascade do |t|
+    t.string   "name",       default: ""
+    t.string   "email",      default: ""
+    t.string   "uid",        default: "", null: false
+    t.string   "provider",   default: "", null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["name"], name: "index_users_on_name", unique: true
+  add_index "users", ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
 
 end

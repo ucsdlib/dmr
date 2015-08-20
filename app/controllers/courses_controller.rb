@@ -4,6 +4,7 @@
 
 class CoursesController < ApplicationController
   include Dmr::ControllerHelper
+  #before_filter :authenticate
   before_action :set_course, only: [:show, :edit, :update, :destroy]
 
   ##
