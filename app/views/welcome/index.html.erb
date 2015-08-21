@@ -1,4 +1,16 @@
 <div class="content">
   <h2 class="text-center">Welcome to Digital Media Reserves (DMR)</h2>
-  <h3 class="text-center"><a href="#">Please Sign In</a></h3>
+  <% if logged_in?%>
+    <%= form_tag search_media_path, method: "GET" do%>
+      <fieldset class="search">
+        <%= text_field_tag :search, params[:search], placeholder: "Search Media or Courses ...", size: 50 %>   
+        <%= submit_tag "", name: nil, class: "btn btn-primary btn-search" %>
+        <div>
+          <%= render :partial => 'shared/search_option'%>
+        </div>     
+      </fieldset>
+    <% end %>
+  <% else %>
+    <h3 class="text-center"><a href="<%= new_user_session_path %>">Sign In</a></h3>
+  <% end %>
 </div>

@@ -5,6 +5,9 @@
 require 'spec_helper'
 
 describe CoursesController do
+  before(:each) do
+    set_current_user
+  end
   describe "GET index" do
     it "assigns all courses as @courses" do
       @course = Fabricate(:course)

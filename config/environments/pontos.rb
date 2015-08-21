@@ -42,5 +42,6 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
   config.wowza_baseurl = 'lib-streaming-test.ucsd.edu:1935/dmr/_definst_/'
-  config.wowza_directory = '/pub/data2/DMR/'     
+  config.wowza_directory = '/pub/data2/DMR/'
+  config.shibboleth = true     
 end            
