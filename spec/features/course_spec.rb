@@ -13,7 +13,12 @@ feature "Course" do
     @media1.delete
     @media2.delete    
   end
-  
+  before(:each) do
+    sign_in_developer
+  end
+  after(:each) do
+    sign_out_developer
+  end    
   scenario "is on course index page" do
     visit courses_path
     expect(page).to have_selector('h3', :text => 'Listing Courses')

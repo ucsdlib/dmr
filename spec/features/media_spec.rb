@@ -9,7 +9,12 @@ feature "Media" do
     @media1.delete
     @media2.delete
   end
-  
+  before(:each) do
+    sign_in_developer
+  end
+  after(:each) do
+    sign_out_developer
+  end  
   scenario "is on media index page" do
     visit media_path
     expect(page).to have_selector('h3', :text => 'Listing Media')

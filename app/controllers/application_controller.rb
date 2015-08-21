@@ -12,10 +12,14 @@ class ApplicationController < ActionController::Base
     !!current_user 
   end
   
-  def authenticate
+  def authorize
     logged_in? ? true : access_denied
   end
   
+  def authorize_student
+    (@current_user && !User.in_super_user_group?(@current_user.uid)) ? true : access_denied
+  end
+    
   def access_denied
     redirect_to new_user_session_path, notice: 'You must sign in to perform this action.' and return false
   end      

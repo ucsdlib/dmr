@@ -5,7 +5,10 @@
 require 'spec_helper'
 
 describe MediaController do
-   describe "GET index" do 
+  before(:each) do
+    set_current_user
+  end
+  describe "GET index" do 
     it "get the count" do
       @media = Fabricate(:media)
       get :index 

@@ -3,7 +3,7 @@
 #---
 
 class MediaController < ApplicationController
-  #before_filter :authenticate
+  before_filter :authorize
   before_action :set_media, only: [:show, :edit, :update, :destroy]  
   ##
   # Handles GET index request to display the last 10 Media objects from the database

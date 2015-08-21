@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
       logger.warn "shibboleth: #{e.to_s}"
     end
 
-    u = User.where(:uid => uid,:provider => provider).first || User.create(:uid => uid, :provider => provider, :email => email, :name => name)
+    u = User.where(:uid => uid,:provider => provider).first || User.create(:uid => uid, :provider => provider, :email => email, :name => name) if !uid.nil?
   end
   
   def self.in_super_user_group?(uid)

@@ -4,7 +4,8 @@
 
 class CoursesController < ApplicationController
   include Dmr::ControllerHelper
-  #before_filter :authenticate
+  before_filter :authorize_student, only: [:show] if Rails.configuration.shibboleth
+  before_filter :authorize
   before_action :set_course, only: [:show, :edit, :update, :destroy]
 
   ##

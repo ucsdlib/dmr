@@ -1,6 +1,5 @@
 <div class="content">
   <h2 class="text-center">Welcome to Digital Media Reserves (DMR)</h2>
- hello <%= logged_in?%>
   <% if logged_in?%>
     <%= form_tag search_media_path, method: "GET" do%>
       <fieldset class="search">
