@@ -163,5 +163,42 @@ feature "Course" do
     
     #Check that the search_option radio button is still selected
     find("input[name='search_option'][type='radio'][value='courses']").should be_checked        
-  end                                
+  end
+  
+  scenario "wants to remove media from Course Reserve List" do
+    # set current course   
+    visit edit_course_path(@course1) 
+    click_on "Set Current Course"
+     
+    # search for media objects
+    visit search_media_path( {:search => 'Test'} )  
+    expect(page).to have_content('Test Media 1')
+    expect(page).to have_content('Test Media 2')
+    expect(page).to have_content('Showing all 2 media')   
+        
+    # add to course list    
+    find("input[type='checkbox'][value='#{@media1.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media2.id}']").set(true)
+    click_on "Add to Course Reserve List"
+    
+    #Check that changes are saved
+    expect(page).to have_content('Media was successfully added to the current Course Reserve List.')
+    current_path.should == edit_course_path(@course1)
+    expect(@course1.media.size).to eq(2)
+    expect(page).to have_content('Test Media 1')
+    expect(page).to have_content('Test Director 1')
+    expect(page).to have_content('Test Media 2')
+    expect(page).to have_content('Test Director 2')
+    
+    # select media object and click the 'Remove Item(s)' button
+    find("input[type='checkbox'][value='#{@media1.id}']").set(true)
+    click_on "Remove Item(s)"
+    
+    # Check that selected media object does not exist
+    expect(page).to have_content('Course successfully updated.')
+    current_path.should == edit_course_path(@course1)
+    expect(@course1.media.size).to eq(1)
+    expect(page).to_not have_content('Test Media 1')
+    expect(page).to_not have_content('Test Director 1')                   
+  end                                   
 end
