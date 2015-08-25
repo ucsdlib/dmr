@@ -60,6 +60,26 @@ module Dmr
           @course.reports.create(media: med) if med && !current_course_media_ids.include?(id)
         end
       end    
-    end    
+    end
+    
+    ##
+    # Removes media objects from course list
+    #
+    # @param filename [Array] set of Media's ids
+    # @param course [String] Current Course ID
+    #
+    ##
+
+    def remove_media_from_course(med_ids,course_id)
+      media_ids = med_ids.collect {|id| id.to_i} if med_ids
+      @course = Course.find_by_id(course_id.to_i) if course_id     
+      if media_ids && @course
+        media_ids.each do |id|
+          med = Media.find_by_id(id)
+          report_tag = Report.where(course_id: course_id, media_id:med.id) if med        
+          @course.reports.delete(report_tag) if report_tag
+        end
+      end    
+    end            
   end
 end

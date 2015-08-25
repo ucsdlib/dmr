@@ -9,7 +9,6 @@ describe "welcome/index" do
   it "renders an welcome page" do
     render
     # Run the generator again with the --webrat flag if you want to use webrat matchers
-    rendered.should match(/Welcome to Digital Media Reserves/)
     rendered.should match(/Search Media or Courses/)     
   end
 end
