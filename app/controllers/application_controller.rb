@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   end
   
   def authorize_student
-    (@current_user && !User.in_super_user_group?(@current_user.uid)) ? true : access_denied
+    (@current_user && !User.in_super_user_group?(request.env["omniauth.auth"].uid)) ? true : access_denied
   end
     
   def access_denied
