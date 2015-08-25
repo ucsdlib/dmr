@@ -43,6 +43,7 @@ class User < ActiveRecord::Base
                             :password => Rails.application.secrets.ldap_password 
                       }
 
+puts "===========ldap parameter host: #{Rails.application.secrets.ldap_host} + #{Rails.application.secrets.ldap_port}"
     result_attrs = ["sAMAccountName"]
     search_filter = Net::LDAP::Filter.eq("sAMAccountName", search_param)
     category_filter = Net::LDAP::Filter.eq("objectcategory", "user")
