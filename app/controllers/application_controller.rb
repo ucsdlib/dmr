@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   def current_user
     @current_user ||= User.find_by uid: session[:user_id] if session[:user_id]
   end
-
+  
   def logged_in?
     !!current_user 
   end
@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   end
   
   def authorize_student
-    (@current_user && !User.in_super_user_group?(request.env["omniauth.auth"].uid)) ? true : access_denied
+    session[:student_user] ? true : access_denied
   end
     
   def access_denied

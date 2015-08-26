@@ -5,8 +5,9 @@
 class CoursesController < ApplicationController
   include Dmr::ControllerHelper
   before_filter :authorize_student, only: [:show] if Rails.configuration.shibboleth
-  before_filter :authorize
-  before_action :set_course, only: [:show, :edit, :update, :destroy]
+  before_filter :authorize, only: [:index,:create,:edit,:update,:new,:destroy,:search]
+
+  before_action :set_course, only: [:show, :edit, :update, :destroy, :clone_course]
   
   ##
   # Handles GET index request to display the last 10 Course objects from the database
@@ -122,6 +123,21 @@ class CoursesController < ApplicationController
     end
   end
 
+  ##
+  # Clone a Course Reserve List object
+  # /courses/clone_course?id=1
+  #
+  # @return [String] - redirect to the Course edit page
+  # 
+  def clone_course
+    new_course = @course.amoeba_dup
+    if new_course.save!
+      redirect_to edit_course_path(new_course), notice: 'Course Reserve List was successfully cloned.'
+    else
+      redirect_to edit_course_path(@course), :flash => { :notice => "Course Reserve List was failed to clone." }
+    end
+  end
+  
   ##
   # Handles POST a set of media ids to be added to the current Course object
   # POST /courses/add_to_course
