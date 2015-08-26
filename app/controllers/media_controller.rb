@@ -87,7 +87,7 @@ class MediaController < ApplicationController
   # Handles GET search for Media object
   #
   def search  
-    if(params[:search_option] && params[:search_option].include?("courses"))
+    if search_course_option?
       redirect_to :controller => 'courses', :action => 'search', :search => params[:search], :search_option => params[:search_option]
     elsif params[:search] && !params[:search].blank? 
       @media = Media.search(params[:search]).order(:title).page(params[:page]).per(10)
@@ -119,5 +119,9 @@ class MediaController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_media
       @media = Media.find(params[:id])
-    end        
+    end  
+    
+    def search_course_option?
+      params[:search_option] == "courses"
+    end          
 end

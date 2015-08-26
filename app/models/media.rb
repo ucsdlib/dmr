@@ -9,7 +9,14 @@ class Media < ActiveRecord::Base
   validates :call_number, presence: true
   validates :year, length: { maximum: 4 }, format: { :with => /\A\d{4}\z/, :message => "must be in number format" }
   validates :file_name, format: { :with => /\A\w+(\.mp4)\z/, :message => "must be in .mp4 format" }
-  
+
+  ##
+  # Enables copying
+  #
+  amoeba do
+    enable
+  end
+    
   ##
   # Handles search request for Media object
   #
@@ -17,7 +24,7 @@ class Media < ActiveRecord::Base
   # @return [String] the resulting Media objects whose titles contain one ore more words that form the query
   #
   def self.search(query)
-    where("lower(title || director || year || call_number) like ?", "%#{query.downcase}%")
+    where("lower(title || director || year || call_number) like ?", "%#{query.downcase}%") if query
   end
 
 end

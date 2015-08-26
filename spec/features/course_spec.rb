@@ -200,5 +200,31 @@ feature "Course" do
     expect(@course1.media.size).to eq(1)
     expect(page).to_not have_content('Test Media 1')
     expect(page).to_not have_content('Test Director 1')                   
-  end                                   
+  end 
+  
+  scenario "wants to clone a Course Reserve List" do
+    # set current course   
+    visit edit_course_path(@course1) 
+    click_on "Set Current Course"
+    
+    # add media to course 
+    visit edit_medium_path(@media1)
+    click_on "Add to Course Reserve List"  
+
+    #Check that changes are saved
+    expect(page).to have_content('Media was successfully added to the current Course Reserve List.')
+    current_path.should == edit_course_path(@course1)
+    
+    click_on "Clone"
+    expect(page).to have_content('Course Reserve List was successfully cloned.')
+    current_path.should_not == edit_course_path(@course1) 
+
+    #Check that changes are saved in new Course Reserve List
+    expect(page).to have_selector("input#course_course[value='Test Course 1']")
+    expect(page).to have_selector("input#course_instructor[value='Test Instructor 1']")
+    expect(page).to have_selector("input#course_year[value='2015']")
+    expect(page).to have_selector("select#course_quarter/option[@selected='selected'][value='Spring']")
+    expect(page).to have_content('Test Media 1')
+    expect(page).to have_content('Test Director 1')              
+  end                                    
 end
