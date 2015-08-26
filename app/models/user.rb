@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
 
     ldap.search(:filter => composite_filter, :attributes => result_attrs, :return_result => false) { |item| 
        result = item.sAMAccountName.first}
-
+Rails.logger.debug("========= lookup-group #{result}  search param #{search_param}")
     get_ldap_response(ldap)
 
     return result
