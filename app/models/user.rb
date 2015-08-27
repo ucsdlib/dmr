@@ -46,19 +46,13 @@ class User < ActiveRecord::Base
     result_attrs = ["sAMAccountName"]
     search_filter = Net::LDAP::Filter.eq("sAMAccountName", search_param)
     category_filter = Net::LDAP::Filter.eq("objectcategory", "user")
-    member_filter = Net::LDAP::Filter.eq("memberof", "CN=lib-dmr-ro,OU=Groups,OU=University Library,DC=AD,DC=UCSD,DC=EDU")
+    member_filter = Net::LDAP::Filter.eq("memberof", "cn=lib-dmr-ro,OU=Groups,OU=University Library,DC=AD,DC=UCSD,DC=EDU")
     s_c_filter = Net::LDAP::Filter.join(search_filter, category_filter)
     composite_filter = Net::LDAP::Filter.join(s_c_filter, member_filter)
 
     ldap.search(:filter => composite_filter, :attributes => result_attrs, :return_result => false) { |item| 
        result = item.sAMAccountName.first}
        
-    ### for debug 
-    result2 = ""
-    composite_filter2 = Net::LDAP::Filter.join(s_c_filter)
-    ldap.search(:filter => composite_filter2, :attributes => result_attrs, :return_result => false) { |item| 
-       result2 = item.sAMAccountName.first}
-Rails.logger.debug("========= lookup-group #{result}  search param #{search_param} - result2 #{result2}")
     get_ldap_response(ldap)
 
     return result
