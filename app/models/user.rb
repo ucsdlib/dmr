@@ -46,7 +46,7 @@ class User < ActiveRecord::Base
     result_attrs = ["sAMAccountName"]
     search_filter = Net::LDAP::Filter.eq("sAMAccountName", search_param)
     category_filter = Net::LDAP::Filter.eq("objectcategory", "user")
-    member_filter = Net::LDAP::Filter.eq("memberof", "cn=lib-dmr-ro,OU=Groups,OU=University Library,DC=AD,DC=UCSD,DC=EDU")
+    member_filter = Net::LDAP::Filter.eq("memberof", "CN=lib-dmr-ro,OU=lib-storage,OU=Linux Groups,OU=Groups,OU=University Library,DC=AD,DC=UCSD,DC=EDU")
     s_c_filter = Net::LDAP::Filter.join(search_filter, category_filter)
     composite_filter = Net::LDAP::Filter.join(s_c_filter, member_filter)
 
