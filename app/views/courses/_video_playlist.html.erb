@@ -10,7 +10,7 @@
 		//{type: 'html 5'},
 		//{type: 'flash', src: 'http://libraries.ucsd.edu/jwplayer/player.swf'}],
       playlist: [{
-      <% @course.media.each do |m| %>
+      <% @sorted_media.each do |m| %>
         <%  wowzaURL = grabWowzaURL(m.file_name,m.id) if !m.nil?%>
         <% if wowzaURL != nil %>
           <% thumbnailURL = "#{Rails.configuration.file_path}#{m.file_name.gsub('.mp4','.jpg')}"%>      

@@ -59,11 +59,11 @@ class User < ActiveRecord::Base
   end
 
   def self.ldap_filter(search_param)
-#    search_filter = Net::LDAP::Filter.eq("sAMAccountName", search_param)
-#    category_filter = Net::LDAP::Filter.eq("objectcategory", "user")
-#    member_filter = Net::LDAP::Filter.eq("memberof", Rails.application.secrets.ldap_group)
-#    s_c_filter = Net::LDAP::Filter.join(search_filter, category_filter)
-#    composite_filter = Net::LDAP::Filter.join(s_c_filter, member_filter)
+    search_filter = Net::LDAP::Filter.eq("sAMAccountName", search_param)
+    category_filter = Net::LDAP::Filter.eq("objectcategory", "user")
+    member_filter = Net::LDAP::Filter.eq("memberof", Rails.application.secrets.ldap_group)
+    s_c_filter = Net::LDAP::Filter.join(search_filter, category_filter)
+    composite_filter = Net::LDAP::Filter.join(s_c_filter, member_filter)
     return composite_filter
   end
 end

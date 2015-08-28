@@ -76,8 +76,8 @@ describe MediaController do
         @course2 = Fabricate(:course)
       end    
       it "creates a new Media with 2 Course objects" do
-        @media.reports.create(course: @course)
-        @media.reports.create(course: @course2)
+        @media.reports.create(course: @course, counter: "1")
+        @media.reports.create(course: @course2, counter: "2")
         expect(Media.count).to eq(1) 
         expect(Course.count).to eq(2)       
         expect(@media.courses.size).to eq(2)
@@ -144,8 +144,8 @@ describe MediaController do
       @media = Fabricate(:media) 
       @course = Fabricate(:course)
       @course2 = Fabricate(:course)
-      @media.reports.create(course: @course)
-      @media.reports.create(course: @course2)      
+      @media.reports.create(course: @course, counter: "1")
+      @media.reports.create(course: @course2, counter: "2")      
       delete :destroy, id: @media
     end
 

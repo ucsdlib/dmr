@@ -4,7 +4,7 @@
 	  <h3>Course Reserve List</h3>
       <%= render :partial => 'shared/error_messages' , :locals => {:obj => @course}%>
       <p class="required">* Required field </p>
-	  
+
       <%= bootstrap_form_for @course, :required=>true do |f| %>
         <%= hidden_field_tag 'form_action' %>
 	    <%= render :partial => 'form' , :locals => {:f => f}%>
@@ -16,7 +16,7 @@
 	      <%= link_to "Send List", courses_path, class: "btn btn-primary"%>
 	      <%= link_to "Set Current Course", set_current_course_courses_path(:id => "#{@course.id}"), class: "btn btn-primary"%>
 	    </div>
-	    <%= render :partial => 'media_view' , :locals => {:f => f}%>
+	    <%= render :partial => 'media_view' , :locals => {:f => f, :sorted_media => @sorted_media}%>
 	  <%end%>
     </div>
   </div>

@@ -226,5 +226,71 @@ feature "Course" do
     expect(page).to have_selector("select#course_quarter/option[@selected='selected'][value='Spring']")
     expect(page).to have_content('Test Media 1')
     expect(page).to have_content('Test Director 1')              
-  end                                    
+  end
+  
+  scenario "wants to move one media up in Course Reserve List" do
+    # set current course   
+    visit edit_course_path(@course1) 
+    click_on "Set Current Course"
+     
+    # search for media objects
+    visit search_media_path( {:search => 'Test'} )  
+    expect(page).to have_content('Test Media 1')
+    expect(page).to have_content('Test Media 2')
+    expect(page).to have_content('Showing all 2 media')   
+        
+    # add to course list    
+    find("input[type='checkbox'][value='#{@media1.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media2.id}']").set(true)
+    click_on "Add to Course Reserve List"
+    
+    #Check that changes are saved
+    expect(page).to have_content('Media was successfully added to the current Course Reserve List.')
+    expect(@course1.media.size).to eq(2)  
+    
+    # check that media object is in order
+    page.all('tr')[1].text.should include '1 Test Media 1'
+    page.all('tr')[2].text.should include '2 Test Media 2' 
+    
+    # select 2nd media object and click the 'Move Up One' button
+    find("input[type='checkbox'][value='#{@media2.id}']").set(true)
+    click_on "Move Up One" 
+    
+    # check that 2nd media object is displayed first
+    page.all('tr')[1].text.should include '1 Test Media 2'
+    page.all('tr')[2].text.should include '2 Test Media 1'               
+  end
+  
+  scenario "wants to move one media down in Course Reserve List" do
+    # set current course   
+    visit edit_course_path(@course1) 
+    click_on "Set Current Course"
+     
+    # search for media objects
+    visit search_media_path( {:search => 'Test'} )  
+    expect(page).to have_content('Test Media 1')
+    expect(page).to have_content('Test Media 2')
+    expect(page).to have_content('Showing all 2 media')   
+        
+    # add to course list    
+    find("input[type='checkbox'][value='#{@media1.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media2.id}']").set(true)
+    click_on "Add to Course Reserve List"
+    
+    #Check that changes are saved
+    expect(page).to have_content('Media was successfully added to the current Course Reserve List.')
+    expect(@course1.media.size).to eq(2)  
+    
+    # check that media object is in order
+    page.all('tr')[1].text.should include '1 Test Media 1'
+    page.all('tr')[2].text.should include '2 Test Media 2' 
+    
+    # select first media object and click the 'Move Down One' button
+    find("input[type='checkbox'][value='#{@media1.id}']").set(true)
+    click_on "Move Down One" 
+    
+    # check that first media object is displayed 2nd
+    page.all('tr')[1].text.should include '1 Test Media 2'
+    page.all('tr')[2].text.should include '2 Test Media 1'               
+  end                                            
 end

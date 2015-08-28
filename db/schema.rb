@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150818204511) do
+ActiveRecord::Schema.define(version: 20150827204504) do
 
   create_table "courses", force: :cascade do |t|
     t.string   "quarter"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20150818204511) do
     t.datetime "updated_at", null: false
     t.integer  "course_id"
     t.integer  "media_id"
+    t.string   "counter"
   end
 
   add_index "reports", ["course_id"], name: "index_reports_on_course_id"
