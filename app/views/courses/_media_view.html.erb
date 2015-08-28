@@ -13,10 +13,10 @@
       </tr>
     </thead>
     <tbody>		    
-      <% @course.media.each do |m| %>
+      <% sorted_media.each do |m| %>
         <% counter += 1 %> 
         <tr>
-          <td><%= check_box_tag 'media_ids[]', m.id %></td>
+          <td><%= check_box_tag 'media_ids[]', m.id%></td>
           <td><%= counter %></td>          
           <td><%= m.title %></td>
           <td><%= m.director %></td>
@@ -26,10 +26,10 @@
         </tr>
       <% end %>  
     <tbody>
-  </table>
+  </table>    
   <div class="center-block">
     <%= f.submit "Remove Item(s)", class: "btn btn-primary"%>
-    <%= link_to "Move Up", courses_path, class: "btn btn-primary"%>
-    <%= link_to "Move Down", courses_path, class: "btn btn-primary"%>
+    <%= f.submit "Move Up One", class: "btn btn-primary"%>
+    <%= f.submit "Move Down One", class: "btn btn-primary"%>
   </div>  
 <% end %>  	    

@@ -8,6 +8,7 @@ class CoursesController < ApplicationController
   before_filter :authorize, only: [:index,:create,:edit,:update,:new,:destroy,:search]
 
   before_action :set_course, only: [:show, :edit, :update, :destroy, :clone_course]
+  before_action :set_sorted_media_list, only: [:show, :edit]
   
   ##
   # Handles GET index request to display the last 10 Course objects from the database
@@ -79,7 +80,8 @@ class CoursesController < ApplicationController
   # @return [String] the edit Course form
   #  
   def update
-    remove_media_from_course(params[:media_ids],params[:id]) if removing_item?
+    remove_media_from_course(params[:media_ids],@course) if removing_item?
+    change_media_order(params[:media_ids],@course,params[:commit])
     if @course.update_attributes(course_params)
       redirect_to edit_course_path(@course), :flash => { :notice => "Course successfully updated." }
     else
@@ -159,6 +161,11 @@ class CoursesController < ApplicationController
       @course = Course.find(params[:id])
     end
 
+    # Use callbacks to share common setup or constraints between actions.
+    def set_sorted_media_list
+      @sorted_media = get_sorted_media(@course)
+    end
+    
     # Never trust parameters from the scary internet, only allow the white list through.
     def course_params
       params.require(:course).permit(:quarter, :year, :course, :instructor, media_ids: [])
@@ -166,6 +173,5 @@ class CoursesController < ApplicationController
    
     def removing_item?
       params[:commit] == "Remove Item(s)"
-    end
-    
+    end       
 end
