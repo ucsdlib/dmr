@@ -91,35 +91,24 @@ module Dmr
     end
 
     ##
-    # Get the previous report counter for Course Reserve List
+    # Get the previous or next report counter for Course Reserve List
     #
     # @param course_id [Integer] Course ID
     # @param current_counter [Integer] the current report counter
+    # @param counter_type [String] previous or next counter type
     # 
-    # @return previous_counter [Integer] the previous report counter
+    # @return counter [Integer] the previous report counter
     #
-    ##
-    def get_previous_report_counter(course_id, current_counter)
-      previous_counter = 0      
-      report = Report.where("course_id = ? and counter < ?",course_id, current_counter).order(counter: :desc)
-      previous_counter = report.first.counter.to_i if report && report.first
-      return previous_counter     
-    end
-
-    ##
-    # Get the next report counter for Course Reserve List
-    #
-    # @param course_id [Integer] Course ID
-    # @param current_counter [Integer] the current report counter
-    # 
-    # @return previous_counter [Integer] the previous report counter
-    #
-    ##
-    def get_next_counter(course_id, current_counter)
+    ##  
+    def get_counter(course_id, current_counter,counter_type)    
       next_counter = 0      
-      report = Report.where("course_id = ? and counter > ?",course_id, current_counter).order(counter: :asc)
+      if counter_type == "next"
+        report = Report.where("course_id = ? and counter > ?",course_id, current_counter).order(counter: :asc)
+      elsif counter_type == "previous"
+        report = Report.where("course_id = ? and counter < ?",course_id, current_counter).order(counter: :desc)
+      end
       next_counter = report.first.counter.to_i if report && report.first
-      return next_counter     
+      return next_counter 
     end
     
     ##
@@ -191,7 +180,7 @@ module Dmr
     ##    
     def move_up(course,current_counter,report)      
       if current_counter > 1 
-        pre_counter = get_previous_report_counter(course.id, current_counter)          
+        pre_counter = get_counter(course.id, current_counter, "previous")          
         update_report(course.id,pre_counter,current_counter)
         update_report_counter(report,pre_counter)
       end          
@@ -206,7 +195,7 @@ module Dmr
     ##    
     def move_down(course,current_counter,report)      
       if current_counter < course.reports.size
-        next_counter = get_next_counter(course.id, current_counter) 
+        next_counter = get_counter(course.id, current_counter,"next") 
         update_report(course.id,next_counter,current_counter)
         update_report_counter(report,next_counter)
       end         

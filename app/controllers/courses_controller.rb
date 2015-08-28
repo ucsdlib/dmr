@@ -133,11 +133,7 @@ class CoursesController < ApplicationController
   # 
   def clone_course
     new_course = @course.amoeba_dup
-    if new_course.save!
-      redirect_to edit_course_path(new_course), notice: 'Course Reserve List was successfully cloned.'
-    else
-      redirect_to edit_course_path(@course), :flash => { :notice => "Course Reserve List was failed to clone." }
-    end
+    redirect_to edit_course_path(new_course), notice: 'Course Reserve List was successfully cloned.' if new_course.save!
   end
   
   ##
