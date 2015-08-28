@@ -103,9 +103,9 @@ module Dmr
     def get_counter(course_id, current_counter,counter_type)    
       next_counter = 0      
       if counter_type == "next"
-        report = Report.where("course_id = ? and counter > ?",course_id, current_counter).order(counter: :asc)
+        report = Report.where("course_id = ? and counter > ?",course_id, current_counter.to_s).order(counter: :asc)
       elsif counter_type == "previous"
-        report = Report.where("course_id = ? and counter < ?",course_id, current_counter).order(counter: :desc)
+        report = Report.where("course_id = ? and counter < ?",course_id, current_counter.to_s).order(counter: :desc)
       end
       next_counter = report.first.counter.to_i if report && report.first
       return next_counter 
