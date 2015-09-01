@@ -33,7 +33,7 @@ engines:
 # For more details see here:
 # http://docs.codeclimate.com/article/289-configuring-your-repository-via-codeclimate-yml#platform
 
- ratings:
+ratings:
    paths:
    - app/**
    - lib/**
