@@ -12,7 +12,7 @@
 	      <%= f.submit "Save", class: "btn btn-primary"%>
 	      <%= link_to "Delete", @course, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary"%>
 	      <%= link_to "Clone", clone_course_courses_path(:id => "#{@course.id}"), class: "btn btn-primary"%>
-	      <%= link_to "View", course_path(@course), class: "btn btn-primary"%>
+	      <%= link_to "View", course_report_path(@course), class: "btn btn-primary"%>
 	      <%= link_to "Send List", courses_path, class: "btn btn-primary"%>
 	      <%= link_to "Set Current Course", set_current_course_courses_path(:id => "#{@course.id}"), class: "btn btn-primary"%>
 	    </div>
