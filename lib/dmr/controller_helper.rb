@@ -9,9 +9,10 @@ module Dmr
     ##
     # Displays a file given a fileid
     #
-    # @note The output of this method should be assigned to the response_body of a controller
-    # the bytes returned from the datastream dissemination will be written to the response
-    # piecemeal rather than being loaded into memory as a String 
+    # @note The output of this method should be assigned to the 
+    # response_body of a controller the bytes returned from the datastream 
+    # dissemination will be written to the response piecemeal rather 
+    # than being loaded into memory as a String 
     #
     # @param objid [String] the object id
     # @param fileid [String] the file id
@@ -19,29 +20,31 @@ module Dmr
     # @return [Bytes] the file content
     #
     def display_file(objid, fileid)
-      start = Time.now.to_f
-      
       if(fileid.include? ".jpg")
-        # set headers
-        disposition = params[:disposition] || 'inline'
-        filename = params["filename"] || "#{objid}#{fileid}"
-        headers['Content-Disposition'] = "#{disposition}; filename=#{filename}"
-   
-        headers['Content-Type'] = 'image/jpeg'
-    
-        headers['Last-Modified'] = Time.now.ctime.to_s
+        set_file_header(objid, fileid)
       
         self.response_body = Enumerator.new do |blk|
           open("#{Rails.configuration.file_path}#{fileid}", "rb") do |seg|
             blk << seg.read
           end
         end
-
-        dur = (Time.now.to_f - start) * 1000
-        logger.info sprintf("Served file #{filename} in %0.1fms", dur)
       end
     end
-    
+
+    ##
+    # Sets header
+    #
+    # @param objid [String] the object id
+    # @param fileid [String] the file id
+    #
+    #
+    def set_file_header(objid, fileid)     
+      disposition = params[:disposition] || 'inline'
+      filename = params["filename"] || "#{objid}#{fileid}"
+      headers['Content-Disposition'] = "#{disposition}; filename=#{filename}"   
+      headers['Content-Type'] = 'image/jpeg'    
+      headers['Last-Modified'] = Time.now.ctime.to_s
+    end    
     ##
     # Adds media objects to current course list
     #
@@ -53,7 +56,7 @@ module Dmr
     def add_media_to_course(media_ids,current_course)
       @course = Course.find_by_id(current_course.to_i) if current_course
       current_course_media_ids = @course.media.map(&:id) if @course.media
-      add_to_report(media_ids,@course,current_course_media_ids)  
+      add_to_report(media_ids, @course, current_course_media_ids)  
     end
 
     ##
@@ -69,7 +72,9 @@ module Dmr
       if media_ids && current_course
         media_ids.each do |id|
           med = Media.find_by_id(id.to_i)
-          current_course.reports.create(media: med, counter: counter.to_s) if med && !current_course_media_ids.include?(id.to_i)
+          if med && !current_course_media_ids.include?(id.to_i)
+            current_course.reports.create(media: med, counter: counter.to_s)
+          end 
           counter = get_next_report_counter(current_course.id)
         end
       end
@@ -103,9 +108,9 @@ module Dmr
     def get_counter(course_id, current_counter,counter_type)    
       next_counter = 0      
       if counter_type == "next"
-        report = Report.where("course_id = ? and counter > ?",course_id, current_counter.to_s).order(counter: :asc)
+        report = Report.where('course_id = ? and counter > ?',course_id, current_counter.to_s).order(counter: :asc)
       elsif counter_type == "previous"
-        report = Report.where("course_id = ? and counter < ?",course_id, current_counter.to_s).order(counter: :desc)
+        report = Report.where('course_id = ? and counter < ?',course_id, current_counter.to_s).order(counter: :desc)
       end
       next_counter = report.first.counter.to_i if report && report.first
       return next_counter 
@@ -121,7 +126,7 @@ module Dmr
     ##
     def update_report(course_id, current_counter, new_counter)         
       report = Report.where(course_id: course_id, counter: current_counter)
-      update_report_counter(report,new_counter)  
+      update_report_counter(report, new_counter)  
     end
 
     ##
@@ -147,10 +152,10 @@ module Dmr
     #
     ##    
     def get_sorted_media(course)
-      media_array = Array.new
+      media_array = []
       course.reports.sort{ |a,b| a.counter <=> b.counter }.each do |r|    
-       media = Media.find_by_id(r.media_id)
-       media_array << media if media
+        media = Media.find_by_id(r.media_id)
+        media_array << media if media
       end
       return media_array
     end
@@ -165,7 +170,7 @@ module Dmr
     def remove_media_from_course(media_ids,course)
       if media_ids && course
         media_ids.each do |id|
-          report_tag = Report.where(course_id: course.id, media_id:id.to_i)
+          report_tag=Report.where(course_id: course.id, media_id: id.to_i)
           course.reports.delete(report_tag) if report_tag
         end
       end    
@@ -180,7 +185,7 @@ module Dmr
     ##    
     def move_up(course,current_counter,report)      
       if current_counter > 1 
-        pre_counter = get_counter(course.id, current_counter, "previous")          
+        pre_counter=get_counter(course.id,current_counter,"previous")          
         update_report(course.id,pre_counter,current_counter)
         update_report_counter(report,pre_counter)
       end          
@@ -196,8 +201,8 @@ module Dmr
     def move_down(course,current_counter,report)      
       if current_counter < course.reports.size
         next_counter = get_counter(course.id, current_counter,"next") 
-        update_report(course.id,next_counter,current_counter)
-        update_report_counter(report,next_counter)
+        update_report(course.id, next_counter, current_counter)
+        update_report_counter(report, next_counter)
       end         
     end 
 
@@ -209,14 +214,14 @@ module Dmr
     # @param type [String] submit type
     #
     ##       
-    def change_media_order(media_ids,course,type)
+    def change_media_order(media_ids, course, type)
       if media_ids && course
         current_counter = 0
         media_ids.each do |id|
-          report = Report.where(course_id: course.id, media_id:id.to_i)      
+          report = Report.where(course_id: course.id, media_id: id.to_i)      
           current_counter = report.first.counter.to_i if report && report.first
-          move_up(course,current_counter,report) if(type == "Move Up One")
-          move_down(course,current_counter,report) if (type == "Move Down One")
+          move_up(course, current_counter, report) if(type == "Move Up One")
+          move_down(course, current_counter, report) if (type == "Move Down One")
         end
       end          
     end

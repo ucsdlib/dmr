@@ -63,7 +63,6 @@ class User < ActiveRecord::Base
     category_filter = Net::LDAP::Filter.eq("objectcategory", "user")
     member_filter = Net::LDAP::Filter.eq("memberof", Rails.application.secrets.ldap_group)
     s_c_filter = Net::LDAP::Filter.join(search_filter, category_filter)
-    composite_filter = Net::LDAP::Filter.join(s_c_filter, member_filter)
-    return composite_filter
+    return Net::LDAP::Filter.join(s_c_filter, member_filter)
   end
 end
