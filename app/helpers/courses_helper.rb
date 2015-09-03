@@ -6,8 +6,7 @@ module CoursesHelper
   #
   # @return [String] url
   ##
-  
   def course_report_path(course)
-     "#{course.quarter}/#{course.year}/#{course.course.parameterize("_")}"
+    "#{course.quarter}/#{course.year}/#{course.course.parameterize('_')}"
   end
 end
