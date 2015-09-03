@@ -4,8 +4,12 @@
 
 class CoursesController < ApplicationController
   include Dmr::ControllerHelper
-  before_action :set_course, only: [:show, :edit, :update, :destroy]
+  before_filter :authorize_student, only: [:show] if Rails.configuration.shibboleth
+  before_filter :authorize, only: [:index,:create,:edit,:update,:new,:destroy,:search]
 
+  before_action :set_course, only: [:show, :edit, :update, :destroy, :clone_course]
+  before_action :set_sorted_media_list, only: [:show, :edit]
+  
   ##
   # Handles GET index request to display the last 10 Course objects from the database
   # GET /courses/index  
@@ -76,7 +80,9 @@ class CoursesController < ApplicationController
   # @return [String] the edit Course form
   #  
   def update
-    if @course.update_attributes(course_params) 
+    remove_media_from_course(params[:media_ids],@course) if removing_item?
+    change_media_order(params[:media_ids],@course,params[:commit])
+    if @course.update_attributes(course_params)
       redirect_to edit_course_path(@course), :flash => { :notice => "Course successfully updated." }
     else
       render :edit
@@ -120,6 +126,17 @@ class CoursesController < ApplicationController
   end
 
   ##
+  # Clone a Course Reserve List object
+  # /courses/clone_course?id=1
+  #
+  # @return [String] - redirect to the Course edit page
+  # 
+  def clone_course
+    new_course = @course.amoeba_dup
+    redirect_to edit_course_path(new_course), notice: 'Course Reserve List was successfully cloned.' if new_course.save!
+  end
+  
+  ##
   # Handles POST a set of media ids to be added to the current Course object
   # POST /courses/add_to_course
   #
@@ -133,16 +150,24 @@ class CoursesController < ApplicationController
       redirect_to courses_path, :flash => { :notice => "No current Course Reserve List is set.  Please set the Course Reserve List first." }
     end
   end
-  
+    
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_course
       @course = Course.find(params[:id])
     end
 
+    # Use callbacks to share common setup or constraints between actions.
+    def set_sorted_media_list
+      @sorted_media = get_sorted_media(@course)
+    end
+    
     # Never trust parameters from the scary internet, only allow the white list through.
     def course_params
       params.require(:course).permit(:quarter, :year, :course, :instructor, media_ids: [])
     end
    
+    def removing_item?
+      params[:commit] == "Remove Item(s)"
+    end       
 end

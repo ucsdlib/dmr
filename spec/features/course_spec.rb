@@ -13,7 +13,12 @@ feature "Course" do
     @media1.delete
     @media2.delete    
   end
-  
+  before(:each) do
+    sign_in_developer
+  end
+  after(:each) do
+    sign_out_developer
+  end    
   scenario "is on course index page" do
     visit courses_path
     expect(page).to have_selector('h3', :text => 'Listing Courses')
@@ -158,5 +163,134 @@ feature "Course" do
     
     #Check that the search_option radio button is still selected
     find("input[name='search_option'][type='radio'][value='courses']").should be_checked        
-  end                                
+  end
+  
+  scenario "wants to remove media from Course Reserve List" do
+    # set current course   
+    visit edit_course_path(@course1) 
+    click_on "Set Current Course"
+     
+    # search for media objects
+    visit search_media_path( {:search => 'Test'} )  
+    expect(page).to have_content('Test Media 1')
+    expect(page).to have_content('Test Media 2')
+    expect(page).to have_content('Showing all 2 media')   
+        
+    # add to course list    
+    find("input[type='checkbox'][value='#{@media1.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media2.id}']").set(true)
+    click_on "Add to Course Reserve List"
+    
+    #Check that changes are saved
+    expect(page).to have_content('Media was successfully added to the current Course Reserve List.')
+    current_path.should == edit_course_path(@course1)
+    expect(@course1.media.size).to eq(2)
+    expect(page).to have_content('Test Media 1')
+    expect(page).to have_content('Test Director 1')
+    expect(page).to have_content('Test Media 2')
+    expect(page).to have_content('Test Director 2')
+    
+    # select media object and click the 'Remove Item(s)' button
+    find("input[type='checkbox'][value='#{@media1.id}']").set(true)
+    click_on "Remove Item(s)"
+    
+    # Check that selected media object does not exist
+    expect(page).to have_content('Course successfully updated.')
+    current_path.should == edit_course_path(@course1)
+    expect(@course1.media.size).to eq(1)
+    expect(page).to_not have_content('Test Media 1')
+    expect(page).to_not have_content('Test Director 1')                   
+  end 
+  
+  scenario "wants to clone a Course Reserve List" do
+    # set current course   
+    visit edit_course_path(@course1) 
+    click_on "Set Current Course"
+    
+    # add media to course 
+    visit edit_medium_path(@media1)
+    click_on "Add to Course Reserve List"  
+
+    #Check that changes are saved
+    expect(page).to have_content('Media was successfully added to the current Course Reserve List.')
+    current_path.should == edit_course_path(@course1)
+    
+    click_on "Clone"
+    expect(page).to have_content('Course Reserve List was successfully cloned.')
+    current_path.should_not == edit_course_path(@course1) 
+
+    #Check that changes are saved in new Course Reserve List
+    expect(page).to have_selector("input#course_course[value='Test Course 1']")
+    expect(page).to have_selector("input#course_instructor[value='Test Instructor 1']")
+    expect(page).to have_selector("input#course_year[value='2015']")
+    expect(page).to have_selector("select#course_quarter/option[@selected='selected'][value='Spring']")
+    expect(page).to have_content('Test Media 1')
+    expect(page).to have_content('Test Director 1')              
+  end
+  
+  scenario "wants to move one media up in Course Reserve List" do
+    # set current course   
+    visit edit_course_path(@course1) 
+    click_on "Set Current Course"
+     
+    # search for media objects
+    visit search_media_path( {:search => 'Test'} )  
+    expect(page).to have_content('Test Media 1')
+    expect(page).to have_content('Test Media 2')
+    expect(page).to have_content('Showing all 2 media')   
+        
+    # add to course list    
+    find("input[type='checkbox'][value='#{@media1.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media2.id}']").set(true)
+    click_on "Add to Course Reserve List"
+    
+    #Check that changes are saved
+    expect(page).to have_content('Media was successfully added to the current Course Reserve List.')
+    expect(@course1.media.size).to eq(2)  
+    
+    # check that media object is in order
+    page.all('tr')[1].text.should include '1 Test Media 1'
+    page.all('tr')[2].text.should include '2 Test Media 2' 
+    
+    # select 2nd media object and click the 'Move Up One' button
+    find("input[type='checkbox'][value='#{@media2.id}']").set(true)
+    click_on "Move Up One" 
+    
+    # check that 2nd media object is displayed first
+    page.all('tr')[1].text.should include '1 Test Media 2'
+    page.all('tr')[2].text.should include '2 Test Media 1'               
+  end
+  
+  scenario "wants to move one media down in Course Reserve List" do
+    # set current course   
+    visit edit_course_path(@course1) 
+    click_on "Set Current Course"
+     
+    # search for media objects
+    visit search_media_path( {:search => 'Test'} )  
+    expect(page).to have_content('Test Media 1')
+    expect(page).to have_content('Test Media 2')
+    expect(page).to have_content('Showing all 2 media')   
+        
+    # add to course list    
+    find("input[type='checkbox'][value='#{@media1.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media2.id}']").set(true)
+    click_on "Add to Course Reserve List"
+    
+    #Check that changes are saved
+    expect(page).to have_content('Media was successfully added to the current Course Reserve List.')
+    expect(@course1.media.size).to eq(2)  
+    
+    # check that media object is in order
+    page.all('tr')[1].text.should include '1 Test Media 1'
+    page.all('tr')[2].text.should include '2 Test Media 2' 
+    
+    # select first media object and click the 'Move Down One' button
+    find("input[type='checkbox'][value='#{@media1.id}']").set(true)
+    click_on "Move Down One" 
+    
+    # check that first media object is displayed 2nd
+    page.all('tr')[1].text.should include '1 Test Media 2'
+    page.all('tr')[2].text.should include '2 Test Media 1'               
+  end                                            
 end

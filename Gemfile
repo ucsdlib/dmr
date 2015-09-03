@@ -15,6 +15,10 @@ gem 'yard'
 gem 'inch', require: false
 gem 'bootstrap_form'
 gem 'kaminari'
+gem 'omniauth'
+gem 'omniauth-shibboleth'
+gem 'net-ldap'
+gem 'amoeba' 
 
 # Deploy with Capistrano
 gem 'capistrano', '~> 3.3.3'

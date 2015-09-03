@@ -5,6 +5,9 @@
 require 'spec_helper'
 
 describe CoursesController do
+  before(:each) do
+    set_current_user
+  end
   describe "GET index" do
     it "assigns all courses as @courses" do
       @course = Fabricate(:course)
@@ -82,8 +85,8 @@ describe CoursesController do
         @course = Fabricate(:course)
       end    
       it "creates a new Course with 2 Media objects" do
-        @course.reports.create(media: @media)
-        @course.reports.create(media: @media2)
+        @course.reports.create(media: @media, counter: "1")
+        @course.reports.create(media: @media2, counter: "2")
         expect(Course.count).to eq(1)   
         expect(Media.count).to eq(2)    
         expect(@course.media.size).to eq(2)
@@ -141,8 +144,8 @@ describe CoursesController do
       @course = Fabricate(:course)
       @media = Fabricate(:media)
       @media2 = Fabricate(:media)
-      @course.reports.create(media: @media)
-      @course.reports.create(media: @media2)                    
+      @course.reports.create(media: @media, counter: "1")
+      @course.reports.create(media: @media2, counter: "2")                    
       delete :destroy, id: @course
     end
 
@@ -223,7 +226,36 @@ describe CoursesController do
     
     it "returns number of Course objects if there is a match" do
       get :search, search: "Test", search_option: "courses"
-      expect(assigns(:course_search_count)).to eq(1)
+      expect(assigns(:course_search_count)).to eq(1) 
+    end    
+  end
+  
+  describe "GET clone_course" do
+    before(:each) do
+      @course = Fabricate(:course)    
+      @media = Fabricate(:media)
+      get :set_current_course, id: @course.id
+      post :add_to_course, media_ids: ["#{@media.id}"]                    
+    end
+
+    it "changes the count of the Course after the clone action" do
+      expect(Course.count).to eq(1)
+      get :clone_course, id: @course.id
+      expect(Course.count).to eq(2)
+    end
+    
+    it "redirects to the new clone course edit view" do
+      get :clone_course, id: @course.id
+      expect(assigns(:course)).to be_a(Course)
+      expect(response).to redirect_to(edit_course_path(Course.last))
+    end
+    
+    it "verifies the clone data" do
+      get :clone_course, id: @course.id
+      new_course = Course.last
+      expect(@course.id).to_not eq(new_course.id)
+      expect(@course.course).to eq(new_course.course)   
+      expect(@course.media.first.title).to eq(new_course.media.first.title)    
     end    
   end     
 end
