@@ -2,49 +2,8 @@
 # @author Vivian <tchu@ucsd.edu>
 #---
 
-require 'open-uri'
-
 module Dmr
   module ControllerHelper 
-    ##
-    # Displays a file given a fileid
-    #
-    # @note The output of this method should be assigned to the 
-    # response_body of a controller the bytes returned from the datastream 
-    # dissemination will be written to the response piecemeal rather 
-    # than being loaded into memory as a String 
-    #
-    # @param objid [String] the object id
-    # @param fileid [String] the file id
-    #
-    # @return [Bytes] the file content
-    #
-    def display_file(objid, fileid)
-      if(fileid.include? ".jpg")
-        set_file_header(objid, fileid)
-      
-        self.response_body = Enumerator.new do |blk|
-          open("#{Rails.configuration.file_path}#{fileid}", "rb") do |seg|
-            blk << seg.read
-          end
-        end
-      end
-    end
-
-    ##
-    # Sets header
-    #
-    # @param objid [String] the object id
-    # @param fileid [String] the file id
-    #
-    #
-    def set_file_header(objid, fileid)     
-      disposition = params[:disposition] || 'inline'
-      filename = params["filename"] || "#{objid}#{fileid}"
-      headers['Content-Disposition'] = "#{disposition}; filename=#{filename}"   
-      headers['Content-Type'] = 'image/jpeg'    
-      headers['Last-Modified'] = Time.now.ctime.to_s
-    end    
     ##
     # Adds media objects to current course list
     #
@@ -105,12 +64,12 @@ module Dmr
     # @return counter [Integer] the previous report counter
     #
     ##  
-    def get_counter(course_id, current_counter,counter_type)    
+    def get_counter(course_id, counter,counter_type)    
       next_counter = 0      
       if counter_type == "next"
-        report = Report.where('course_id = ? and counter > ?',course_id, current_counter.to_s).order(counter: :asc)
+        report = Report.where('course_id = ? and counter > ?',course_id, counter.to_s).order(counter: :asc)
       elsif counter_type == "previous"
-        report = Report.where('course_id = ? and counter < ?',course_id, current_counter.to_s).order(counter: :desc)
+        report = Report.where('course_id = ? and counter < ?',course_id, counter.to_s).order(counter: :desc)
       end
       next_counter = report.first.counter.to_i if report && report.first
       return next_counter 

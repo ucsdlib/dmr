@@ -1,0 +1,19 @@
+<html>
+  <body>
+     <p>Please add a link on Docutek to the playlist for Professor <%= @course.instructor%>'s <%= @course.course%> course for <%= @course.quarter%> <%= @course.year%>.</p> 
+     <p>The titles in the playlist for this course are:</p> 
+     <% if (@sorted_media) %>    
+       <ul>
+         <% @sorted_media.each do |m| %>                 
+           <li><%= m.title %></li>
+         <% end %>         
+       </ul>
+     <% end %>
+     
+     </p>The path to this DMR course reserve list is:</p>     
+     <% url = course_report_url(:id => "#{@course.id}", :course => "#{@course.course.parameterize('_')}", :quarter => "#{@course.quarter}", :year => "#{@course.year}")%>
+     <%= link_to "#{url}", url%>
+     
+     <p>Thanks!</p>
+  </body>
+</html>

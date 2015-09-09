@@ -7,8 +7,8 @@ class CoursesController < ApplicationController
   before_filter :authorize_student, only: [:show] if Rails.configuration.shibboleth
   before_filter :authorize, only: [:index,:create,:edit,:update,:new,:destroy,:search]
 
-  before_action :set_course, only: [:show, :edit, :update, :destroy, :clone_course]
-  before_action :set_sorted_media_list, only: [:show, :edit]
+  before_action :set_course, only: [:show, :edit, :update, :destroy, :clone_course, :send_email]
+  before_action :set_sorted_media_list, only: [:show, :edit, :send_email]
   
   ##
   # Handles GET index request to display the last 10 Course objects from the database
@@ -150,7 +150,16 @@ class CoursesController < ApplicationController
       redirect_to courses_path, :flash => { :notice => "No current Course Reserve List is set.  Please set the Course Reserve List first." }
     end
   end
-    
+
+  ##
+  # Handles GET send a confirmation email about the Course
+  # GET /courses/send_mail
+  # 
+  def send_email
+    CourseMailer.course_email(current_user, @course, @sorted_media).deliver_now
+    redirect_to edit_course_path(@course), :flash => { :notice => "The confirmation email has been sent." }
+  end
+      
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_course

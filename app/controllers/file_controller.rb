@@ -3,7 +3,7 @@
 #---
 
 class FileController < ApplicationController
-  include Dmr::ControllerHelper
+  include Dmr::FileControllerHelper
   
   ##
   # Handles GET show request
