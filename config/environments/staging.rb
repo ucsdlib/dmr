@@ -42,6 +42,8 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :sendmail
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_url_options = {host: 'librarytest.ucsd.edu'}
+  
   #config.action_mailer.default_options = {from: 'xxx@ucsd.edu'}
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
@@ -55,5 +57,6 @@ Rails.application.configure do
   config.action_dispatch.best_standards_support = :builtin
   config.wowza_baseurl = 'lib-streaming-test.ucsd.edu:1935/dmr/_definst_/'
   config.wowza_directory = '/pub/data2/DMR/'
-  config.shibboleth = true   
+  config.shibboleth = true
+  config.receiver_emails = 'landrews@ucsd.edu,'   
 end

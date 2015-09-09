@@ -315,5 +315,11 @@ feature "Course" do
     click_on "View"
     
     current_path.should == "/courses/#{@course1.id}/#{@course1.quarter}/#{@course1.year}/#{@course1.course.parameterize("_")}"           
-  end                                              
+  end
+  
+  scenario "wants to send a Course Reserve List confirmation email" do  
+    visit edit_course_path(@course1) 
+    click_on "Send List" 
+    expect(page).to have_content('The confirmation email has been sent.')      
+  end                                                
 end

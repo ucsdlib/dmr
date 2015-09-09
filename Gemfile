@@ -19,6 +19,7 @@ gem 'omniauth'
 gem 'omniauth-shibboleth'
 gem 'net-ldap'
 gem 'amoeba' 
+gem 'letter_opener'
 
 # Deploy with Capistrano
 gem 'capistrano', '~> 3.3.3'
