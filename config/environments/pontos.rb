@@ -47,5 +47,5 @@ Rails.application.configure do
   config.wowza_baseurl = 'lib-streaming-test.ucsd.edu:1935/dmr/_definst_/'
   config.wowza_directory = '/pub/data2/DMR/'
   config.shibboleth = true
-  config.receiver_emails = ''     
+  config.receiver_emails = 'tchu@ucsd.edu,'     
 end            
