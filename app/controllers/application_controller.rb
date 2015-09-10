@@ -21,6 +21,7 @@ class ApplicationController < ActionController::Base
   end
     
   def access_denied
+    session['omniauth.origin'] = request.original_url
     redirect_to new_user_session_path, notice: 'You must sign in to perform this action.' and return false
   end      
 end
