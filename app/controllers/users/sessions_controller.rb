@@ -23,7 +23,7 @@ class Users::SessionsController < ApplicationController
   	  render file: "#{Rails.root}/public/403", formats: [:html], status: 403, layout: false
   	else
   	  create_user_session(@user) if @user
-      redirect_to session['omniauth.origin'] || root_url, notice: "You have successfully authenticated from #{auth_type} account!"
+      redirect_to request.env['omniauth.origin'] || root_url, notice: "You have successfully authenticated from #{auth_type} account!"
     end
   end
 
