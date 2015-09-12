@@ -35,7 +35,7 @@ describe ApplicationController do
     it "redirects to the login page" do
       get :index
       expect(response).to have_http_status(302)
-      expect(response).to redirect_to(new_user_session_path)
+      expect(response).to redirect_to(new_user_session_path(origin: "http://test.host/anonymous"))
     end
   end  
 end
