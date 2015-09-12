@@ -1,21 +1,21 @@
 class Users::SessionsController < ApplicationController
   def new
     if Rails.configuration.shibboleth
-      redirect_to shibboleth_path
+      redirect_to shibboleth_path(origin: params[:origin])
     else
       redirect_to developer_path(origin: params[:origin])
     end
   end
 
   def developer
-    find_or_create_user('developer',params[:origin])
+    find_or_create_user('developer', params[:origin])
   end
   
   def shibboleth
-    find_or_create_user('shibboleth',params[:origin])
+    find_or_create_user('shibboleth', params[:origin])
   end
 
-  def find_or_create_user(auth_type,origin)
+  def find_or_create_user(auth_type, origin)
     find_or_create_method = "find_or_create_for_#{auth_type.downcase}".to_sym
   	@user = User.send(find_or_create_method,request.env["omniauth.auth"])
   	session[:student_user] = "true"  	
