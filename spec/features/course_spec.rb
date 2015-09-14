@@ -292,5 +292,34 @@ feature "Course" do
     # check that first media object is displayed 2nd
     page.all('tr')[1].text.should include '1 Test Media 2'
     page.all('tr')[2].text.should include '2 Test Media 1'               
-  end                                            
+  end
+  
+  scenario "expects to see a friendly url Course Reserve List" do
+    # set current course   
+    visit edit_course_path(@course1) 
+    click_on "Set Current Course"
+     
+    # search for media objects
+    visit search_media_path( {:search => 'Test'} )  
+    expect(page).to have_content('Test Media 1')
+    expect(page).to have_content('Test Media 2')
+    expect(page).to have_content('Showing all 2 media')   
+        
+    # add to course list    
+    find("input[type='checkbox'][value='#{@media1.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media2.id}']").set(true)
+    click_on "Add to Course Reserve List"
+    
+    # check the friendly url for view button
+    expect(page).to have_link('View', href: "Spring/2015/test_course_1" )
+    click_on "View"
+    
+    current_path.should == "/courses/#{@course1.id}/#{@course1.quarter}/#{@course1.year}/#{@course1.course.parameterize("_")}"           
+  end
+  
+  scenario "wants to send a Course Reserve List confirmation email" do  
+    visit edit_course_path(@course1) 
+    click_on "Send List" 
+    expect(page).to have_content('The confirmation email has been sent.')      
+  end                                                
 end

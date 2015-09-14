@@ -15,7 +15,9 @@ Rails.application.configure do
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
-
+  config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.default_url_options = {host: 'localhost:3000'}
+  
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
@@ -40,5 +42,6 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
   config.wowza_baseurl = 'lib-streaming-test.ucsd.edu:1935/dmr/_definst_/'
   config.wowza_directory = '/pub/data2/DMR/'
-  config.shibboleth = false   
+  config.shibboleth = false
+  config.receiver_emails = 'landrews@ucsd.edu,reserves@ucsd.edu,'   
 end

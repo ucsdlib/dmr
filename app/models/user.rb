@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
     u = User.where(:uid => uid,:provider => provider).first || User.create(:uid => uid, :provider => provider, :email => email, :name => name) if !uid.nil?
   end
   
-  def self.in_super_user_group?(uid)
+  def self.in_group?(uid)
     lookup_group(uid) == uid ? true : false
   end
   
@@ -63,7 +63,6 @@ class User < ActiveRecord::Base
     category_filter = Net::LDAP::Filter.eq("objectcategory", "user")
     member_filter = Net::LDAP::Filter.eq("memberof", Rails.application.secrets.ldap_group)
     s_c_filter = Net::LDAP::Filter.join(search_filter, category_filter)
-    composite_filter = Net::LDAP::Filter.join(s_c_filter, member_filter)
-    return composite_filter
+    return Net::LDAP::Filter.join(s_c_filter, member_filter)
   end
 end

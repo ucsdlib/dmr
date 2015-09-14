@@ -47,6 +47,7 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :sendmail
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_url_options = {host: 'library.ucsd.edu'}
   #config.action_mailer.default_options = {from: 'xxx@ucsd.edu'}
   
   # Set to :debug to see everything in the log.
@@ -86,5 +87,6 @@ Rails.application.configure do
 
   config.shibboleth = true
   config.wowza_baseurl = 'lib-streaming.ucsd.edu:1935/dmr/_definst_/'
-  config.wowza_directory = '/pub/data2/DMR/'    
+  config.wowza_directory = '/pub/data2/DMR/'
+  config.receiver_emails = 'landrews@ucsd.edu,reserves@ucsd.edu,'    
 end

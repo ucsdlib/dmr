@@ -6,7 +6,8 @@ require 'spec_helper'
 
 describe CoursesController do
   before(:each) do
-    set_current_user
+    @user = Fabricate(:user)
+    set_current_user(@user)
   end
   describe "GET index" do
     it "assigns all courses as @courses" do
@@ -257,5 +258,28 @@ describe CoursesController do
       expect(@course.course).to eq(new_course.course)   
       expect(@course.media.first.title).to eq(new_course.media.first.title)    
     end    
-  end     
+  end
+  
+  describe "GET send_mail" do
+    before(:each) do
+      @course = Fabricate(:course)    
+      @media = Fabricate(:media)      
+      get :set_current_course, id: @course.id 
+      post :add_to_course, media_ids: ["#{@media.id}"]
+      ActionMailer::Base.deliveries.clear
+      get :send_email, id: @course.id                         
+    end
+
+    it "changes the email count after the send email action" do            
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
+    end
+    
+    it "redirects to the Course edit page" do
+      expect(response).to redirect_to(edit_course_path(Course.last))
+    end 
+    
+    it "sends a confirmation email to correct recipient" do
+      expect(ActionMailer::Base.deliveries.last.from).to eq(['developer@ucsd.edu'])
+    end     
+  end            
 end

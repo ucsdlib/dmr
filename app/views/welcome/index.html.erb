@@ -11,6 +11,6 @@
     <% end %>
   <% else %>
     <h2 class="text-center">Welcome to Digital Media Reserves (DMR)</h2>
-    <h3 class="text-center"><%= link_to 'Sign In', new_user_session_path, data: {no_turbolink: true }%></h3>
+    <h3 class="text-center"><%= link_to 'Sign In', new_user_session_path(origin: request.original_url), data: {no_turbolink: true }%></h3>
   <% end %>
 </div>

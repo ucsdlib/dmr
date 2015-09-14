@@ -14,9 +14,12 @@ Rails.application.routes.draw do
      get 'set_current_course', to: 'courses#set_current_course'
      get 'search', to: 'courses#search'
      get 'clone_course', to: 'courses#clone_course'
-   end 
+     get 'send_email', to: 'courses#send_email'
+   end
   end
-  get "media/:id/:ds", :to => 'file#show', :constraints => { :ds => /[^\/]+/ }, :as => 'file'
+  
+  get "media/:id/:ds", :to => 'file#show', :constraints => { :ds => /[^\/]+/ }, :as => 'file'  
+  match "courses/:id/:quarter/:year/:course", :to => 'courses#show', :as => :course_report, via: [:get]
   
   get "/auth/shibboleth", as: :shibboleth
   get "/auth/developer", to: 'users/sessions#developer', as: :developer

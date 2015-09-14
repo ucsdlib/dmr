@@ -1,29 +1,29 @@
 class Users::SessionsController < ApplicationController
   def new
     if Rails.configuration.shibboleth
-      redirect_to shibboleth_path
+      redirect_to shibboleth_path(origin: params[:origin])
     else
-      redirect_to developer_path
+      redirect_to developer_path(origin: params[:origin])
     end
   end
 
   def developer
-    find_or_create_user('developer')
+    find_or_create_user('developer', params[:origin])
   end
   
   def shibboleth
-    find_or_create_user('shibboleth')
+    find_or_create_user('shibboleth', params[:origin])
   end
 
-  def find_or_create_user(auth_type)
+  def find_or_create_user(auth_type, origin)
     find_or_create_method = "find_or_create_for_#{auth_type.downcase}".to_sym
   	@user = User.send(find_or_create_method,request.env["omniauth.auth"])
-  	if Rails.configuration.shibboleth && !User.in_super_user_group?(request.env["omniauth.auth"].uid)
-  	  session[:student_user] = "true"
+  	session[:student_user] = "true"
+  	if Rails.configuration.shibboleth && !User.in_group?(request.env["omniauth.auth"].uid) && report_url(origin) == false
   	  render file: "#{Rails.root}/public/403", formats: [:html], status: 403, layout: false
   	else
   	  create_user_session(@user) if @user
-      redirect_to root_url, notice: "You have successfully authenticated from #{auth_type} account!"
+      redirect_to origin || root_url, notice: "You have successfully authenticated from #{auth_type} account!"
     end
   end
 
@@ -49,4 +49,11 @@ class Users::SessionsController < ApplicationController
   end  
 
   
- end
+  def report_url(original_url)
+    quarters = ["Spring", "Summer", "Fall", "Winter"]
+    quarters.each do |quarter|
+      return true if original_url.include?(quarter)
+    end
+    return false 
+  end  
+end
