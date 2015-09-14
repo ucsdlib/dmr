@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
     u = User.where(:uid => uid,:provider => provider).first || User.create(:uid => uid, :provider => provider, :email => email, :name => name) if !uid.nil?
   end
   
-  def self.in_super_user_group?(uid)
+  def self.in_group?(uid)
     lookup_group(uid) == uid ? true : false
   end
   
