@@ -20,7 +20,7 @@ class Users::SessionsController < ApplicationController
   	@user = User.send(find_or_create_method,request.env["omniauth.auth"])
   	session[:student_user] = "true"
   	report = report_url(origin) if origin
-  	if (Rails.configuration.shibboleth && !User.in_group?(request.env["omniauth.auth"].uid) && report == false)
+  	if Rails.configuration.shibboleth && !User.in_group?(request.env["omniauth.auth"].uid) && report == false
   	  render file: "#{Rails.root}/public/403", formats: [:html], status: 403, layout: false
   	else
   	  create_user_session(@user) if @user
