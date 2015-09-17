@@ -120,12 +120,12 @@ describe MediaController do
     describe "with invalid params" do   
       before(:each) do     
         @media = Fabricate(:media)        
-        put :update, id: @media, media: Fabricate.attributes_for(:media, year: 'abcde')
+        put :update, id: @media, media: Fabricate.attributes_for(:media, file_name: 'abcde')
         @media.reload        
       end
       
       it "does not update the requested media page" do
-        expect(@media.year).to eq('2015')
+        expect(@media.file_name).to eq('test.mp4')
       end
   
       it "assigns the requested page as @media" do
