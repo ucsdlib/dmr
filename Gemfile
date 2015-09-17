@@ -31,9 +31,9 @@ gem 'equivalent-xml', '~> 0.5.1'
 gem 'activesupport', '~> 4.2.4'
 gem 'activemodel', '~> 4.2.4'
 gem 'activerecord', '~> 4.2.4'
-
+gem 'sqlite3'
+  
 group :development do
-  gem 'sqlite3'
   gem 'spring'
 end
 
