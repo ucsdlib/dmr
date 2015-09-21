@@ -147,7 +147,7 @@ class CoursesController < ApplicationController
       add_media_to_course(params[:media_ids],session[:current_course])
       redirect_to edit_course_path(@course), :flash => { :notice => "Media was successfully added to the current Course Reserve List." }
     else
-      redirect_to courses_path, :flash => { :notice => "No current Course Reserve List is set.  Please set the Course Reserve List first." }
+      redirect_to courses_path, :flash => { :alert => "No current Course Reserve List is set.  Please set the Course Reserve List first." }
     end
   end
 
