@@ -22,7 +22,7 @@ class Media < ActiveRecord::Base
   # @return [String] the resulting Media objects whose titles contain one ore more words that form the query
   #
   def self.search(query)
-    where("lower(title || director || year || call_number) like ?", "%#{query.downcase}%") if query
+    where("lower(title || director || year || call_number || file_name) like ?", "%#{query.downcase}%") if query
   end
 
 end
