@@ -106,6 +106,13 @@ feature "Media" do
     expect(page).to have_content('There were no results for the search: "abcdef"')        
   end
 
+  scenario "wants to search for media file name" do
+    visit search_media_path( {:search => 'toystory'} )  
+    expect(page).to have_content('Showing 1 media')   
+    expect(page).to have_content('Test Media 1')
+    expect(page).to have_content('toystory.mp4') 
+  end
+  
   scenario "wants to return to search results page after viewing a media record" do
     visit search_media_path( {:search => 'Test'} )  
     expect(page).to have_content('Test Media 1')
