@@ -21,6 +21,6 @@ class ApplicationController < ActionController::Base
   end
     
   def access_denied
-    redirect_to new_user_session_path(origin: request.original_url), notice: 'You must sign in to perform this action.' and return false
+    redirect_to new_user_session_path(origin: request.original_url), alert: 'You must sign in to perform this action.' and return false
   end      
 end
