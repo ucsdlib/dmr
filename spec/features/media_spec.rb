@@ -26,7 +26,15 @@ feature "Media" do
     expect(page).to have_content('Test Media 1')
     expect(page).to have_content('Test Media 2')
   end
-  
+ 
+  scenario "is on media index page with 'Create New Media Record' button" do
+    visit media_path
+    expect(page).to have_selector('h3', :text => 'Listing Media') 
+    expect(page).to have_content('Test Media 1')
+    expect(page).to have_content('Test Media 2')
+    expect(page).to have_selector('a.btn-primary', :text => 'Create New Media Record')
+  end
+    
   scenario "is on the media show page" do
     visit medium_path(@media1)
     expect(page).to have_selector('h3', :text => @media1.title)
