@@ -5,13 +5,13 @@
 class CoursesController < ApplicationController
   include Dmr::ControllerHelper
   before_filter :authorize_student, only: [:show] if Rails.configuration.shibboleth
-  before_filter :authorize, only: [:index,:create,:edit,:update,:new,:destroy,:search]
+  before_filter :authorize, only: [:index, :create, :edit, :update, :new, :destroy, :search]
 
   before_action :set_course, only: [:show, :edit, :update, :destroy, :clone_course, :send_email]
   before_action :set_sorted_media_list, only: [:show, :edit, :send_email, :update]
   
   ##
-  # Handles GET index request to display the last 10 Course objects from the database
+  # Handles GET index request to display last 10 Courses from the database
   # GET /courses/index  
   #
   # @return [String] the resulting webpage of the last 10 Course objects
@@ -27,7 +27,7 @@ class CoursesController < ApplicationController
   # @return [String] the resulting webpage of a single object
   #
   def show
-    render :layout => false
+    render layout: false
   end
 
   ##
@@ -97,7 +97,7 @@ class CoursesController < ApplicationController
   #  
   def destroy
     @course.destroy
-    redirect_to courses_path, :flash => { :notice => "Course was successfully destroyed." }
+    redirect_to courses_path, notice: 'Course was successfully destroyed.'
   end
 
   ##
@@ -105,7 +105,7 @@ class CoursesController < ApplicationController
   #
   def search
     if params[:search] && !params[:search].blank?
-      @courses = Course.search(params[:search]).order(:course).page(params[:page]).per(10)
+      @courses = Course.search(params[:search]).order(:course).page(params[:page]).per(20)
       @course_search_count = @courses.count
       session[:search] = params[:search]
       session[:search_option] = params[:search_option] if params[:search_option]
@@ -119,9 +119,9 @@ class CoursesController < ApplicationController
   # @return [String] - redirect to the Course edit page
   # 
   def set_current_course
-    if (params[:id])
+    if params[:id]
       session[:current_course] = params[:id]
-      redirect_to edit_course_path(params[:id].to_s), :flash => { :notice => "Current Course Reserve List was successfully set." }
+      redirect_to edit_course_path(params[:id].to_s), notice: 'Current Course was successfully set.'
     end
   end
 
@@ -133,7 +133,7 @@ class CoursesController < ApplicationController
   # 
   def clone_course
     new_course = @course.amoeba_dup
-    redirect_to edit_course_path(new_course), notice: 'Course Reserve List was successfully cloned.' if new_course.save!
+    redirect_to edit_course_path(new_course), notice: 'Course was successfully cloned.' if new_course.save!
   end
   
   ##
@@ -143,11 +143,11 @@ class CoursesController < ApplicationController
   # @return [String] - redirect to the Course edit page if successful
   #   
   def add_to_course
-    if(session[:current_course] != nil)
+    if !session[:current_course].nil?
       add_media_to_course(params[:media_ids],session[:current_course])
-      redirect_to edit_course_path(@course), :flash => { :notice => "Media was successfully added to the current Course Reserve List." }
+      redirect_to edit_course_path(@course), notice: 'Media was successfully added to current Course.'
     else
-      redirect_to courses_path, :flash => { :alert => "No current Course Reserve List is set.  Please set the Course Reserve List first." }
+      redirect_to courses_path, alert: 'No current Course is set.  Set the Course first.'
     end
   end
 
@@ -158,33 +158,34 @@ class CoursesController < ApplicationController
   def send_email
     if send_list?
       CourseMailer.course_email(current_user, @course, @sorted_media).deliver_now
-      redirect_to edit_course_path(@course), :flash => { :notice => "The confirmation email has been sent." }
+      redirect_to edit_course_path(@course), notice: 'The confirmation email has been sent.'
     else
-      redirect_to edit_course_path(@course), :flash => { :notice => "Course successfully updated." }
+      redirect_to edit_course_path(@course), notice: 'Course successfully updated.'
     end    
   end
            
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_course
-      @course = Course.find(params[:id])
-    end
+  
+  # Use callbacks to share common setup or constraints between actions.
+  def set_course
+    @course = Course.find(params[:id])
+  end
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_sorted_media_list
-      @sorted_media = get_sorted_media(@course)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_sorted_media_list
+    @sorted_media = get_sorted_media(@course)
+  end
     
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def course_params
-      params.require(:course).permit(:quarter, :year, :course, :instructor, media_ids: [])
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def course_params
+    params.require(:course).permit(:quarter, :year, :course, :instructor, media_ids: [])
+  end
    
-    def removing_item?
-      params[:commit] == "Remove Item(s)"
-    end
+  def removing_item?
+    params[:commit] == "Remove Item(s)"
+  end
 
-    def send_list?
-      params[:commit] == "Send List"
-    end            
+  def send_list?
+    params[:commit] == "Send List"
+  end         
 end

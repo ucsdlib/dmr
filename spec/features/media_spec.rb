@@ -108,7 +108,12 @@ feature "Media" do
     expect(page).to have_content('Test Media 2')
     expect(page).to have_content('Showing all 2 media')        
   end
-  
+ 
+  scenario "wants to search for media with no search term" do
+    visit search_media_path( {:search => ''} )  
+    expect(page).to have_content('No text is inputted.')
+  end
+   
   scenario "wants to search for media with no matching search term" do    
     visit search_media_path( {:search => 'abcdef'} )
     expect(page).to have_content('There were no results for the search: "abcdef"')        

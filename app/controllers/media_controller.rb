@@ -67,7 +67,7 @@ class MediaController < ApplicationController
   #
   def update 
     if @media.update_attributes(media_params) 
-      redirect_to edit_medium_path(@media), :flash => { :notice => "Media successfully updated." }
+      redirect_to edit_medium_path(@media), notice: 'Media successfully updated.'
     else
       render :edit
     end   
@@ -80,48 +80,47 @@ class MediaController < ApplicationController
   #
   def destroy
     @media.destroy 
-    redirect_to media_path, :flash => { :notice => "Media was successfully destroyed." }
+    redirect_to media_path, notice: 'Media was successfully destroyed.'
   end
  
   ##
   # Handles GET search for Media object
   #
-  def search  
-    if search_course_option?
-      redirect_to :controller => 'courses', :action => 'search', :search => params[:search], :search_option => params[:search_option]
-    elsif params[:search] && !params[:search].blank? 
-      @media = Media.search(params[:search]).order(:title).page(params[:page]).per(10)
-      @search_count = @media.count
-      session[:search] = params[:search] if params[:search]  
-      session[:search_option] = params[:search_option] if params[:search_option]
+  def search
+    if params[:search] && params[:search].blank? 
+      redirect_to root_path, alert: 'No text is inputted.'
+    elsif params[:search] && !params[:search].blank?
+      if search_course_option?
+        redirect_to :controller => 'courses', :action => 'search', :search => params[:search], :search_option => params[:search_option]
+      else
+        create_search_session
+      end
     end
   end
-           
+             
   private
-    ##
-    # Specify which parameters are allowed into Media controller actions to prevent wrongful mass assignment.
-    #
-    # @!visibility private
-    #  
-    def media_params
-      params.require(:media).permit(:title, :director, :call_number, :year, :file_name, course_ids: [])
-    end
+  ##
+  # Specify which parameters are allowed into Media controller actions to prevent wrongful mass assignment.
+  #
+  # @!visibility private
+  #  
+  def media_params
+    params.require(:media).permit(:title, :director, :call_number, :year, :file_name, course_ids: [])
+  end
 
-    ##
-    # Specify which Reports parameters are allowed into Media controller actions to prevent wrongful mass assignment.
-    #
-    # @!visibility private
-    # 
-    #def reports_params
-    #  params.require(:report).permit(:course_id)
-    #end
-
-    # Use callbacks to share common setup or constraints between actions.
-    def set_media
-      @media = Media.find(params[:id])
-    end  
+  # Use callbacks to share common setup or constraints between actions.
+  def set_media
+    @media = Media.find(params[:id])
+  end  
     
-    def search_course_option?
-      params[:search_option] == "courses"
-    end          
+  def search_course_option?
+    params[:search_option] == "courses"
+  end
+
+  def create_search_session
+    @media = Media.search(params[:search]).order(:title).page(params[:page]).per(20)
+    @search_count = @media.count
+    session[:search] = params[:search]
+    session[:search_option] = params[:search_option] if params[:search_option]
+  end              
 end
