@@ -89,7 +89,7 @@ feature "Course" do
   scenario "wants to set current Course Reserve List" do
     visit edit_course_path(@course1)
     click_on "Set Current Course"
-    expect(page).to have_content('Current Course Reserve List was successfully set.')
+    expect(page).to have_content('Current Course was successfully set.')
     click_on "View Current Course Reserve List"
     current_path.should == edit_course_path(@course1)        
   end
@@ -97,7 +97,7 @@ feature "Course" do
   scenario "wants to add a media object to the current Course Reserve List when no current course is set" do
     visit edit_medium_path(@media1)
     click_on "Add to Course Reserve List"
-    expect(page).to have_content('No current Course Reserve List is set. Please set the Course Reserve List first.')     
+    expect(page).to have_content('No current Course is set.  Set the Course first.')     
   end  
     
   scenario "wants to add a media object to the current Course Reserve List from media edit page" do
@@ -110,7 +110,7 @@ feature "Course" do
     click_on "Add to Course Reserve List"
     
     #Check that changes are saved
-    expect(page).to have_content('Media was successfully added to the current Course Reserve List.')
+    expect(page).to have_content('Media was successfully added to current Course.')
     current_path.should == edit_course_path(@course1)
     expect(@course1.media.size).to eq(1)
     expect(page).to have_content('Test Media 1')
@@ -134,7 +134,7 @@ feature "Course" do
     click_on "Add to Course Reserve List"
     
     #Check that changes are saved
-    expect(page).to have_content('Media was successfully added to the current Course Reserve List.')
+    expect(page).to have_content('Media was successfully added to current Course.')
     current_path.should == edit_course_path(@course1)
     expect(@course1.media.size).to eq(2)
     expect(page).to have_content('Test Media 1')
@@ -182,7 +182,7 @@ feature "Course" do
     click_on "Add to Course Reserve List"
     
     #Check that changes are saved
-    expect(page).to have_content('Media was successfully added to the current Course Reserve List.')
+    expect(page).to have_content('Media was successfully added to current Course.')
     current_path.should == edit_course_path(@course1)
     expect(@course1.media.size).to eq(2)
     expect(page).to have_content('Test Media 1')
@@ -212,11 +212,11 @@ feature "Course" do
     click_on "Add to Course Reserve List"  
 
     #Check that changes are saved
-    expect(page).to have_content('Media was successfully added to the current Course Reserve List.')
+    expect(page).to have_content('Media was successfully added to current Course.')
     current_path.should == edit_course_path(@course1)
     
     click_on "Clone"
-    expect(page).to have_content('Course Reserve List was successfully cloned.')
+    expect(page).to have_content('Course was successfully cloned.')
     current_path.should_not == edit_course_path(@course1) 
 
     #Check that changes are saved in new Course Reserve List
@@ -245,7 +245,7 @@ feature "Course" do
     click_on "Add to Course Reserve List"
     
     #Check that changes are saved
-    expect(page).to have_content('Media was successfully added to the current Course Reserve List.')
+    expect(page).to have_content('Media was successfully added to current Course.')
     expect(@course1.media.size).to eq(2)  
     
     # check that media object is in order
@@ -278,7 +278,7 @@ feature "Course" do
     click_on "Add to Course Reserve List"
     
     #Check that changes are saved
-    expect(page).to have_content('Media was successfully added to the current Course Reserve List.')
+    expect(page).to have_content('Media was successfully added to current Course.')
     expect(@course1.media.size).to eq(2)  
     
     # check that media object is in order
