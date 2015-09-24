@@ -138,6 +138,24 @@ describe CoursesController do
         expect(response).to render_template :edit
       end
     end
+    
+    describe "before send mail" do
+      before(:each) do     
+        @course = Fabricate(:course)
+        ActionMailer::Base.deliveries.clear        
+        put :update, id: @course, commit: "Send List", course: Fabricate.attributes_for(:course, course: 'Test Course Update')
+        @course.reload        
+      end
+
+      it "updates the requested course" do
+        expect(@course.course).to eq('Test Course Update')        
+        expect(ActionMailer::Base.deliveries.last.body.encoded).to include('Test Course Update')
+      end
+
+      it "changes the email count after the send email action" do            
+        expect(ActionMailer::Base.deliveries.count).to eq(1)
+      end    
+    end    
   end
 
   describe "DELETE destroy" do
@@ -267,7 +285,7 @@ describe CoursesController do
       get :set_current_course, id: @course.id 
       post :add_to_course, media_ids: ["#{@media.id}"]
       ActionMailer::Base.deliveries.clear
-      get :send_email, id: @course.id                         
+      get :send_email, id: @course.id, commit: "Send List"                      
     end
 
     it "changes the email count after the send email action" do            
