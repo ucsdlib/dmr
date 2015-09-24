@@ -8,7 +8,7 @@ class CoursesController < ApplicationController
   before_filter :authorize, only: [:index,:create,:edit,:update,:new,:destroy,:search]
 
   before_action :set_course, only: [:show, :edit, :update, :destroy, :clone_course, :send_email]
-  before_action :set_sorted_media_list, only: [:show, :edit, :send_email]
+  before_action :set_sorted_media_list, only: [:show, :edit, :send_email, :update]
   
   ##
   # Handles GET index request to display the last 10 Course objects from the database
@@ -83,7 +83,7 @@ class CoursesController < ApplicationController
     remove_media_from_course(params[:media_ids],@course) if removing_item?
     change_media_order(params[:media_ids],@course,params[:commit])
     if @course.update_attributes(course_params)
-      redirect_to edit_course_path(@course), :flash => { :notice => "Course successfully updated." }
+      send_email
     else
       render :edit
     end
@@ -156,10 +156,14 @@ class CoursesController < ApplicationController
   # GET /courses/send_mail
   # 
   def send_email
-    CourseMailer.course_email(current_user, @course, @sorted_media).deliver_now
-    redirect_to edit_course_path(@course), :flash => { :notice => "The confirmation email has been sent." }
+    if send_list?
+      CourseMailer.course_email(current_user, @course, @sorted_media).deliver_now
+      redirect_to edit_course_path(@course), :flash => { :notice => "The confirmation email has been sent." }
+    else
+      redirect_to edit_course_path(@course), :flash => { :notice => "Course successfully updated." }
+    end    
   end
-      
+           
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_course
@@ -178,5 +182,9 @@ class CoursesController < ApplicationController
    
     def removing_item?
       params[:commit] == "Remove Item(s)"
-    end       
+    end
+
+    def send_list?
+      params[:commit] == "Send List"
+    end            
 end
