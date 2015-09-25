@@ -23,6 +23,8 @@ module MediaHelper
     if !filename.nil?
       encrypted = encrypt_stream_name(objid, filename, request.ip)
       return Rails.configuration.wowza_baseurl + encrypted
+    else
+      nil
     end
   end
 
@@ -35,13 +37,14 @@ module MediaHelper
   #
   # @return [String] url or nil
   # @author David T.
-  ##
-
+  ## 
+  
   def encrypt_stream_name(pid, fid, ip)
+
     # random nonce
-    nonce = rand(36**16).to_s(36)
+    nonce=rand(36**16).to_s(36)
     while nonce.length < 16 do
-      nonce += 'x'
+      nonce += "x"
     end
 
     # load key from file
@@ -57,7 +60,7 @@ module MediaHelper
 
     # base64-encode
     b64 = Base64.encode64 enc
-    b64 = b64.gsub('+', '-').gsub('/', '_').gsub('\n', '')
+    b64 = b64.gsub("+", "-").gsub("/", "_").gsub("\n", "")
     "#{nonce},#{b64}"
   end
 end
