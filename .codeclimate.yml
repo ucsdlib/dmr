@@ -46,3 +46,4 @@ ratings:
 exclude_paths:
 - spec/**/*
 - vendor/**/*
+- app/assets/**/*
