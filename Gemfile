@@ -7,8 +7,7 @@ gem 'coffee-rails'
 gem 'jquery-rails', '4.0.5'
 gem 'turbolinks'
 gem 'jbuilder'
-#gem 'sdoc', '~> 0.4.0', group: :doc
-gem "bootstrap-sass", '~> 3.2.0	'
+gem 'bootstrap-sass', '~> 3.2.0	'
 gem 'pg'
 gem 'fabrication'
 gem 'yard'
@@ -50,7 +49,6 @@ end
 
 group :test do
   gem 'database_cleaner', '1.2.0'
- # gem 'shoulda-matchers', require: false, github: 'thoughtbot/shoulda-matchers', branch: 'master'
   gem 'shoulda-matchers', '2.8.0.rc2'
-  gem "codeclimate-test-reporter", require: nil
+  gem 'codeclimate-test-reporter', require: nil
 end

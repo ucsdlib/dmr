@@ -4,9 +4,9 @@
 
 class MediaController < ApplicationController
   before_filter :authorize
-  before_action :set_media, only: [:show, :edit, :update, :destroy]  
+  before_action :set_media, only: [:show, :edit, :update, :destroy]
   ##
-  # Handles GET index request to display the last 10 Media objects from the database
+  # Handles GET index request to display the last 10 Media from database
   #
   # @return [String] the resulting webpage of the last 10 Media objects
   #
@@ -20,7 +20,7 @@ class MediaController < ApplicationController
   # @return [String] the resulting webpage of a single object
   #
   def show
-    render :layout => false
+    render layout: false
   end
 
   ##
@@ -53,7 +53,7 @@ class MediaController < ApplicationController
   # Handles GET edit a Media object
   #
   # @return [String] the resulting webpage with the Media object
-  #  
+  #
   def edit
   end
 
@@ -65,12 +65,12 @@ class MediaController < ApplicationController
   # @note if failure
   # @return [String] the edit Media form
   #
-  def update 
-    if @media.update_attributes(media_params) 
+  def update
+    if @media.update_attributes(media_params)
       redirect_to edit_medium_path(@media), notice: 'Media successfully updated.'
     else
       render :edit
-    end   
+    end
   end
 
   ##
@@ -79,15 +79,15 @@ class MediaController < ApplicationController
   # @return [String] - redirect to the Media index page
   #
   def destroy
-    @media.destroy 
+    @media.destroy
     redirect_to media_path, notice: 'Media was successfully destroyed.'
   end
- 
+
   ##
   # Handles GET search for Media object
   #
   def search
-    if params[:search] && params[:search].blank? 
+    if params[:search] && params[:search].blank?
       redirect_to root_path, alert: 'No text is inputted.'
     elsif params[:search] && !params[:search].blank?
       if search_course_option?
@@ -97,13 +97,14 @@ class MediaController < ApplicationController
       end
     end
   end
-             
+
   private
+
   ##
   # Specify which parameters are allowed into Media controller actions to prevent wrongful mass assignment.
   #
   # @!visibility private
-  #  
+  #
   def media_params
     params.require(:media).permit(:title, :director, :call_number, :year, :file_name, course_ids: [])
   end
@@ -111,10 +112,10 @@ class MediaController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_media
     @media = Media.find(params[:id])
-  end  
-    
+  end
+
   def search_course_option?
-    params[:search_option] == "courses"
+    params[:search_option] == 'courses'
   end
 
   def create_search_session
@@ -122,5 +123,5 @@ class MediaController < ApplicationController
     @search_count = @media.count
     session[:search] = params[:search]
     session[:search_option] = params[:search_option] if params[:search_option]
-  end              
+  end
 end

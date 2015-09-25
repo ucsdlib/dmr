@@ -10,7 +10,7 @@ class CourseMailer < ApplicationMailer
   # @param course [Course] the Course Reserve List
   # @param sorted_media [Array] the list of media belong to the course
   #
-  
+
   def course_email(user, course, sorted_media)
     @course = course
     @sorted_media = sorted_media

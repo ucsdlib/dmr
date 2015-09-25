@@ -8,11 +8,11 @@ class CoursesController < ApplicationController
   before_filter :authorize, only: [:index, :create, :edit, :update, :new, :destroy, :search]
 
   before_action :set_course, only: [:show, :edit, :update, :destroy, :clone_course, :send_email]
-  before_action :set_sorted_media_list, only: [:show, :edit, :send_email, :update]
-  
+  before_action :set_sorted_media, only: [:show, :edit, :send_email, :update]
+
   ##
   # Handles GET index request to display last 10 Courses from the database
-  # GET /courses/index  
+  # GET /courses/index
   #
   # @return [String] the resulting webpage of the last 10 Course objects
   #
@@ -58,7 +58,6 @@ class CoursesController < ApplicationController
     else
       render :new
     end
- 
   end
 
   ##
@@ -66,7 +65,7 @@ class CoursesController < ApplicationController
   # GET /courses/1/edit
   #
   # @return [String] the resulting webpage with the Course object
-  #    
+  #
   def edit
   end
 
@@ -78,7 +77,7 @@ class CoursesController < ApplicationController
   # @return [String] - redirect to the resulting webpage
   # @note if failure
   # @return [String] the edit Course form
-  #  
+  #
   def update
     remove_media_from_course(params[:media_ids],@course) if removing_item?
     change_media_order(params[:media_ids],@course,params[:commit])
@@ -111,7 +110,7 @@ class CoursesController < ApplicationController
       session[:search_option] = params[:search_option] if params[:search_option]
     end
   end
-  
+
   ##
   # Handles set a current Course object
   # /courses/set_current_course?id=1
@@ -130,18 +129,18 @@ class CoursesController < ApplicationController
   # /courses/clone_course?id=1
   #
   # @return [String] - redirect to the Course edit page
-  # 
+  #
   def clone_course
     new_course = @course.amoeba_dup
     redirect_to edit_course_path(new_course), notice: 'Course was successfully cloned.' if new_course.save!
   end
-  
+
   ##
   # Handles POST a set of media ids to be added to the current Course object
   # POST /courses/add_to_course
   #
   # @return [String] - redirect to the Course edit page if successful
-  #   
+  #
   def add_to_course
     if !session[:current_course].nil?
       add_media_to_course(params[:media_ids],session[:current_course])
@@ -154,38 +153,38 @@ class CoursesController < ApplicationController
   ##
   # Handles GET send a confirmation email about the Course
   # GET /courses/send_mail
-  # 
+  #
   def send_email
     if send_list?
       CourseMailer.course_email(current_user, @course, @sorted_media).deliver_now
       redirect_to edit_course_path(@course), notice: 'The confirmation email has been sent.'
     else
       redirect_to edit_course_path(@course), notice: 'Course successfully updated.'
-    end    
+    end  
   end
-           
+         
   private
-  
+
   # Use callbacks to share common setup or constraints between actions.
   def set_course
     @course = Course.find(params[:id])
   end
 
   # Use callbacks to share common setup or constraints between actions.
-  def set_sorted_media_list
+  def set_sorted_media
     @sorted_media = get_sorted_media(@course)
   end
-    
+
   # Never trust parameters from the scary internet, only allow the white list through.
   def course_params
     params.require(:course).permit(:quarter, :year, :course, :instructor, media_ids: [])
   end
-   
+
   def removing_item?
-    params[:commit] == "Remove Item(s)"
+    params[:commit] == 'Remove Item(s)'
   end
 
   def send_list?
-    params[:commit] == "Send List"
-  end         
+    params[:commit] == 'Send List'
+  end       
 end
