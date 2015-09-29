@@ -20,7 +20,10 @@
 	      ],
 	      <!--title of media file-->
 	      title: "<%= m.title %>",
-	  
+	      
+          <!--Brief media description text area-->
+	      description: "Director: <%= m.director %> Year: <%= m.year %>",
+	  	  
 	      <!--add image: to display thumbnail-->
 	      image: "<%= thumbnailURL%>"
 	  
@@ -35,11 +38,12 @@
 
 	  listbar: {
         position: 'right',
-        size: 384,
+        size: "25%",
       },
-      height: 360,
-	  width: '1024',
-	  skin: 'roundster',
+	  width: "100%",
+	  height: "100%",
+	  aspectratio: "16:6",
+	  skin: 'glow',
     });
 
   </script>

@@ -26,7 +26,15 @@ feature "Media" do
     expect(page).to have_content('Test Media 1')
     expect(page).to have_content('Test Media 2')
   end
-  
+ 
+  scenario "is on media index page with 'Create New Media Record' button" do
+    visit media_path
+    expect(page).to have_selector('h3', :text => 'Listing Media') 
+    expect(page).to have_content('Test Media 1')
+    expect(page).to have_content('Test Media 2')
+    expect(page).to have_selector('a.btn-primary', :text => 'Create New Media Record')
+  end
+    
   scenario "is on the media show page" do
     visit medium_path(@media1)
     expect(page).to have_selector('h3', :text => @media1.title)
@@ -100,12 +108,24 @@ feature "Media" do
     expect(page).to have_content('Test Media 2')
     expect(page).to have_content('Showing all 2 media')        
   end
-  
+ 
+  scenario "wants to search for media with no search term" do
+    visit search_media_path( {:search => ''} )  
+    expect(page).to have_content('No text is inputted.')
+  end
+   
   scenario "wants to search for media with no matching search term" do    
     visit search_media_path( {:search => 'abcdef'} )
     expect(page).to have_content('There were no results for the search: "abcdef"')        
   end
 
+  scenario "wants to search for media file name" do
+    visit search_media_path( {:search => 'toystory'} )  
+    expect(page).to have_content('Showing 1 media')   
+    expect(page).to have_content('Test Media 1')
+    expect(page).to have_content('toystory.mp4') 
+  end
+  
   scenario "wants to return to search results page after viewing a media record" do
     visit search_media_path( {:search => 'Test'} )  
     expect(page).to have_content('Test Media 1')

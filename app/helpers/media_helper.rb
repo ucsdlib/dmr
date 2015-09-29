@@ -2,7 +2,7 @@
 # @author Vivian <tchu@ucsd.edu>
 #---
 
-require "base64"
+require 'base64'
 
 module MediaHelper
 
@@ -19,9 +19,9 @@ module MediaHelper
   # @return [String] url or nil
   ##
 
-  def grabWowzaURL(filename,objid)
+  def grabWowzaURL(filename, objid)
     if !filename.nil?
-      encrypted = encrypt_stream_name( objid, filename, request.ip )
+      encrypted = encrypt_stream_name(objid, filename, request.ip)
       return Rails.configuration.wowza_baseurl + encrypted
     else
       nil
@@ -39,7 +39,7 @@ module MediaHelper
   # @author David T.
   ## 
   
-  def encrypt_stream_name( pid, fid, ip )
+  def encrypt_stream_name(pid, fid, ip)
 
     # random nonce
     nonce=rand(36**16).to_s(36)
@@ -48,10 +48,10 @@ module MediaHelper
     end
 
     # load key from file
-    key= File.read Rails.configuration.wowza_directory + 'streaming.key'
+    key = File.read Rails.configuration.wowza_directory + 'streaming.key'
 
     # encrypt
-    str="#{pid} #{fid} #{ip}"
+    str = "#{pid} #{fid} #{ip}"
     cipher = OpenSSL::Cipher::AES.new(128,:CBC)
     cipher.encrypt
     cipher.key = key
@@ -60,7 +60,7 @@ module MediaHelper
 
     # base64-encode
     b64 = Base64.encode64 enc
-    b64 = b64.gsub("+","-").gsub("/","_").gsub("\n","")
+    b64 = b64.gsub("+", "-").gsub("/", "_").gsub("\n", "")
     "#{nonce},#{b64}"
   end
 end

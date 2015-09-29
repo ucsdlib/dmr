@@ -9,9 +9,9 @@ class WelcomeController < ApplicationController
   #
   # @return [String] the resulting webpage
   def index
-    @menu_display = "false"
-    @search_box_display = "false"
+    @menu_display = 'false'
+    @search_box_display = 'false'
     @menu_display = nil if logged_in?
   end
-    
+
 end
