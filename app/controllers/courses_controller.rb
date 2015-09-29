@@ -17,7 +17,7 @@ class CoursesController < ApplicationController
   # @return [String] the resulting webpage of the last 10 Course objects
   #
   def index
-    @courses = Course.all
+    @courses = Course.order('created_at DESC').limit(10)
   end
 
   ##
