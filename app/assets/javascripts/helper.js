@@ -3,7 +3,7 @@
 //----------------
 
 $(document).ready(function()
-{
+{                                  
   //Select all check boxes
   $("#check_all").on("click",function()
   {
@@ -11,7 +11,7 @@ $(document).ready(function()
     var chklength = chk_arr.length;
     var flag =  $('#check_all').val();
 
-    for(k=0;k< chklength;k++)
+    for(k=0; k < chklength; k++)
     {
       if(flag === 'false')
       {
