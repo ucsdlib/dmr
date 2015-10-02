@@ -2,10 +2,12 @@ require 'spec_helper'
 
 feature "Media" do
   before(:all) do
+    @course1 = Course.create course: "Test Course 1", instructor: "Test Instructor 1", year: "2015", quarter: "Spring"
     @media1 = Media.create title: "Test Media 1", director: "Test Director 1", year: "2015", call_number: "11111111", file_name: "toystory.mp4"
     @media2 = Media.create title: "Test Media 2", director: "Test Director 2", year: "2016", call_number: "77777777", file_name: "file2.mp4"    
   end
   after(:all) do
+    @course1.delete
     @media1.delete
     @media2.delete
   end
@@ -156,5 +158,46 @@ feature "Media" do
     
     #Check that the search_option radio button is still selected
     find("input[name='search_option'][type='radio'][value='media']").should be_checked        
-  end                          
+  end
+  
+  scenario "wants to use delete selected media records" do
+    # set current course   
+    visit edit_course_path(@course1) 
+    click_on "Set Current Course"
+      
+    # search for media objects
+    visit search_media_path( {:search => 'Test'} )  
+    expect(page).to have_content('Test Media 1')
+    expect(page).to have_content('Test Media 2')
+    expect(page).to have_content('Showing all 2 media')   
+        
+    # add to course list    
+    find("input[type='checkbox'][value='#{@media1.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media2.id}']").set(true)
+    click_on "Add to Course Reserve List"
+    
+    # check that media records are added
+    expect(page).to have_content('Media was successfully added to current Course.')
+    expect(@course1.media.size).to eq(2)  
+    
+    # search for media objects again to select records to delete
+    visit search_media_path( {:search => 'Test'} )  
+    expect(page).to have_content('Showing all 2 media')       
+
+    # delete media records and any associate reference in the course list    
+    find("input[type='checkbox'][value='#{@media1.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media2.id}']").set(true)
+    click_on "Delete Selected Records"
+    
+    expect(page).to have_content('Selected Records were successfully deleted.')
+    
+    # search for media objects
+    visit search_media_path( {:search => 'Test'} )
+    expect(page).to have_content('There were no results for the search: "Test"')  
+    expect(page).to_not have_content('Test Media 1')
+    expect(page).to_not have_content('Test Media 2')
+            
+    # check that the media object references in course list are also deleted
+    expect(@course1.media.size).to eq(0)         
+  end                              
 end

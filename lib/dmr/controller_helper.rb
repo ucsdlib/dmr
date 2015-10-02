@@ -184,6 +184,23 @@ module Dmr
         end
       end          
     end
-                                             
+
+    ##
+    # Removes selected media objects
+    #
+    # @param filename [Array] set of Media's ids
+    #
+    ##
+    def delete_media(media_ids)
+      media_ids.each do |id|
+        media = Media.find(id.to_i)
+        report_tags = Report.where(media_id: id.to_i)
+        report_tags.each do |tag|     
+          course = Course.find(tag.course_id)
+          course.reports.delete(tag)      
+        end
+        media.destroy
+      end 
+    end                                             
   end
 end

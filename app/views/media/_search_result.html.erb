@@ -33,9 +33,8 @@
     </div>
   </div>
  <div class="text-center">
-    <%= f.primary "Add to Course Reserve List"%> 
-  </div>
-  <div class="text-center">
+    <%= f.primary "Add to Course Reserve List"%>    
     <%= link_to "Create New Media Record", new_medium_path, class: "btn btn-primary"%>
+    <%= f.primary "Delete Selected Records", data: { confirm: 'Are you sure?' }%>
   </div>  
 <% end %>  
