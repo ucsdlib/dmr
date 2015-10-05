@@ -142,7 +142,10 @@ class CoursesController < ApplicationController
   # @return [String] - redirect to the Course edit page if successful
   #
   def add_to_course
-    if !session[:current_course].nil?
+    if deleting_media?
+      delete_media(params[:media_ids])
+      redirect_to media_path, notice: 'Selected Records were successfully deleted.' 
+    elsif !session[:current_course].nil?
       add_media_to_course(params[:media_ids],session[:current_course])
       redirect_to edit_course_path(@course), notice: 'Media was successfully added to current Course.'
     else
@@ -186,5 +189,9 @@ class CoursesController < ApplicationController
 
   def send_list?
     params[:commit] == 'Send List'
-  end       
+  end
+  
+  def deleting_media?
+    params[:commit] == 'Delete Selected Records'
+  end          
 end
