@@ -6,12 +6,28 @@ feature "Course" do
     @course2 = Course.create course: "Test Course 2", instructor: "Test Instructor 2", year: "2015", quarter: "Summer"
     @media1 = Media.create title: "Test Media 1", director: "Test Director 1", year: "2015", call_number: "11111111", file_name: "toystory.mp4"
     @media2 = Media.create title: "Test Media 2", director: "Test Director 2", year: "2016", call_number: "77777777", file_name: "file2.mp4"          
+    @media3 = Media.create title: "Test Media 3", director: "Test Director 1", year: "2015", call_number: "11111111", file_name: "toystory.mp4"
+    @media4 = Media.create title: "Test Media 4", director: "Test Director 2", year: "2016", call_number: "77777777", file_name: "file2.mp4"  
+    @media5 = Media.create title: "Test Media 5", director: "Test Director 1", year: "2015", call_number: "11111111", file_name: "toystory.mp4"
+    @media6 = Media.create title: "Test Media 6", director: "Test Director 2", year: "2016", call_number: "77777777", file_name: "file2.mp4" 
+    @media7 = Media.create title: "Test Media 7", director: "Test Director 2", year: "2016", call_number: "77777777", file_name: "file2.mp4"         
+    @media8 = Media.create title: "Test Media 8", director: "Test Director 1", year: "2015", call_number: "11111111", file_name: "toystory.mp4"
+    @media9 = Media.create title: "Test Media 9", director: "Test Director 2", year: "2016", call_number: "77777777", file_name: "file2.mp4"
+    @media10 = Media.create title: "Test Media 10", director: "Test Director 1", year: "2015", call_number: "11111111", file_name: "toystory.mp4"
   end
   after(:all) do
     @course1.delete
     @course2.delete
     @media1.delete
-    @media2.delete    
+    @media2.delete
+    @media3.delete
+    @media4.delete
+    @media5.delete
+    @media6.delete
+    @media7.delete
+    @media8.delete
+    @media9.delete
+    @media10.delete
   end
   before(:each) do
     sign_in_developer
@@ -126,7 +142,7 @@ feature "Course" do
     visit search_media_path( {:search => 'Test'} )  
     expect(page).to have_content('Test Media 1')
     expect(page).to have_content('Test Media 2')
-    expect(page).to have_content('Showing all 2 media')   
+    expect(page).to have_content('Showing all 10 media')   
         
     # add to course list    
     find("input[type='checkbox'][value='#{@media1.id}']").set(true)
@@ -174,7 +190,7 @@ feature "Course" do
     visit search_media_path( {:search => 'Test'} )  
     expect(page).to have_content('Test Media 1')
     expect(page).to have_content('Test Media 2')
-    expect(page).to have_content('Showing all 2 media')   
+    expect(page).to have_content('Showing all 10 media')   
         
     # add to course list    
     find("input[type='checkbox'][value='#{@media1.id}']").set(true)
@@ -237,27 +253,35 @@ feature "Course" do
     visit search_media_path( {:search => 'Test'} )  
     expect(page).to have_content('Test Media 1')
     expect(page).to have_content('Test Media 2')
-    expect(page).to have_content('Showing all 2 media')   
+    expect(page).to have_content('Showing all 10 media')   
         
     # add to course list    
     find("input[type='checkbox'][value='#{@media1.id}']").set(true)
     find("input[type='checkbox'][value='#{@media2.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media3.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media4.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media5.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media6.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media7.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media8.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media9.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media10.id}']").set(true)    
     click_on "Add to Course Reserve List"
     
     #Check that changes are saved
     expect(page).to have_content('Media was successfully added to current Course.')
-    expect(@course1.media.size).to eq(2)  
+    expect(@course1.media.size).to eq(10)  
     
     # check that media object is in order
     page.all('tr')[1].text.should include '1 Test Media 1'
-    page.all('tr')[2].text.should include '2 Test Media 2' 
+    page.all('tr')[2].text.should include '2 Test Media 10' 
     
     # select 2nd media object and click the 'Move Up One' button
-    find("input[type='checkbox'][value='#{@media2.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media10.id}']").set(true)
     click_on "Move Up One" 
     
     # check that 2nd media object is displayed first
-    page.all('tr')[1].text.should include '1 Test Media 2'
+    page.all('tr')[1].text.should include '1 Test Media 10'
     page.all('tr')[2].text.should include '2 Test Media 1'               
   end
   
@@ -270,27 +294,35 @@ feature "Course" do
     visit search_media_path( {:search => 'Test'} )  
     expect(page).to have_content('Test Media 1')
     expect(page).to have_content('Test Media 2')
-    expect(page).to have_content('Showing all 2 media')   
+    expect(page).to have_content('Showing all 10 media')   
         
     # add to course list    
     find("input[type='checkbox'][value='#{@media1.id}']").set(true)
     find("input[type='checkbox'][value='#{@media2.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media3.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media4.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media5.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media6.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media7.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media8.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media9.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media10.id}']").set(true)       
     click_on "Add to Course Reserve List"
     
     #Check that changes are saved
     expect(page).to have_content('Media was successfully added to current Course.')
-    expect(@course1.media.size).to eq(2)  
+    expect(@course1.media.size).to eq(10)  
     
     # check that media object is in order
     page.all('tr')[1].text.should include '1 Test Media 1'
-    page.all('tr')[2].text.should include '2 Test Media 2' 
+    page.all('tr')[2].text.should include '2 Test Media 10' 
     
     # select first media object and click the 'Move Down One' button
     find("input[type='checkbox'][value='#{@media1.id}']").set(true)
     click_on "Move Down One" 
     
     # check that first media object is displayed 2nd
-    page.all('tr')[1].text.should include '1 Test Media 2'
+    page.all('tr')[1].text.should include '1 Test Media 10'
     page.all('tr')[2].text.should include '2 Test Media 1'               
   end
   
@@ -303,7 +335,7 @@ feature "Course" do
     visit search_media_path( {:search => 'Test'} )  
     expect(page).to have_content('Test Media 1')
     expect(page).to have_content('Test Media 2')
-    expect(page).to have_content('Showing all 2 media')   
+    expect(page).to have_content('Showing all 10 media')   
         
     # add to course list    
     find("input[type='checkbox'][value='#{@media1.id}']").set(true)
