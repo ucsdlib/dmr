@@ -97,7 +97,7 @@ module Dmr
     #
     ##
     def update_report_counter(report,counter)
-      if report && report.first
+      if report && report.first && counter
         report.first.counter = counter
         report.first.save!        
       end          
@@ -175,11 +175,9 @@ module Dmr
     #
     ##    
     def move_down(course,current_counter,report)
-      if current_counter < course.reports.size
-        next_counter = get_counter(course.id, current_counter,"next") 
-        update_report(course.id, next_counter, current_counter)
-        update_report_counter(report, next_counter)
-      end         
+      next_counter = get_counter(course.id, current_counter,"next")
+      update_report(course.id, next_counter, current_counter)
+      update_report_counter(report, next_counter)
     end 
 
     ##
