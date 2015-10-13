@@ -9,6 +9,10 @@ AllCops:
     - 'bin/**/*'
     - 'db/**/*'
     - 'app/assets/**/*'
+    - 'config/**/*'
+    - 'doc/**/*'
+    - 'spec/**/*'
+    - 'test/**/*'
 
 Style/Encoding:
   Enabled: true
