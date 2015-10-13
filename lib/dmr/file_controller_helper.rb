@@ -1,3 +1,4 @@
+# encoding: utf-8
 #---
 # @author Vivian <tchu@ucsd.edu>
 #---
@@ -20,11 +21,11 @@ module Dmr
     # @return [Bytes] the file content
     #
     def display_file(objid, fileid)
-      if(fileid.include? ".jpg")
+      if(fileid.include? '.jpg')
         set_file_header(objid, fileid)
       
         self.response_body = Enumerator.new do |blk|
-          open("#{Rails.configuration.file_path}#{fileid}", "rb") do |seg|
+          open("#{Rails.configuration.file_path}#{fileid}", 'rb') do |seg|
             blk << seg.read
           end
         end
@@ -40,7 +41,7 @@ module Dmr
     #
     def set_file_header(objid, fileid)     
       disposition = params[:disposition] || 'inline'
-      filename = params["filename"] || "#{objid}#{fileid}"
+      filename = params['filename'] || "#{objid}#{fileid}"
       headers['Content-Disposition'] = "#{disposition}; filename=#{filename}"   
       headers['Content-Type'] = 'image/jpeg'    
       headers['Last-Modified'] = Time.now.ctime.to_s

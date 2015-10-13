@@ -1,3 +1,4 @@
+# encoding: utf-8
 #---
 # @author Vivian <tchu@ucsd.edu>
 # @author hweng@ucsd.edu
@@ -8,7 +9,7 @@ require 'net/ldap'
 class User < ActiveRecord::Base
 
   def self.find_or_create_for_developer(access_token)
-    u = User.where(:uid => 1,:provider => "developer").first || User.create(:uid => 1, :provider => "developer", :email => "developer@ucsd.edu", :name => "developer")
+    u = User.where(:uid => 1,:provider => 'developer').first || User.create(:uid => 1, :provider => 'developer', :email => 'developer@ucsd.edu', :name => 'developer')
   end
 
   def self.find_or_create_for_shibboleth(access_token)
@@ -30,7 +31,7 @@ class User < ActiveRecord::Base
   end
   
   def self.lookup_group(search_param)   
-    result = ""
+    result = ''
 
     ldap = Net::LDAP.new  :host => Rails.application.secrets.ldap_host, 
                           :port => Rails.application.secrets.ldap_port, 
@@ -40,9 +41,9 @@ class User < ActiveRecord::Base
                             :method => :simple,
                             :username => Rails.application.secrets.ldap_username, 
                             :password => Rails.application.secrets.ldap_password 
-                      }
+                          }
 
-    result_attrs = ["sAMAccountName"]
+    result_attrs = ['sAMAccountName']
     
     ldap.search(:filter => ldap_filter(search_param), :attributes => result_attrs, :return_result => false) { |item| 
        result = item.sAMAccountName.first}
@@ -59,9 +60,9 @@ class User < ActiveRecord::Base
   end
 
   def self.ldap_filter(search_param)
-    search_filter = Net::LDAP::Filter.eq("sAMAccountName", search_param)
-    category_filter = Net::LDAP::Filter.eq("objectcategory", "user")
-    member_filter = Net::LDAP::Filter.eq("memberof", Rails.application.secrets.ldap_group)
+    search_filter = Net::LDAP::Filter.eq('sAMAccountName', search_param)
+    category_filter = Net::LDAP::Filter.eq('objectcategory', 'user')
+    member_filter = Net::LDAP::Filter.eq('memberof', Rails.application.secrets.ldap_group)
     s_c_filter = Net::LDAP::Filter.join(search_filter, category_filter)
     return Net::LDAP::Filter.join(s_c_filter, member_filter)
   end

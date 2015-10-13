@@ -1,3 +1,4 @@
+# encoding: utf-8
 #---
 # @author Vivian <tchu@ucsd.edu>
 #---
@@ -68,9 +69,9 @@ module Dmr
       next_counter = 0
       counter_list = get_sorted_counter(Course.find(course_id))
       counter_pos = counter_list.index(counter.to_s)
-      if counter_type == "next"
+      if counter_type == 'next'
         next_counter = counter_list[counter_pos+1]
-      elsif counter_type == "previous"
+      elsif counter_type == 'previous'
         next_counter = counter_list[counter_pos-1]
       end
       return next_counter 
@@ -161,7 +162,7 @@ module Dmr
     ##    
     def move_up(course,current_counter,report)      
       if current_counter > 1 
-        pre_counter=get_counter(course.id,current_counter,"previous")          
+        pre_counter=get_counter(course.id,current_counter,'previous')          
         update_report(course.id,pre_counter,current_counter)
         update_report_counter(report,pre_counter)
       end          
@@ -175,7 +176,7 @@ module Dmr
     #
     ##    
     def move_down(course,current_counter,report)
-      next_counter = get_counter(course.id, current_counter,"next")
+      next_counter = get_counter(course.id, current_counter,'next')
       update_report(course.id, next_counter, current_counter)
       update_report_counter(report, next_counter)
     end 
@@ -194,8 +195,8 @@ module Dmr
         media_ids.each do |id|
           report = Report.where(course_id: course.id, media_id: id.to_i)      
           current_counter = report.first.counter.to_i if report && report.first
-          move_up(course, current_counter, report) if(type == "Move Up One")
-          move_down(course, current_counter, report) if (type == "Move Down One")
+          move_up(course, current_counter, report) if(type == 'Move Up One')
+          move_down(course, current_counter, report) if (type == 'Move Down One')
         end
       end          
     end

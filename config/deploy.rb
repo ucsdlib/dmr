@@ -1,3 +1,4 @@
+# encoding: utf-8
 set :application, 'dmr'
 set :repo_url, 'git@github.com:ucsdlib/dmr.git'
 
@@ -38,7 +39,7 @@ namespace :deploy do
     end
   end
 
-  desc "Write the current version to public/version.txt"
+  desc 'Write the current version to public/version.txt'
   task :write_version do
     on roles(:app), in: :sequence do
       within repo_path do

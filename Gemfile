@@ -1,3 +1,4 @@
+# encoding: utf-8
 source 'https://rubygems.org'
 
 gem 'rails', '4.2.4'
@@ -45,6 +46,8 @@ group :development, :test do
   gem 'launchy', '~> 2.4.3'                           
   gem 'unicorn', '~> 4.8.3'
   gem 'pry'
+  gem 'rubocop', require: false
+  gem 'rubocop-rspec'
 end
 
 group :test do

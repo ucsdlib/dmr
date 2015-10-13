@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Users::SessionsController < ApplicationController
   def new
     if Rails.configuration.shibboleth

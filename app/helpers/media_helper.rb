@@ -1,3 +1,4 @@
+# encoding: utf-8
 #---
 # @author Vivian <tchu@ucsd.edu>
 #---
@@ -44,7 +45,7 @@ module MediaHelper
     # random nonce
     nonce=rand(36**16).to_s(36)
     while nonce.length < 16 do
-      nonce += "x"
+      nonce += 'x'
     end
 
     # load key from file
@@ -60,7 +61,7 @@ module MediaHelper
 
     # base64-encode
     b64 = Base64.encode64 enc
-    b64 = b64.gsub("+", "-").gsub("/", "_").gsub("\n", "")
+    b64 = b64.gsub('+', '-').gsub('/', '_').gsub("\n", '')
     "#{nonce},#{b64}"
   end
 end

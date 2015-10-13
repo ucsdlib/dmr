@@ -1,3 +1,4 @@
+# encoding: utf-8
 Rails.application.routes.draw do
   root 'welcome#index'
   get 'welcome/index'
@@ -18,14 +19,14 @@ Rails.application.routes.draw do
    end
   end
   
-  get "media/:id/:ds", :to => 'file#show', :constraints => { :ds => /[^\/]+/ }, :as => 'file'  
-  match "courses/:id/:quarter/:year/:course", :to => 'courses#show', :as => :course_report, via: [:get]
+  get 'media/:id/:ds', :to => 'file#show', :constraints => { :ds => /[^\/]+/ }, :as => 'file'  
+  match 'courses/:id/:quarter/:year/:course', :to => 'courses#show', :as => :course_report, via: [:get]
   
-  get "/auth/shibboleth", as: :shibboleth
-  get "/auth/developer", to: 'users/sessions#developer', as: :developer
-  match "/auth/shibboleth/callback" => "users/sessions#shibboleth", as: :callback, via: [:get, :post]
-  get '/users/sign_in', :to => "users/sessions#new", :as => :new_user_session
-  get '/users/sign_out', :to => "users/sessions#destroy", :as => :destroy_user_session
+  get '/auth/shibboleth', as: :shibboleth
+  get '/auth/developer', to: 'users/sessions#developer', as: :developer
+  match '/auth/shibboleth/callback' => 'users/sessions#shibboleth', as: :callback, via: [:get, :post]
+  get '/users/sign_in', :to => 'users/sessions#new', :as => :new_user_session
+  get '/users/sign_out', :to => 'users/sessions#destroy', :as => :destroy_user_session
 end
 
 

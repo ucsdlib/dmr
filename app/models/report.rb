@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Report < ActiveRecord::Base
   belongs_to :course, :dependent => :destroy
   belongs_to :media, :dependent => :destroy

@@ -1,3 +1,4 @@
+# encoding: utf-8
 # bundle exec rake import
 # This task import data from csv to create media records
 
