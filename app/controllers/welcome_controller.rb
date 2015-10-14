@@ -14,5 +14,4 @@ class WelcomeController < ApplicationController
     @search_box_display = 'false'
     @menu_display = nil if logged_in?
   end
-
 end

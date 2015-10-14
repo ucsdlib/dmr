@@ -4,7 +4,7 @@
 #---
 
 class MediaController < ApplicationController
-  before_filter :authorize
+  before_action :authorize
   before_action :set_media, only: [:show, :edit, :update, :destroy]
   ##
   # Handles GET index request to display the last 10 Media from database
@@ -92,7 +92,7 @@ class MediaController < ApplicationController
       redirect_to root_path, alert: 'No text is inputted.'
     elsif params[:search] && !params[:search].blank?
       if search_course_option?
-        redirect_to :controller => 'courses', :action => 'search', :search => params[:search], :search_option => params[:search_option]
+        redirect_to controller: 'courses', action: 'search', search: params[:search], search_option: params[:search_option]
       else
         create_search_session
       end

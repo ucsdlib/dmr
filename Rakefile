@@ -8,7 +8,7 @@ require 'inch/rake'
 Rails.application.load_tasks
 
 Inch::Rake::Suggest.new('doc:suggest') do |suggest|
-  suggest.args << '--private'  
+  suggest.args << '--private'
 end
 
 if %w(development test).include? Rails.env

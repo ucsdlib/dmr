@@ -37,7 +37,7 @@ class Users::SessionsController < ApplicationController
   protected :find_or_create_user
 
   private
- 
+
   def create_user_session(user)
     session[:user_name] = user.name
     session[:user_id] = user.uid
@@ -50,10 +50,10 @@ class Users::SessionsController < ApplicationController
   end
 
   def report_url(original_url)
-    quarters = ['Spring', 'Summer', 'Fall', 'Winter']
+    quarters = %w(Spring Summer Fall Winter)
     quarters.each do |quarter|
       return true if original_url.include?(quarter)
     end
-    return false
-  end  
+    false
+  end
 end

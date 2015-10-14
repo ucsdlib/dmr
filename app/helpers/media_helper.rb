@@ -6,7 +6,6 @@
 require 'base64'
 
 module MediaHelper
-
   #-----------
   # STREAMING
   #-----------
@@ -21,11 +20,9 @@ module MediaHelper
   ##
 
   def grabWowzaURL(filename, objid)
-    if !filename.nil?
+    unless filename.nil?
       encrypted = encrypt_stream_name(objid, filename, request.ip)
       return Rails.configuration.wowza_baseurl + encrypted
-    else
-      nil
     end
   end
 
@@ -38,22 +35,19 @@ module MediaHelper
   #
   # @return [String] url or nil
   # @author David T.
-  ## 
-  
-  def encrypt_stream_name(pid, fid, ip)
+  ##
 
+  def encrypt_stream_name(pid, fid, ip)
     # random nonce
-    nonce=rand(36**16).to_s(36)
-    while nonce.length < 16 do
-      nonce += 'x'
-    end
+    nonce = rand(36**16).to_s(36)
+    nonce += 'x' while nonce.length < 16
 
     # load key from file
     key = File.read Rails.configuration.wowza_directory + 'streaming.key'
 
     # encrypt
     str = "#{pid} #{fid} #{ip}"
-    cipher = OpenSSL::Cipher::AES.new(128,:CBC)
+    cipher = OpenSSL::Cipher::AES.new(128, :CBC)
     cipher.encrypt
     cipher.key = key
     cipher.iv = nonce
@@ -61,7 +55,7 @@ module MediaHelper
 
     # base64-encode
     b64 = Base64.encode64 enc
-    b64 = b64.gsub('+', '-').gsub('/', '_').gsub("\n", '')
+    b64 = b64.tr('+', '-').tr('/', '_').delete("\n")
     "#{nonce},#{b64}"
   end
 end

@@ -14,5 +14,4 @@ class FileController < ApplicationController
   def show
     display_file(params[:id], params[:ds])
   end
-
 end

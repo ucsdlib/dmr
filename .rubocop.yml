@@ -1,5 +1,5 @@
 require: rubocop-rspec
-inherit_from: .rubocop_todo.yml
+#inherit_from: .rubocop_todo.yml
 
 AllCops:
   RunRailsCops: true
@@ -24,4 +24,3 @@ Style/StringLiterals:
 Style/Documentation:
   Exclude:
     - 'spec/**/*'
-

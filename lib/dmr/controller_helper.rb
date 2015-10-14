@@ -4,7 +4,7 @@
 #---
 
 module Dmr
-  module ControllerHelper 
+  module ControllerHelper
     ##
     # Adds media objects to current course list
     #
@@ -13,10 +13,10 @@ module Dmr
     #
     ##
 
-    def add_media_to_course(media_ids,current_course)
+    def add_media_to_course(media_ids, current_course)
       @course = Course.find_by_id(current_course.to_i) if current_course
       current_course_media_ids = @course.media.map(&:id) if @course.media
-      add_to_report(media_ids, @course, current_course_media_ids)  
+      add_to_report(media_ids, @course, current_course_media_ids)
     end
 
     ##
@@ -27,14 +27,14 @@ module Dmr
     # @param filename [Array] set of Current Course Media's ids
     #
     ##
-    def add_to_report(media_ids,current_course,current_course_media_ids)      
+    def add_to_report(media_ids, current_course, current_course_media_ids)
       counter = get_next_report_counter(current_course.id)
       if media_ids && current_course
         media_ids.each do |id|
           med = Media.find_by_id(id.to_i)
           if med && !current_course_media_ids.include?(id.to_i)
             current_course.reports.create(media: med, counter: counter.to_s)
-          end 
+          end
           counter = get_next_report_counter(current_course.id)
         end
       end
@@ -44,15 +44,15 @@ module Dmr
     # Get the next report counter for Course Reserve List
     #
     # @param course_id [Integer] Course ID
-    # 
+    #
     # @return next_counter [Integer] the next report counter
     #
     ##
     def get_next_report_counter(course_id)
-      next_counter = 1      
-      report = Report.where(course_id: course_id).order('created_at DESC')     
+      next_counter = 1
+      report = Report.where(course_id: course_id).order('created_at DESC')
       next_counter = report.first.counter.to_i + 1 if report && report.first
-      return next_counter     
+      next_counter
     end
 
     ##
@@ -61,22 +61,22 @@ module Dmr
     # @param course_id [Integer] Course ID
     # @param current_counter [Integer] the current report counter
     # @param counter_type [String] previous or next counter type
-    # 
+    #
     # @return counter [Integer] the previous report counter
     #
-    ##  
-    def get_counter(course_id, counter,counter_type)    
+    ##
+    def get_counter(course_id, counter, counter_type)
       next_counter = 0
       counter_list = get_sorted_counter(Course.find(course_id))
       counter_pos = counter_list.index(counter.to_s)
       if counter_type == 'next'
-        next_counter = counter_list[counter_pos+1]
+        next_counter = counter_list[counter_pos + 1]
       elsif counter_type == 'previous'
-        next_counter = counter_list[counter_pos-1]
+        next_counter = counter_list[counter_pos - 1]
       end
-      return next_counter 
+      next_counter
     end
-    
+
     ##
     # Updates the report for Course Reserve List
     #
@@ -85,9 +85,9 @@ module Dmr
     # @param new_counter [Integer] the new report counter
     #
     ##
-    def update_report(course_id, current_counter, new_counter)         
+    def update_report(course_id, current_counter, new_counter)
       report = Report.where(course_id: course_id, counter: current_counter)
-      update_report_counter(report, new_counter)  
+      update_report_counter(report, new_counter)
     end
 
     ##
@@ -97,46 +97,46 @@ module Dmr
     # @param counter [Integer] the report counter
     #
     ##
-    def update_report_counter(report,counter)
+    def update_report_counter(report, counter)
       if report && report.first && counter
         report.first.counter = counter
-        report.first.save!        
-      end          
+        report.first.save!
+      end
     end
-                
+
     ##
     # Sorts the media objects in the Course Reserve List
     #
     # @param course [Course] Course object
-    # 
+    #
     # @return media_array[Array] the list of Media object
     #
-    ##    
+    ##
     def get_sorted_media(course)
       media_array = []
-      course.reports.sort{ |a,b| a.counter.to_i <=> b.counter.to_i }.each do |r|    
+      course.reports.sort { |a, b| a.counter.to_i <=> b.counter.to_i }.each do |r|
         media = Media.find_by_id(r.media_id)
         media_array << media if media
       end
-      return media_array
+      media_array
     end
 
     ##
     # Sorts the media counter in the Course Reserve List
     #
     # @param course [Course] Course object
-    # 
+    #
     # @return counter_array[Array] the list of Media object counter
     #
-    ##   
+    ##
     def get_sorted_counter(course)
-      counter_array = []   
-      course.reports.sort{ |a,b| a.counter.to_i <=> b.counter.to_i }.each do |r|          
+      counter_array = []
+      course.reports.sort { |a, b| a.counter.to_i <=> b.counter.to_i }.each do |r|
         counter_array << r.counter
-      end  
-      return counter_array
+      end
+      counter_array
     end
-                  
+
     ##
     # Removes media objects from course list
     #
@@ -144,28 +144,28 @@ module Dmr
     # @param course [Course] Course object
     #
     ##
-    def remove_media_from_course(media_ids,course)
+    def remove_media_from_course(media_ids, course)
       if media_ids && course
         media_ids.each do |id|
-          report_tag=Report.where(course_id: course.id, media_id: id.to_i)
+          report_tag = Report.where(course_id: course.id, media_id: id.to_i)
           course.reports.delete(report_tag) if report_tag
         end
-      end    
+      end
     end
-    
+
     ##
     # Moves media object up one from course list
     #
     # @param filename [Array] set of Media's ids
     # @param course [String] Current Course ID
     #
-    ##    
-    def move_up(course,current_counter,report)      
-      if current_counter > 1 
-        pre_counter=get_counter(course.id,current_counter,'previous')          
-        update_report(course.id,pre_counter,current_counter)
-        update_report_counter(report,pre_counter)
-      end          
+    ##
+    def move_up(course, current_counter, report)
+      if current_counter > 1
+        pre_counter = get_counter(course.id, current_counter, 'previous')
+        update_report(course.id, pre_counter, current_counter)
+        update_report_counter(report, pre_counter)
+      end
     end
 
     ##
@@ -174,12 +174,12 @@ module Dmr
     # @param filename [Array] set of Media's ids
     # @param course [String] Current Course ID
     #
-    ##    
-    def move_down(course,current_counter,report)
-      next_counter = get_counter(course.id, current_counter,'next')
+    ##
+    def move_down(course, current_counter, report)
+      next_counter = get_counter(course.id, current_counter, 'next')
       update_report(course.id, next_counter, current_counter)
       update_report_counter(report, next_counter)
-    end 
+    end
 
     ##
     # Change order of media object list in course list
@@ -188,17 +188,17 @@ module Dmr
     # @param course [String] Current Course ID
     # @param type [String] submit type
     #
-    ##       
+    ##
     def change_media_order(media_ids, course, type)
       if media_ids && course
         current_counter = 0
         media_ids.each do |id|
-          report = Report.where(course_id: course.id, media_id: id.to_i)      
+          report = Report.where(course_id: course.id, media_id: id.to_i)
           current_counter = report.first.counter.to_i if report && report.first
-          move_up(course, current_counter, report) if(type == 'Move Up One')
+          move_up(course, current_counter, report) if (type == 'Move Up One')
           move_down(course, current_counter, report) if (type == 'Move Down One')
         end
-      end          
+      end
     end
 
     ##
@@ -211,12 +211,12 @@ module Dmr
       media_ids.each do |id|
         media = Media.find(id.to_i)
         report_tags = Report.where(media_id: id.to_i)
-        report_tags.each do |tag|     
+        report_tags.each do |tag|
           course = Course.find(tag.course_id)
-          course.reports.delete(tag)      
+          course.reports.delete(tag)
         end
         media.destroy
-      end 
-    end                                             
+      end
+    end
   end
 end

@@ -7,7 +7,7 @@ class Course < ActiveRecord::Base
   has_many :reports, dependent: :delete_all
   has_many :media, through: :reports
   validates :quarter, presence: true
-  validates :year, presence: true, length: { maximum: 4 }, format: { :with => /\A\d{4}\z/, :message => 'must be in number format' }
+  validates :year, presence: true, length: { maximum: 4 }, format: { with: /\A\d{4}\z/, message: 'must be in number format' }
   validates :course, presence: true
   validates :instructor, presence: true
 
@@ -19,7 +19,7 @@ class Course < ActiveRecord::Base
     clone [:media]
     clone [:reports]
   end
-    
+
   ##
   # Handles search request for Course object
   #
@@ -28,5 +28,5 @@ class Course < ActiveRecord::Base
   #
   def self.search(query)
     where('lower(course || quarter || year || instructor) like ?', "%#{query.downcase}%")
-  end  
+  end
 end
