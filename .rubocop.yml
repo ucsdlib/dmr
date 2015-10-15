@@ -1,5 +1,5 @@
 require: rubocop-rspec
-#inherit_from: .rubocop_todo.yml
+inherit_from: .rubocop_todo.yml
 
 AllCops:
   RunRailsCops: true
@@ -33,9 +33,6 @@ Metrics/MethodLength:
 
 Metrics/ModuleLength:
   Max: 102
-
-Metrics/AbcSize:
-  Max: 26
 
 Metrics/PerceivedComplexity:
   Max: 8
