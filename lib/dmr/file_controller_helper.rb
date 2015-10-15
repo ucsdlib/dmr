@@ -1,11 +1,15 @@
 # encoding: utf-8
-#---
+#
 # @author Vivian <tchu@ucsd.edu>
-#---
-
+#
 require 'open-uri'
-
+#
+# Supports the file related function
+#
 module Dmr
+  #
+  # Supports the file related function
+  #
   module FileControllerHelper
     ##
     # Displays a file given a fileid
@@ -44,7 +48,7 @@ module Dmr
       filename = params['filename'] || "#{objid}#{fileid}"
       headers['Content-Disposition'] = "#{disposition}; filename=#{filename}"
       headers['Content-Type'] = 'image/jpeg'
-      headers['Last-Modified'] = Time.now.ctime.to_s
+      headers['Last-Modified'] = Time.zone.now.ctime.to_s
     end
   end
 end

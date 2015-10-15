@@ -1,14 +1,17 @@
 # encoding: utf-8
-#---
+#
 # @author Vivian <tchu@ucsd.edu>
 # @author hweng@ucsd.edu
-#---
-
+#
 require 'net/ldap'
-
+#
+# Supports user login function
+#
 class User < ActiveRecord::Base
   def self.find_or_create_for_developer(_access_token)
-    u = User.find_by(uid: 1, provider: 'developer') || User.create(uid: 1, provider: 'developer', email: 'developer@ucsd.edu', name: 'developer')
+    User.find_by(uid: 1, provider: 'developer') || User.create(uid: 1, provider: 'developer',
+                                                               email: 'developer@ucsd.edu',
+                                                               name: 'developer')
   end
 
   def self.find_or_create_for_shibboleth(access_token)
@@ -18,11 +21,13 @@ class User < ActiveRecord::Base
       provider = access_token.provider
       name = access_token['info']['name']
 
-    rescue Exception => e
+    rescue StandardError => e
       logger.warn "shibboleth: #{e}"
     end
 
-    u = User.find_by(uid: uid, provider: provider) || User.create(uid: uid, provider: provider, email: email, name: name) unless uid.nil?
+    User.find_by(uid: uid, provider: provider) || User.create(uid: uid, provider: provider,
+                                                              email: email,
+                                                              name: name) unless uid.nil?
   end
 
   def self.in_group?(uid)
@@ -44,8 +49,9 @@ class User < ActiveRecord::Base
 
     result_attrs = ['sAMAccountName']
 
-    ldap.search(filter: ldap_filter(search_param), attributes: result_attrs, return_result: false) do |item|
-      result = item.sAMAccountName.first
+    ldap.search(filter: ldap_filter(search_param),
+                attributes: result_attrs, return_result: false) do |i|
+      result = i.sAMAccountName.first
     end
 
     get_ldap_response(ldap)
@@ -54,7 +60,8 @@ class User < ActiveRecord::Base
   end
 
   def self.get_ldap_response(ldap)
-    msg = "Response Code: #{ldap.get_operation_result.code}, Message: #{ldap.get_operation_result.message}"
+    msg = "Response Code: #{ldap.get_operation_result.code},
+           Message: #{ldap.get_operation_result.message}"
 
     fail msg unless ldap.get_operation_result.code == 0
   end

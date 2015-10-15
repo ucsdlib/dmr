@@ -1,4 +1,9 @@
 # encoding: utf-8
+# ApplicationController inherits from ActionController::Base and
+# all other controllers inherits from it. It allows the configuration
+# of things such as request forgery protection and filtering of
+# sensitive request parameters.
+#
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.

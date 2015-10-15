@@ -1,8 +1,7 @@
 # encoding: utf-8
-#---
+#
 # @author Vivian <tchu@ucsd.edu>
-#---
-
+#
 class CoursesController < ApplicationController
   include Dmr::ControllerHelper
   before_action :authorize_student, only: [:show] if Rails.configuration.shibboleth
@@ -133,7 +132,9 @@ class CoursesController < ApplicationController
   #
   def clone_course
     new_course = @course.amoeba_dup
-    redirect_to edit_course_path(new_course), notice: 'Course was successfully cloned.' if new_course.save!
+    if new_course.save!
+      redirect_to edit_course_path(new_course), notice: 'Course was successfully cloned.'
+    end
   end
 
   ##
@@ -148,7 +149,7 @@ class CoursesController < ApplicationController
       redirect_to media_path, notice: 'Selected Records were successfully deleted.'
     elsif !session[:current_course].nil?
       add_media_to_course(params[:media_ids], session[:current_course])
-      redirect_to edit_course_path(@course), notice: 'Media was successfully added to current Course.'
+      redirect_to edit_course_path(@course), notice: 'Media was successfully added to Course.'
     else
       redirect_to courses_path, alert: 'No current Course is set.  Set the Course first.'
     end

@@ -1,15 +1,12 @@
 # encoding: utf-8
-#---
+#
 # @author Vivian <tchu@ucsd.edu>
-#---
-
+#
 require 'base64'
-
+#
+# This module supports the function in Media controller
+#
 module MediaHelper
-  #-----------
-  # STREAMING
-  #-----------
-
   ##
   # Builds Wowza URL
   #
@@ -19,7 +16,7 @@ module MediaHelper
   # @return [String] url or nil
   ##
 
-  def grabWowzaURL(filename, objid)
+  def grab_wowza_url(filename, objid)
     unless filename.nil?
       encrypted = encrypt_stream_name(objid, filename, request.ip)
       return Rails.configuration.wowza_baseurl + encrypted

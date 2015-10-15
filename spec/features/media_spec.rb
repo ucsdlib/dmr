@@ -178,7 +178,7 @@ feature 'Media' do
     click_on 'Add to Course Reserve List'
     
     # check that media records are added
-    expect(page).to have_content('Media was successfully added to current Course.')
+    expect(page).to have_content('Media was successfully added to Course.')
     expect(@course1.media.size).to eq(2)  
     
     # search for media objects again to select records to delete

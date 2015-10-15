@@ -24,3 +24,32 @@ Style/StringLiterals:
 Style/Documentation:
   Exclude:
     - 'spec/**/*'
+
+Metrics/LineLength:
+  Max: 100
+
+Metrics/MethodLength:
+  Max: 12
+
+Metrics/ModuleLength:
+  Max: 102
+
+Metrics/AbcSize:
+  Max: 26
+
+Metrics/PerceivedComplexity:
+  Max: 8
+
+Metrics/MethodLength:
+  Max: 17
+
+Style/AndOr:
+  Exclude:
+    - 'app/controllers/application_controller.rb'
+
+Metrics/CyclomaticComplexity:
+  Max: 7
+
+Style/DoubleNegation:
+  Exclude:
+    - 'app/controllers/application_controller.rb'

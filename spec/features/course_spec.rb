@@ -127,7 +127,7 @@ feature 'Course' do
     click_on 'Add to Course Reserve List'
     
     #Check that changes are saved
-    expect(page).to have_content('Media was successfully added to current Course.')
+    expect(page).to have_content('Media was successfully added to Course.')
     current_path.should == edit_course_path(@course1)
     expect(@course1.media.size).to eq(1)
     expect(page).to have_content('Test Media 1')
@@ -151,7 +151,7 @@ feature 'Course' do
     click_on 'Add to Course Reserve List'
     
     #Check that changes are saved
-    expect(page).to have_content('Media was successfully added to current Course.')
+    expect(page).to have_content('Media was successfully added to Course.')
     current_path.should == edit_course_path(@course1)
     expect(@course1.media.size).to eq(2)
     expect(page).to have_content('Test Media 1')
@@ -199,7 +199,7 @@ feature 'Course' do
     click_on 'Add to Course Reserve List'
     
     #Check that changes are saved
-    expect(page).to have_content('Media was successfully added to current Course.')
+    expect(page).to have_content('Media was successfully added to Course.')
     current_path.should == edit_course_path(@course1)
     expect(@course1.media.size).to eq(2)
     expect(page).to have_content('Test Media 1')
@@ -229,7 +229,7 @@ feature 'Course' do
     click_on 'Add to Course Reserve List'  
 
     #Check that changes are saved
-    expect(page).to have_content('Media was successfully added to current Course.')
+    expect(page).to have_content('Media was successfully added to Course.')
     current_path.should == edit_course_path(@course1)
     
     click_on 'Clone'
@@ -270,7 +270,7 @@ feature 'Course' do
     click_on 'Add to Course Reserve List'
     
     #Check that changes are saved
-    expect(page).to have_content('Media was successfully added to current Course.')
+    expect(page).to have_content('Media was successfully added to Course.')
     expect(@course1.media.size).to eq(10)  
     
     # check that media object is in order
@@ -311,7 +311,7 @@ feature 'Course' do
     click_on 'Add to Course Reserve List'
     
     #Check that changes are saved
-    expect(page).to have_content('Media was successfully added to current Course.')
+    expect(page).to have_content('Media was successfully added to Course.')
     expect(@course1.media.size).to eq(10)  
     
     # check that media object is in order

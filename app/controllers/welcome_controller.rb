@@ -1,8 +1,7 @@
 # encoding: utf-8
-#---
+#
 # @author Vivian <tchu@ucsd.edu>
-#---
-
+#
 class WelcomeController < ApplicationController
   layout 'application'
   ##

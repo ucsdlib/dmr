@@ -1,9 +1,11 @@
 # encoding: utf-8
-#---
+#
 # @author Vivian <tchu@ucsd.edu>
-#---
-
+#
 module Dmr
+  #
+  # Collection of methods to support the Controllers
+  #
   module ControllerHelper
     ##
     # Adds media objects to current course list

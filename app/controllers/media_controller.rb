@@ -1,8 +1,7 @@
 # encoding: utf-8
-#---
+#
 # @author Vivian <tchu@ucsd.edu>
-#---
-
+#
 class MediaController < ApplicationController
   before_action :authorize
   before_action :set_media, only: [:show, :edit, :update, :destroy]
@@ -92,7 +91,8 @@ class MediaController < ApplicationController
       redirect_to root_path, alert: 'No text is inputted.'
     elsif params[:search] && !params[:search].blank?
       if search_course_option?
-        redirect_to controller: 'courses', action: 'search', search: params[:search], search_option: params[:search_option]
+        redirect_to controller: 'courses', action: 'search',
+                    search: params[:search], search_option: params[:search_option]
       else
         create_search_session
       end
@@ -102,12 +102,14 @@ class MediaController < ApplicationController
   private
 
   ##
-  # Specify which parameters are allowed into Media controller actions to prevent wrongful mass assignment.
+  # Specify which parameters are allowed into Media controller actions to
+  # prevent wrongful mass assignment.
   #
   # @!visibility private
   #
   def media_params
-    params.require(:media).permit(:title, :director, :call_number, :year, :file_name, course_ids: [])
+    params.require(:media).permit(:title, :director, :call_number, :year,
+                                  :file_name, course_ids: [])
   end
 
   # Use callbacks to share common setup or constraints between actions.
