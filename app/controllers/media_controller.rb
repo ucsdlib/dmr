@@ -1,9 +1,9 @@
-#---
+# encoding: utf-8
+#
 # @author Vivian <tchu@ucsd.edu>
-#---
-
+#
 class MediaController < ApplicationController
-  before_filter :authorize
+  before_action :authorize
   before_action :set_media, only: [:show, :edit, :update, :destroy]
   ##
   # Handles GET index request to display the last 10 Media from database
@@ -87,26 +87,26 @@ class MediaController < ApplicationController
   # Handles GET search for Media object
   #
   def search
-    if params[:search] && params[:search].blank?
+    return unless params[:search]
+    if params[:search].blank?
       redirect_to root_path, alert: 'No text is inputted.'
-    elsif params[:search] && !params[:search].blank?
-      if search_course_option?
-        redirect_to :controller => 'courses', :action => 'search', :search => params[:search], :search_option => params[:search_option]
-      else
-        create_search_session
-      end
+    elsif !params[:search].blank?
+      perform_search
+      create_search_session
     end
   end
 
   private
 
   ##
-  # Specify which parameters are allowed into Media controller actions to prevent wrongful mass assignment.
+  # Specify which parameters are allowed into Media controller actions to
+  # prevent wrongful mass assignment.
   #
   # @!visibility private
   #
   def media_params
-    params.require(:media).permit(:title, :director, :call_number, :year, :file_name, course_ids: [])
+    params.require(:media).permit(:title, :director, :call_number, :year,
+                                  :file_name, course_ids: [])
   end
 
   # Use callbacks to share common setup or constraints between actions.
@@ -119,9 +119,17 @@ class MediaController < ApplicationController
   end
 
   def create_search_session
-    @media = Media.search(params[:search]).order(:title).page(params[:page]).per(20)
-    @search_count = @media.count
     session[:search] = params[:search]
     session[:search_option] = params[:search_option] if params[:search_option]
+  end
+
+  def perform_search
+    if search_course_option?
+      redirect_to controller: 'courses', action: 'search',
+                  search: params[:search], search_option: params[:search_option]
+    else
+      @media = Media.search(params[:search]).order(:title).page(params[:page]).per(20)
+      @search_count = @media.count
+    end
   end
 end

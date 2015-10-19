@@ -1,3 +1,4 @@
+# encoding: utf-8
 def set_current_user(user=nil)
   user = User.find_or_create_for_developer(nil)
   session[:user_id] = user.uid

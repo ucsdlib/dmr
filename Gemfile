@@ -1,3 +1,4 @@
+# encoding: utf-8
 source 'https://rubygems.org'
 
 gem 'rails', '4.2.4'
@@ -17,7 +18,7 @@ gem 'kaminari'
 gem 'omniauth'
 gem 'omniauth-shibboleth'
 gem 'net-ldap'
-gem 'amoeba' 
+gem 'amoeba'
 gem 'letter_opener'
 
 # Deploy with Capistrano
@@ -31,7 +32,7 @@ gem 'activesupport', '~> 4.2.4'
 gem 'activemodel', '~> 4.2.4'
 gem 'activerecord', '~> 4.2.4'
 gem 'sqlite3'
-  
+
 group :development do
   gem 'spring'
 end
@@ -42,9 +43,11 @@ group :development, :test do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
   gem 'capybara', '~> 2.4.4'
-  gem 'launchy', '~> 2.4.3'                           
+  gem 'launchy', '~> 2.4.3'
   gem 'unicorn', '~> 4.8.3'
   gem 'pry'
+  gem 'rubocop', require: false
+  gem 'rubocop-rspec'
 end
 
 group :test do

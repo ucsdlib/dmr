@@ -1,3 +1,7 @@
+# encoding: utf-8
+#
+# @author Vivian <tchu@ucsd.edu>
+#
 class Users::SessionsController < ApplicationController
   def new
     if Rails.configuration.shibboleth
@@ -18,25 +22,26 @@ class Users::SessionsController < ApplicationController
   def find_or_create_user(auth_type, origin)
     find_or_create_method = "find_or_create_for_#{auth_type.downcase}".to_sym
     @user = User.send(find_or_create_method, request.env['omniauth.auth'])
-    if Rails.configuration.shibboleth && !User.in_group?(request.env['omniauth.auth'].uid) && report_url(origin) == false
-      render file: "#{Rails.root}/public/403", formats: [:html], status: 403, layout: false
+    if Rails.configuration.shibboleth
+      authenticate_user_session(origin)
     else
       create_user_session(@user) if @user
-      redirect_to origin || root_url, notice: "You have successfully authenticated from #{auth_type} account!"
+      redirect_to origin || root_url, notice: "Successfully authenticated from #{auth_type} account"
     end
   end
 
   def destroy
     destroy_user_session
-    flash[:alert] = ('You have been logged out of DMR. To logout of all Single Sign-On applications, close your browser').html_safe if Rails.configuration.shibboleth
-
+    if Rails.configuration.shibboleth
+      flash[:alert] = 'DMR Logged out. To logout of all Single Sign-On applications, close browser'
+    end
     redirect_to root_url
   end
 
   protected :find_or_create_user
 
   private
- 
+
   def create_user_session(user)
     session[:user_name] = user.name
     session[:user_id] = user.uid
@@ -49,10 +54,15 @@ class Users::SessionsController < ApplicationController
   end
 
   def report_url(original_url)
-    quarters = ['Spring', 'Summer', 'Fall', 'Winter']
+    quarters = %w(Spring Summer Fall Winter)
     quarters.each do |quarter|
       return true if original_url.include?(quarter)
     end
-    return false
-  end  
+    false
+  end
+
+  def authenticate_user(origin)
+    return unless !User.in_group?(request.env['omniauth.auth'].uid) && report_url(origin) == false
+    render file: "#{Rails.root}/public/403", formats: [:html], status: 403, layout: false
+  end
 end

@@ -1,3 +1,4 @@
+# encoding: utf-8
 #---
 # @author Vivian <tchu@ucsd.edu>
 #---
@@ -17,7 +18,7 @@ describe CourseMailer do
   end
   
   it 'renders the receiver email' do
-    expect(email.to).to eql(["landrews@ucsd.edu", "reserves@ucsd.edu", "#{@user.email}"])
+    expect(email.to).to eql(['landrews@ucsd.edu', 'reserves@ucsd.edu', "#{@user.email}"])
   end
   
   it 'renders the sender email' do

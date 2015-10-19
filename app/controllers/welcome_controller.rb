@@ -1,9 +1,9 @@
-#---
+# encoding: utf-8
+#
 # @author Vivian <tchu@ucsd.edu>
-#---
-
+#
 class WelcomeController < ApplicationController
-  layout "application"
+  layout 'application'
   ##
   # Handles GET index request
   #
@@ -13,5 +13,4 @@ class WelcomeController < ApplicationController
     @search_box_display = 'false'
     @menu_display = nil if logged_in?
   end
-
 end
