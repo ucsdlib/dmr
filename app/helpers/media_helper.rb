@@ -17,10 +17,9 @@ module MediaHelper
   ##
 
   def grab_wowza_url(filename, objid)
-    unless filename.nil?
-      encrypted = encrypt_stream_name(objid, filename, request.ip)
-      return Rails.configuration.wowza_baseurl + encrypted
-    end
+    return unless filename
+    encrypted = encrypt_stream_name(objid, filename, request.ip)
+    "#{Rails.configuration.wowza_baseurl}#{encrypted}"
   end
 
   ##
@@ -36,8 +35,7 @@ module MediaHelper
 
   def encrypt_stream_name(pid, fid, ip)
     # random nonce
-    nonce = rand(36**16).to_s(36)
-    nonce += 'x' while nonce.length < 16
+    nonce = create_nonce
 
     # load key from file
     key = File.read Rails.configuration.wowza_directory + 'streaming.key'
@@ -50,9 +48,32 @@ module MediaHelper
     cipher.iv = nonce
     enc = cipher.update(str) + cipher.final
 
+    "#{nonce},#{base64_encode(enc)}"
+  end
+
+  ##
+  # Encode base64
+  #
+  # @param enc [String] the encrypted string
+  #
+  # @return [String] base64-encode
+  ##
+
+  def base64_encode(enc)
     # base64-encode
     b64 = Base64.encode64 enc
-    b64 = b64.tr('+', '-').tr('/', '_').delete("\n")
-    "#{nonce},#{b64}"
+    b64.tr('+', '-').tr('/', '_').delete("\n")
+  end
+
+  ##
+  # Creates random nonce
+  #
+  #
+  # @return [String] nonce
+  ##
+  def create_nonce
+    nonce = rand(36**16).to_s(36)
+    nonce += 'x' while nonce.length < 16
+    nonce
   end
 end

@@ -103,12 +103,9 @@ class CoursesController < ApplicationController
   # Handles GET search for Course object
   #
   def search
-    if params[:search] && !params[:search].blank?
-      @courses = Course.search(params[:search]).order(:course).page(params[:page]).per(20)
-      @course_search_count = @courses.count
-      session[:search] = params[:search]
-      session[:search_option] = params[:search_option] if params[:search_option]
-    end
+    return unless params[:search] && !params[:search].blank?
+    @courses = Course.search(params[:search]).order(:course).page(params[:page]).per(20)
+    create_search_session(@courses)
   end
 
   ##
@@ -118,10 +115,9 @@ class CoursesController < ApplicationController
   # @return [String] - redirect to the Course edit page
   #
   def set_current_course
-    if params[:id]
-      session[:current_course] = params[:id]
-      redirect_to edit_course_path(params[:id].to_s), notice: 'Current Course was successfully set.'
-    end
+    return unless params[:id]
+    session[:current_course] = params[:id]
+    redirect_to edit_course_path(params[:id].to_s), notice: 'Current Course was successfully set.'
   end
 
   ##
@@ -132,9 +128,8 @@ class CoursesController < ApplicationController
   #
   def clone_course
     new_course = @course.amoeba_dup
-    if new_course.save!
-      redirect_to edit_course_path(new_course), notice: 'Course was successfully cloned.'
-    end
+    return unless new_course.save!
+    redirect_to edit_course_path(new_course), notice: 'Course was successfully cloned.'
   end
 
   ##
@@ -145,8 +140,7 @@ class CoursesController < ApplicationController
   #
   def add_to_course
     if deleting_media?
-      delete_media(params[:media_ids])
-      redirect_to media_path, notice: 'Selected Records were successfully deleted.'
+      remove_items
     elsif !session[:current_course].nil?
       add_media_to_course(params[:media_ids], session[:current_course])
       redirect_to edit_course_path(@course), notice: 'Media was successfully added to Course.'
@@ -195,5 +189,16 @@ class CoursesController < ApplicationController
 
   def deleting_media?
     params[:commit] == 'Delete Selected Records'
+  end
+
+  def create_search_session(courses)
+    @course_search_count = courses.count
+    session[:search] = params[:search]
+    session[:search_option] = params[:search_option] if params[:search_option]
+  end
+
+  def remove_items
+    delete_media(params[:media_ids])
+    redirect_to media_path, notice: 'Selected Records were successfully deleted.'
   end
 end

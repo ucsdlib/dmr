@@ -1,5 +1,4 @@
 require: rubocop-rspec
-inherit_from: .rubocop_todo.yml
 
 AllCops:
   RunRailsCops: true
@@ -26,27 +25,18 @@ Style/Documentation:
     - 'spec/**/*'
 
 Metrics/LineLength:
-  Max: 100
+  Max: 103
 
-Metrics/MethodLength:
-  Max: 12
+Metrics/AbcSize:
+  Max: 16
 
-Metrics/ModuleLength:
-  Max: 102
-
-Metrics/PerceivedComplexity:
-  Max: 8
-
-Metrics/MethodLength:
-  Max: 17
+Metrics/CyclomaticComplexity:
+  Max: 7
 
 Style/AndOr:
   Exclude:
     - 'app/controllers/application_controller.rb'
 
-Metrics/CyclomaticComplexity:
-  Max: 7
-
-Style/DoubleNegation:
+Style/ClassAndModuleChildren:
   Exclude:
-    - 'app/controllers/application_controller.rb'
+    - 'app/controllers/users/sessions_controller.rb'

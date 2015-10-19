@@ -87,15 +87,12 @@ class MediaController < ApplicationController
   # Handles GET search for Media object
   #
   def search
-    if params[:search] && params[:search].blank?
+    return unless params[:search]
+    if params[:search].blank?
       redirect_to root_path, alert: 'No text is inputted.'
-    elsif params[:search] && !params[:search].blank?
-      if search_course_option?
-        redirect_to controller: 'courses', action: 'search',
-                    search: params[:search], search_option: params[:search_option]
-      else
-        create_search_session
-      end
+    elsif !params[:search].blank?
+      perform_search
+      create_search_session
     end
   end
 
@@ -122,9 +119,17 @@ class MediaController < ApplicationController
   end
 
   def create_search_session
-    @media = Media.search(params[:search]).order(:title).page(params[:page]).per(20)
-    @search_count = @media.count
     session[:search] = params[:search]
     session[:search_option] = params[:search_option] if params[:search_option]
+  end
+
+  def perform_search
+    if search_course_option?
+      redirect_to controller: 'courses', action: 'search',
+                  search: params[:search], search_option: params[:search_option]
+    else
+      @media = Media.search(params[:search]).order(:title).page(params[:page]).per(20)
+      @search_count = @media.count
+    end
   end
 end

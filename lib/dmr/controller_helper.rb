@@ -31,14 +31,13 @@ module Dmr
     ##
     def add_to_report(media_ids, current_course, current_course_media_ids)
       counter = get_next_report_counter(current_course.id)
-      if media_ids && current_course
-        media_ids.each do |id|
-          med = Media.find_by_id(id.to_i)
-          if med && !current_course_media_ids.include?(id.to_i)
-            current_course.reports.create(media: med, counter: counter.to_s)
-          end
-          counter = get_next_report_counter(current_course.id)
+      return unless media_ids && current_course
+      media_ids.each do |id|
+        med = Media.find_by_id(id.to_i)
+        if med && !current_course_media_ids.include?(id.to_i)
+          current_course.reports.create(media: med, counter: counter.to_s)
         end
+        counter = get_next_report_counter(current_course.id)
       end
     end
 
@@ -100,10 +99,9 @@ module Dmr
     #
     ##
     def update_report_counter(report, counter)
-      if report && report.first && counter
-        report.first.counter = counter
-        report.first.save!
-      end
+      return unless report && report.first && counter
+      report.first.counter = counter
+      report.first.save!
     end
 
     ##
@@ -147,11 +145,10 @@ module Dmr
     #
     ##
     def remove_media_from_course(media_ids, course)
-      if media_ids && course
-        media_ids.each do |id|
-          report_tag = Report.where(course_id: course.id, media_id: id.to_i)
-          course.reports.delete(report_tag) if report_tag
-        end
+      return unless media_ids && course
+      media_ids.each do |id|
+        report_tag = Report.where(course_id: course.id, media_id: id.to_i)
+        course.reports.delete(report_tag) if report_tag
       end
     end
 
@@ -163,11 +160,10 @@ module Dmr
     #
     ##
     def move_up(course, current_counter, report)
-      if current_counter > 1
-        pre_counter = get_counter(course.id, current_counter, 'previous')
-        update_report(course.id, pre_counter, current_counter)
-        update_report_counter(report, pre_counter)
-      end
+      return unless current_counter > 1
+      pre_counter = get_counter(course.id, current_counter, 'previous')
+      update_report(course.id, pre_counter, current_counter)
+      update_report_counter(report, pre_counter)
     end
 
     ##
@@ -192,14 +188,13 @@ module Dmr
     #
     ##
     def change_media_order(media_ids, course, type)
-      if media_ids && course
-        current_counter = 0
-        media_ids.each do |id|
-          report = Report.where(course_id: course.id, media_id: id.to_i)
-          current_counter = report.first.counter.to_i if report && report.first
-          move_up(course, current_counter, report) if (type == 'Move Up One')
-          move_down(course, current_counter, report) if (type == 'Move Down One')
-        end
+      return unless media_ids && course
+      current_counter = 0
+      media_ids.each do |id|
+        report = Report.where(course_id: course.id, media_id: id.to_i)
+        current_counter = report.first.counter.to_i if report && report.first
+        move_up(course, current_counter, report) if (type == 'Move Up One')
+        move_down(course, current_counter, report) if (type == 'Move Down One')
       end
     end
 

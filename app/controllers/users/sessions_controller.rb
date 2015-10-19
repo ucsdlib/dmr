@@ -23,13 +23,10 @@ class Users::SessionsController < ApplicationController
     find_or_create_method = "find_or_create_for_#{auth_type.downcase}".to_sym
     @user = User.send(find_or_create_method, request.env['omniauth.auth'])
     if Rails.configuration.shibboleth
-      if !User.in_group?(request.env['omniauth.auth'].uid) && report_url(origin) == false
-        render file: "#{Rails.root}/public/403", formats: [:html], status: 403, layout: false
-      end
+      authenticate_user_session(origin)
     else
       create_user_session(@user) if @user
-      flash[:notice] = "You have successfully authenticated from #{auth_type} account!"
-      redirect_to origin || root_url
+      redirect_to origin || root_url, notice: "Successfully authenticated from #{auth_type} account"
     end
   end
 
@@ -62,5 +59,10 @@ class Users::SessionsController < ApplicationController
       return true if original_url.include?(quarter)
     end
     false
+  end
+
+  def authenticate_user(origin)
+    return unless !User.in_group?(request.env['omniauth.auth'].uid) && report_url(origin) == false
+    render file: "#{Rails.root}/public/403", formats: [:html], status: 403, layout: false
   end
 end

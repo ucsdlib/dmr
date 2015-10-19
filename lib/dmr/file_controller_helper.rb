@@ -25,13 +25,12 @@ module Dmr
     # @return [Bytes] the file content
     #
     def display_file(objid, fileid)
-      if fileid.include? '.jpg'
-        set_file_header(objid, fileid)
+      return unless fileid.include? '.jpg'
+      set_file_header(objid, fileid)
 
-        self.response_body = Enumerator.new do |blk|
-          open("#{Rails.configuration.file_path}#{fileid}", 'rb') do |seg|
-            blk << seg.read
-          end
+      self.response_body = Enumerator.new do |blk|
+        open("#{Rails.configuration.file_path}#{fileid}", 'rb') do |seg|
+          blk << seg.read
         end
       end
     end

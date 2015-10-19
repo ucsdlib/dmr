@@ -16,7 +16,7 @@ describe Users::SessionsController do
   describe 'GET developer' do
     it 'redirects to the home page' do
       get :developer
-      flash[:notice].should include 'You have successfully authenticated from developer account!'
+      flash[:notice].should include 'Successfully authenticated from developer account'
       response.should redirect_to(root_path)
     end
   end
@@ -24,7 +24,7 @@ describe Users::SessionsController do
   describe 'GET shibboleth' do
     it 'redirects to the home page' do
       get :shibboleth
-      flash[:notice].should include 'You have successfully authenticated from shibboleth account!'
+      flash[:notice].should include 'Successfully authenticated from shibboleth account'
       response.should redirect_to(root_path)
     end
   end
