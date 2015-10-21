@@ -26,9 +26,11 @@ Style/Documentation:
 
 Metrics/LineLength:
   Max: 103
+  Exclude:
+    - 'app/controllers/users/sessions_controller.rb'  
 
 Metrics/AbcSize:
-  Max: 16
+  Max: 17
 
 Metrics/CyclomaticComplexity:
   Max: 7

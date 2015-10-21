@@ -20,8 +20,7 @@ class Users::SessionsController < ApplicationController
   end
 
   def find_or_create_user(auth_type, origin)
-    find_or_create_method = "find_or_create_for_#{auth_type.downcase}".to_sym
-    @user = User.send(find_or_create_method, request.env['omniauth.auth'])
+    @user = lookup_user(auth_type)
     if Rails.configuration.shibboleth && !User.in_group?(request.env['omniauth.auth'].uid) && report_url(origin) == false
       render file: "#{Rails.root}/public/403", formats: [:html], status: 403, layout: false
     else
@@ -61,8 +60,8 @@ class Users::SessionsController < ApplicationController
     false
   end
 
-  def authenticate_user(origin)
-    return unless !User.in_group?(request.env['omniauth.auth'].uid) && report_url(origin) == false
-    render file: "#{Rails.root}/public/403", formats: [:html], status: 403, layout: false
+  def lookup_user(auth_type)
+    find_or_create_method = "find_or_create_for_#{auth_type.downcase}".to_sym
+    User.send(find_or_create_method, request.env['omniauth.auth'])
   end
 end
