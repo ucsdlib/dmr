@@ -35,8 +35,9 @@ class User < ActiveRecord::Base
   def self.lookup_group(search_param)
     ldap = create_ldap_connection
     result_attrs = ['sAMAccountName']
-    ldap_search(ldap, result_attrs, search_param)
+    group = ldap_search(ldap, result_attrs, search_param)
     get_ldap_response(ldap)
+    group
   end
 
   def self.get_ldap_response(ldap)
