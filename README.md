@@ -55,10 +55,10 @@ $ cp config/streaming.key.sample /pub/data2/DMR/streaming.key
 $ bundle exec rake db:migrate
 ```
 
-7.Import the data.
+7.Update Test DB
 
 ```
-$ bundle exec rake import
+$ bundle exec rake db:migrate RAILS_ENV=test
 ```
 
 ## Running DMR

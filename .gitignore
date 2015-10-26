@@ -20,3 +20,4 @@ config/database.yml
 config/secrets.yml
 .coveralls.yml
 .DS_Store
+DMR_Data.csv
