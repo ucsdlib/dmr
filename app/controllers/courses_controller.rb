@@ -1,11 +1,11 @@
-#---
+# encoding: utf-8
+#
 # @author Vivian <tchu@ucsd.edu>
-#---
-
+#
 class CoursesController < ApplicationController
   include Dmr::ControllerHelper
-  before_filter :authorize_student, only: [:show] if Rails.configuration.shibboleth
-  before_filter :authorize, only: [:index, :create, :edit, :update, :new, :destroy, :search]
+  before_action :authorize_student, only: [:show] if Rails.configuration.shibboleth
+  before_action :authorize, only: [:index, :create, :edit, :update, :new, :destroy, :search]
 
   before_action :set_course, only: [:show, :edit, :update, :destroy, :clone_course, :send_email]
   before_action :set_sorted_media, only: [:show, :edit, :send_email, :update]
@@ -48,11 +48,11 @@ class CoursesController < ApplicationController
   # @return [String] - redirect to the resulting webpage of all Course objects
   # @note if failure
   # @return [String] the new Course form
-  #  
+  #
   def create
     @course = Course.new(course_params)
 
-    if @course.save  
+    if @course.save
       session[:current_course] = "#{@course.id}"
       redirect_to edit_course_path(@course), notice: 'Course was successfully created.'
     else
@@ -70,7 +70,7 @@ class CoursesController < ApplicationController
   end
 
   ##
-  # Handles PUT update a Course object  
+  # Handles PUT update a Course object
   # PATCH/PUT /courses/1
   #
   # @note if successful
@@ -79,8 +79,8 @@ class CoursesController < ApplicationController
   # @return [String] the edit Course form
   #
   def update
-    remove_media_from_course(params[:media_ids],@course) if removing_item?
-    change_media_order(params[:media_ids],@course,params[:commit])
+    remove_media_from_course(params[:media_ids], @course) if removing_item?
+    change_media_order(params[:media_ids], @course, params[:commit])
     if @course.update_attributes(course_params)
       send_email
     else
@@ -93,7 +93,7 @@ class CoursesController < ApplicationController
   # DELETE /courses/1
   #
   # @return [String] - redirect to the Object index page
-  #  
+  #
   def destroy
     @course.destroy
     redirect_to courses_path, notice: 'Course was successfully destroyed.'
@@ -103,12 +103,9 @@ class CoursesController < ApplicationController
   # Handles GET search for Course object
   #
   def search
-    if params[:search] && !params[:search].blank?
-      @courses = Course.search(params[:search]).order(:course).page(params[:page]).per(20)
-      @course_search_count = @courses.count
-      session[:search] = params[:search]
-      session[:search_option] = params[:search_option] if params[:search_option]
-    end
+    return unless params[:search] && !params[:search].blank?
+    @courses = Course.search(params[:search]).order(:course).page(params[:page]).per(20)
+    create_search_session(@courses)
   end
 
   ##
@@ -116,12 +113,11 @@ class CoursesController < ApplicationController
   # /courses/set_current_course?id=1
   #
   # @return [String] - redirect to the Course edit page
-  # 
+  #
   def set_current_course
-    if params[:id]
-      session[:current_course] = params[:id]
-      redirect_to edit_course_path(params[:id].to_s), notice: 'Current Course was successfully set.'
-    end
+    return unless params[:id]
+    session[:current_course] = params[:id]
+    redirect_to edit_course_path(params[:id].to_s), notice: 'Current Course was successfully set.'
   end
 
   ##
@@ -132,7 +128,8 @@ class CoursesController < ApplicationController
   #
   def clone_course
     new_course = @course.amoeba_dup
-    redirect_to edit_course_path(new_course), notice: 'Course was successfully cloned.' if new_course.save!
+    return unless new_course.save!
+    redirect_to edit_course_path(new_course), notice: 'Course was successfully cloned.'
   end
 
   ##
@@ -143,11 +140,10 @@ class CoursesController < ApplicationController
   #
   def add_to_course
     if deleting_media?
-      delete_media(params[:media_ids])
-      redirect_to media_path, notice: 'Selected Records were successfully deleted.' 
+      remove_items
     elsif !session[:current_course].nil?
-      add_media_to_course(params[:media_ids],session[:current_course])
-      redirect_to edit_course_path(@course), notice: 'Media was successfully added to current Course.'
+      add_media_to_course(params[:media_ids], session[:current_course])
+      redirect_to edit_course_path(@course), notice: 'Media was successfully added to Course.'
     else
       redirect_to courses_path, alert: 'No current Course is set.  Set the Course first.'
     end
@@ -163,9 +159,9 @@ class CoursesController < ApplicationController
       redirect_to edit_course_path(@course), notice: 'The confirmation email has been sent.'
     else
       redirect_to edit_course_path(@course), notice: 'Course successfully updated.'
-    end  
+    end
   end
-         
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -190,8 +186,19 @@ class CoursesController < ApplicationController
   def send_list?
     params[:commit] == 'Send List'
   end
-  
+
   def deleting_media?
     params[:commit] == 'Delete Selected Records'
-  end          
+  end
+
+  def create_search_session(courses)
+    @course_search_count = courses.count
+    session[:search] = params[:search]
+    session[:search_option] = params[:search_option] if params[:search_option]
+  end
+
+  def remove_items
+    delete_media(params[:media_ids])
+    redirect_to media_path, notice: 'Selected Records were successfully deleted.'
+  end
 end

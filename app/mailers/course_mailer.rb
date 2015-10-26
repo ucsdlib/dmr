@@ -1,7 +1,7 @@
-#---
+# encoding: utf-8
+#
 # @author Vivian <tchu@ucsd.edu>
-#---
-
+#
 class CourseMailer < ApplicationMailer
   ##
   # Sends an email

@@ -1,0 +1,44 @@
+require: rubocop-rspec
+
+AllCops:
+  RunRailsCops: true
+  DisplayCopNames: true
+  Exclude:
+    - 'vendor/**/*'
+    - 'bin/**/*'
+    - 'db/**/*'
+    - 'app/assets/**/*'
+    - 'config/**/*'
+    - 'doc/**/*'
+    - 'spec/**/*'
+    - 'test/**/*'
+
+Style/Encoding:
+  Enabled: true
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: single_quotes
+
+Style/Documentation:
+  Exclude:
+    - 'spec/**/*'
+
+Metrics/LineLength:
+  Max: 103
+  Exclude:
+    - 'app/controllers/users/sessions_controller.rb'  
+
+Metrics/AbcSize:
+  Max: 17
+
+Metrics/CyclomaticComplexity:
+  Max: 7
+
+Style/AndOr:
+  Exclude:
+    - 'app/controllers/application_controller.rb'
+
+Style/ClassAndModuleChildren:
+  Exclude:
+    - 'app/controllers/users/sessions_controller.rb'

@@ -1,6 +1,6 @@
+# encoding: utf-8
 # bundle exec rake import
 # This task import data from csv to create media records
-
 require 'csv'
 desc 'Imports a CSV file into an ActiveRecord table'
 task :import, [:filename] => :environment do
