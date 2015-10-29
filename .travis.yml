@@ -1,0 +1,18 @@
+rvm:
+  - 2.2.2
+
+before_script:
+  - cp config/database.yml.example config/database.yml
+  - cp config/secrets.yml.example config/secrets.yml
+  - cp config/streaming.key.sample config/streaming.key
+
+notifications:
+  slack:
+    secure: N2GLAPVP5h9iZZEfHe5u/tsN8WhZJJ9l3dtSEall/8Vq4Nb7BtDnhyOIPxD0y3sCH+yy0Dvo0NHenm3nWO2qVi6ldjhRb4aYJvhUt1X4oNMTBW2QGtPGGV1pz/aL0l/T/XDrLd+Tf0Ce09dOy1uFaFboNhZnGGJC6nl6tKJGgs6Gmhvu95IbH7k23lZGtIri/B5VIU/tHsVsNOWyvFZkUZEi1iB41NNBeQEWk3MjGOkA8u7a2spEWQTUmBlVLUBbrHJc3tr0jq1ZLFLv/19bdkavtNlGWMsy7qrLwrAIGMd9zA1xbdlWskwhaJZBe9IVnw/oYFznV2RJ5J5YLMmAZ68uhzb9sCjfXNXZLhSLvArd/S0X9ZG1iMre8l19kb+E9BuJruqDqUjH5dlSzJZf7gXItzyS5ZJSaG4pEHYjhbCPENcT+HZBWOhpU/QLnDpBe5C7Id8Ll6fLM0Lb2DALlwcjp21noT6cf5Q/ygbHpf64QKMZfln2jc8AOVEw+sYdmHCae7bbCy+KWUwf4gBPZk0JuowrqTr4tayQOqd+it87tZ+EePHxLtqH4ghM0L1HO6KUj3JWpJGdKGr9qz3u/67++gea4DUmld/kUZ8BxKs5oYXVlIWepnsyvmNTYuNCSnP4l+gJYeC3+ybnqi2BjnwTUHJQwgDzXxIU+yTHFck=
+
+sudo: false
+
+language: ruby
+
+script:
+  - bundle exec rake

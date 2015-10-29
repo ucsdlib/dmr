@@ -12,7 +12,7 @@ set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rben
 set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :rbenv_roles, :all # default value
 
-set :linked_files, %w{config/secrets.yml config/database.yml config/.coveralls.yml}
+set :linked_files, %w{config/secrets.yml config/database.yml config/.coveralls.yml config/streaming.key}
 #set :linked_dirs, %w{config/environments}
 
 namespace :deploy do

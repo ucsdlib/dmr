@@ -3,6 +3,9 @@
 # @author Vivian <tchu@ucsd.edu>
 #
 require 'base64'
+require 'pathname'
+
+APP_ROOT = Pathname.new File.expand_path('../../../', __FILE__)
 #
 # This module supports the function in Media controller
 #
@@ -38,7 +41,7 @@ module MediaHelper
     nonce = create_nonce
 
     # load key from file
-    key = File.read Rails.configuration.wowza_directory + 'streaming.key'
+    key = File.read "#{APP_ROOT}/config/" + 'streaming.key'
 
     # encrypt
     str = "#{pid} #{fid} #{ip}"
