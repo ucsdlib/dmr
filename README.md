@@ -42,11 +42,10 @@ Replace the secret_key_base hex string with a new random string (you can generat
 $ cp config/secrets.yml.example config/secrets.yml
 ```
 
-5.Copy Streaming Key. Edit the wowza_directory property in config/environments/test.rb to 
-point to any directory on your local machine where the streaming.key is stored.
+5.Copy Streaming Key.
 
 ```
-$ cp config/streaming.key.sample /pub/data2/DMR/streaming.key
+$ cp config/streaming.key.sample config/streaming.key
 ```
 
 6.Update DB.
