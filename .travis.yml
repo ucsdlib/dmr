@@ -1,19 +1,21 @@
+language: ruby
+cache: bundler
+sudo: false
 rvm:
-  - 2.2.3
-
+- 2.2.3
 before_script:
-  - cp config/database.yml.example config/database.yml
-  - cp config/secrets.yml.example config/secrets.yml
-  - cp config/streaming.key.sample config/streaming.key
-
+- cp config/database.yml.example config/database.yml
+- cp config/secrets.yml.example config/secrets.yml
+- cp config/streaming.key.sample config/streaming.key
+matrix:
+  fast_finish: true
 notifications:
   slack:
     secure: N2GLAPVP5h9iZZEfHe5u/tsN8WhZJJ9l3dtSEall/8Vq4Nb7BtDnhyOIPxD0y3sCH+yy0Dvo0NHenm3nWO2qVi6ldjhRb4aYJvhUt1X4oNMTBW2QGtPGGV1pz/aL0l/T/XDrLd+Tf0Ce09dOy1uFaFboNhZnGGJC6nl6tKJGgs6Gmhvu95IbH7k23lZGtIri/B5VIU/tHsVsNOWyvFZkUZEi1iB41NNBeQEWk3MjGOkA8u7a2spEWQTUmBlVLUBbrHJc3tr0jq1ZLFLv/19bdkavtNlGWMsy7qrLwrAIGMd9zA1xbdlWskwhaJZBe9IVnw/oYFznV2RJ5J5YLMmAZ68uhzb9sCjfXNXZLhSLvArd/S0X9ZG1iMre8l19kb+E9BuJruqDqUjH5dlSzJZf7gXItzyS5ZJSaG4pEHYjhbCPENcT+HZBWOhpU/QLnDpBe5C7Id8Ll6fLM0Lb2DALlwcjp21noT6cf5Q/ygbHpf64QKMZfln2jc8AOVEw+sYdmHCae7bbCy+KWUwf4gBPZk0JuowrqTr4tayQOqd+it87tZ+EePHxLtqH4ghM0L1HO6KUj3JWpJGdKGr9qz3u/67++gea4DUmld/kUZ8BxKs5oYXVlIWepnsyvmNTYuNCSnP4l+gJYeC3+ybnqi2BjnwTUHJQwgDzXxIU+yTHFck=
-
-sudo: false
-
-language: ruby
-
+addons:
+  code_climate:
+    repo_token:
+      secure: WLDlPi5zVu4K3rcJRQ5tj+0WK0zJNY1TuPrTudR8GW/6k2Z7Xh+i6uzVn3T9SLJAl9yI2Zg2UwVhdJDCyd/94/E0HvuD17SPkc3gHVgN9TEwVG/rx7rdaoqvn13DSpu0mSNEQ+iaMvB0DtlpZ0mHNj3qUlw4vST3U5qa24KFDrFl97zGNBvK5hYQGTxFJJQsYlpW1MZB4OQZ3urs/Gnd5WXSlL5fi5luPgjjZHiqstKc2Wgqqr5RnGOETrL45av0AX2vGtKAf4g3QwP+rVF1A+7Hcx4s6D6CW908ZD+tOzrcx2y/Pn3oW8HACeQlDOadeQuLYARAZua7g5pSvP8YCKt2KUCNW59t3SG8TQyKnlBWA6chNHnbCz+Ymiy99cjE5QOsBTazayPoH7czEaslumQfMBBPKKpSgK3BfwQiZlsV9ykPehVO7DXMQvCxa0hiHSFZb80JdNJLspemGFWPCiitMS26jO6M0YKRbkApRP1H59gmzJTs7m9y3eeHfUNTPTOls8ueR6gCpdPnXGjPj30hso7YnqKJOlNEM8Y4Y32jm03Dq3j9NxRSJfnRZCcGg/b3k079LwM4rg5OLI0Etp6/gp07E9oVJ1dQWSxot+KIPMty+WzH9dzd1BvTQJGIXPUHs9Dg+CEvxCR/Is471hvNNUrvAzK97mMoiE9Y/2c=
 script:
-  - bundle exec rake db:migrate RAILS_ENV=test
-  - bundle exec rake
+- bundle exec rake db:migrate RAILS_ENV=test
+- bundle exec rake
