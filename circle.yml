@@ -26,11 +26,3 @@ database:
 test:
   post:
     - bundle exec rake
-
-deployment:
-  dev:
-    branch: feature/circle-ci  
-  staging:
-    branch: develop
-  prod:
-    branch: master
