@@ -1,0 +1,39 @@
+machine:
+  ruby:
+    version:
+      2.2.3        
+  environment:
+    CIRCLE_ENV: test
+
+checkout:
+  post:
+    - cp config/database.yml.example config/database.yml
+    - cp config/secrets.yml.example config/secrets.yml
+    - cp config/streaming.key.sample config/streaming.key
+
+dependencies:
+  pre:
+    - gem uninstall bundler  
+    - gem install bundler --pre
+
+  override:
+    - bundle install
+
+database:
+  override:
+    - bundle exec rake db:migrate RAILS_ENV=test
+
+test:
+  post:
+    - bundle exec rake
+        environment:
+          RAILS_ENV: test
+          RACK_ENV: test
+
+deployment:
+  dev:
+    branch: feature/circle-ci  
+  staging:
+    branch: develop
+  prod:
+    branch: master
