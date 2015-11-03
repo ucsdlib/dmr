@@ -26,9 +26,6 @@ database:
 test:
   post:
     - bundle exec rake
-        environment:
-          RAILS_ENV: test
-          RACK_ENV: test
 
 deployment:
   dev:
