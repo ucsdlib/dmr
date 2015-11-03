@@ -13,7 +13,6 @@ checkout:
 
 dependencies:
   pre:
-    - gem uninstall bundler  
     - gem install bundler --pre
 
   override:
