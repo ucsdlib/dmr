@@ -22,3 +22,4 @@ config/streaming.key
 .coveralls.yml
 .DS_Store
 DMR_Data.csv
+coverage/*
