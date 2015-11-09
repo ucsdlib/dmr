@@ -200,5 +200,10 @@ feature 'Media' do
             
     # check that the media object references in course list are also deleted
     expect(@course1.media.size).to eq(0)         
-  end                              
+  end
+  
+  scenario "wants to see the Procedures and Policy link" do
+    visit root_path
+    expect(page).to have_link('Procedures and Policy')
+  end                               
 end
