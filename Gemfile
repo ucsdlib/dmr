@@ -2,56 +2,54 @@
 source 'https://rubygems.org'
 
 gem 'rails', '4.2.4'
-gem 'sass-rails', '5.0.3'
+gem 'sass-rails', '5.0.4'
 gem 'uglifier', '2.7.2'
 gem 'coffee-rails'
 gem 'jquery-rails', '4.0.5'
 gem 'turbolinks'
-gem 'jbuilder'
-gem 'bootstrap-sass', '~> 3.2.0	'
-gem 'pg'
-gem 'fabrication'
+gem 'jbuilder', '2.3.2'
+gem 'bootstrap-sass'
+gem 'pg', '0.18.3'
+gem 'fabrication', '2.14.1'
 gem 'yard'
-gem 'inch', require: false
+gem 'inch', '0.7.0', require: false
 gem 'bootstrap_form'
 gem 'kaminari'
 gem 'omniauth'
-gem 'omniauth-shibboleth'
-gem 'net-ldap'
+gem 'omniauth-shibboleth', '1.2.1'
+gem 'net-ldap', '0.12.0'
 gem 'amoeba'
-gem 'letter_opener'
+gem 'letter_opener', '1.4.1'
 
 # Deploy with Capistrano
-gem 'capistrano', '~> 3.3.3'
-gem 'capistrano-rails', '~> 1.1.2'
+gem 'capistrano', '~> 3.4.0'
+gem 'capistrano-rails', '~> 1.1.5'
 gem 'capistrano-rbenv', '~> 2.0.2'
-gem 'capistrano-bundler', '~> 1.1.3'
-gem 'equivalent-xml', '~> 0.5.1'
+gem 'capistrano-bundler'
+gem 'equivalent-xml', '~> 0.6.0'
 
 gem 'activesupport', '~> 4.2.4'
 gem 'activemodel', '~> 4.2.4'
 gem 'activerecord', '~> 4.2.4'
-gem 'sqlite3'
+gem 'sqlite3', '1.3.11'
 
 group :development do
-  gem 'spring'
+  gem 'spring', '1.4.1'
 end
 
 group :development, :test do
-  gem 'rspec-rails', '3.1'
-  gem 'byebug'
-  # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
-  gem 'capybara', '~> 2.4.4'
+  gem 'rspec-rails', '3.3.3'
+  gem 'byebug', '8.1.0'
+  gem 'capybara', '~> 2.5.0'
   gem 'launchy', '~> 2.4.3'
-  gem 'unicorn', '~> 4.8.3'
-  gem 'pry'
-  gem 'rubocop', require: false
+  gem 'unicorn', '~> 5.0.0'
+  gem 'pry', '0.10.3'
+  gem 'rubocop', '0.35.1', require: false
   gem 'rubocop-rspec'
 end
 
 group :test do
-  gem 'database_cleaner', '1.2.0'
+  gem 'database_cleaner', '1.5.1'
   gem 'shoulda-matchers', '2.8.0.rc2'
-  gem 'codeclimate-test-reporter', require: nil
+  gem 'codeclimate-test-reporter', '0.4.8', require: nil
 end

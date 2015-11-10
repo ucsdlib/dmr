@@ -193,8 +193,8 @@ module Dmr
       media_ids.each do |id|
         report = Report.where(course_id: course.id, media_id: id.to_i)
         current_counter = report.first.counter.to_i if report && report.first
-        move_up(course, current_counter, report) if (type == 'Move Up One')
-        move_down(course, current_counter, report) if (type == 'Move Down One')
+        move_up(course, current_counter, report) if type == 'Move Up One'
+        move_down(course, current_counter, report) if type == 'Move Down One'
       end
     end
 
