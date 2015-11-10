@@ -5,7 +5,7 @@
 
 require 'spec_helper'
 
-describe Media do
+describe Media, type: :model do
   it {should validate_presence_of(:title)}
   it {should validate_presence_of(:file_name)}
   it {should allow_value('anyFileName.mp4').for(:file_name)}
