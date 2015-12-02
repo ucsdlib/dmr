@@ -88,6 +88,5 @@ Rails.application.configure do
 
   config.shibboleth = true
   config.wowza_baseurl = 'lib-streaming.ucsd.edu:1935/dmrnew/_definst_/'
-  config.wowza_directory = '/pub/data2/DMR/'
   config.receiver_emails = 'reserves@ucsd.edu,'    
 end

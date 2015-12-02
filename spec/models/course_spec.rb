@@ -5,7 +5,7 @@
 
 require 'spec_helper'
 
-describe Course do
+describe Course, type: :model do
   it {should validate_presence_of(:quarter)}
   it {should validate_presence_of(:instructor)}
   it {should validate_presence_of(:course)}

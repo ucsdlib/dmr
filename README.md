@@ -1,6 +1,8 @@
-# dmr
+# Digital Media Reserves
 
-[![Code Climate](https://codeclimate.com/repos/55ba7d62695680248f002bf7/badges/d679e6605b13a7596ad1/gpa.svg)](https://codeclimate.com/repos/55ba7d62695680248f002bf7/feed) [![Test Coverage](https://codeclimate.com/repos/55ba7d62695680248f002bf7/badges/d679e6605b13a7596ad1/coverage.svg)](https://codeclimate.com/repos/55ba7d62695680248f002bf7/coverage)
+[![Code Climate](https://codeclimate.com/repos/55ba7d62695680248f002bf7/badges/d679e6605b13a7596ad1/gpa.svg)](https://codeclimate.com/repos/55ba7d62695680248f002bf7/feed)
+[![Test Coverage](https://codeclimate.com/repos/55ba7d62695680248f002bf7/badges/d679e6605b13a7596ad1/coverage.svg)](https://codeclimate.com/repos/55ba7d62695680248f002bf7/coverage)
+[![Dependency Status](https://gemnasium.com/ucsdlib/dmr.svg)](https://gemnasium.com/ucsdlib/dmr)
 
 DMR is a Digital Media Reserves Tool to manage videos created for the UCSD campus.
 
@@ -42,11 +44,10 @@ Replace the secret_key_base hex string with a new random string (you can generat
 $ cp config/secrets.yml.example config/secrets.yml
 ```
 
-5.Copy Streaming Key. Edit the wowza_directory property in config/environments/test.rb to 
-point to any directory on your local machine where the streaming.key is stored.
+5.Copy Streaming Key.
 
 ```
-$ cp config/streaming.key.sample /pub/data2/DMR/streaming.key
+$ cp config/streaming.key.sample config/streaming.key
 ```
 
 6.Update DB.
@@ -55,10 +56,10 @@ $ cp config/streaming.key.sample /pub/data2/DMR/streaming.key
 $ bundle exec rake db:migrate
 ```
 
-7.Import the data.
+7.Update Test DB
 
 ```
-$ bundle exec rake import
+$ bundle exec rake db:migrate RAILS_ENV=test
 ```
 
 ## Running DMR
