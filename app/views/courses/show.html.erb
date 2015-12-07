@@ -2,8 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <%= render :partial => 'shared/report_header'%>
   <body>
-    <%= render :partial => 'shared/report_menu'%>				
-    <%= render :partial => 'video_playlist'%>
+    <%= render :partial => 'shared/report_menu'%>	
+	<div id="tdr_content" class="tdr_fonts">
+	  <div id="tdr_content_content" style="width:100%;max-width:80%;">    			
+        <%= render :partial => 'video_playlist'%>
+      </div>
+    </div>
     <%= render :partial => 'shared/report_footer'%>		
   </body>
 </html>

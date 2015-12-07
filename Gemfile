@@ -20,6 +20,7 @@ gem 'omniauth-shibboleth', '1.2.1'
 gem 'net-ldap', '0.12.1'
 gem 'amoeba'
 gem 'letter_opener', '1.4.1'
+gem 'nokogiri', '1.6.7.rc4'
 
 # Deploy with Capistrano
 gem 'capistrano', '~> 3.4.0'
@@ -34,7 +35,7 @@ gem 'activerecord', '~> 4.2.5'
 gem 'sqlite3', '1.3.11'
 
 group :development do
-  gem 'spring', '1.4.1'
+  gem 'spring', '1.4.4'
 end
 
 group :development, :test do
@@ -42,7 +43,7 @@ group :development, :test do
   gem 'byebug', '8.2.0'
   gem 'capybara', '~> 2.5.0'
   gem 'launchy', '~> 2.4.3'
-  gem 'unicorn', '~> 5.0.0'
+  gem 'unicorn', '~> 5.0.1'
   gem 'pry', '0.10.3'
   gem 'rubocop', '0.35.1', require: false
   gem 'rubocop-rspec'
