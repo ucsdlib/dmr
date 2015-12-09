@@ -2,11 +2,13 @@ language: ruby
 cache: bundler
 sudo: false
 rvm:
-- 2.2.3
+  - 2.2.3
 before_script:
-- cp config/database.yml.example config/database.yml
-- cp config/secrets.yml.example config/secrets.yml
-- cp config/streaming.key.sample config/streaming.key
+  - cp config/database.yml.example config/database.yml
+  - cp config/secrets.yml.example config/secrets.yml
+  - cp config/streaming.key.sample config/streaming.key
+before_install:
+  - eval "$(ssh-agent)"
 matrix:
   fast_finish: true
 notifications:
@@ -17,5 +19,11 @@ addons:
     repo_token:
       secure: WLDlPi5zVu4K3rcJRQ5tj+0WK0zJNY1TuPrTudR8GW/6k2Z7Xh+i6uzVn3T9SLJAl9yI2Zg2UwVhdJDCyd/94/E0HvuD17SPkc3gHVgN9TEwVG/rx7rdaoqvn13DSpu0mSNEQ+iaMvB0DtlpZ0mHNj3qUlw4vST3U5qa24KFDrFl97zGNBvK5hYQGTxFJJQsYlpW1MZB4OQZ3urs/Gnd5WXSlL5fi5luPgjjZHiqstKc2Wgqqr5RnGOETrL45av0AX2vGtKAf4g3QwP+rVF1A+7Hcx4s6D6CW908ZD+tOzrcx2y/Pn3oW8HACeQlDOadeQuLYARAZua7g5pSvP8YCKt2KUCNW59t3SG8TQyKnlBWA6chNHnbCz+Ymiy99cjE5QOsBTazayPoH7czEaslumQfMBBPKKpSgK3BfwQiZlsV9ykPehVO7DXMQvCxa0hiHSFZb80JdNJLspemGFWPCiitMS26jO6M0YKRbkApRP1H59gmzJTs7m9y3eeHfUNTPTOls8ueR6gCpdPnXGjPj30hso7YnqKJOlNEM8Y4Y32jm03Dq3j9NxRSJfnRZCcGg/b3k079LwM4rg5OLI0Etp6/gp07E9oVJ1dQWSxot+KIPMty+WzH9dzd1BvTQJGIXPUHs9Dg+CEvxCR/Is471hvNNUrvAzK97mMoiE9Y/2c=
 script:
-- bundle exec rake db:migrate RAILS_ENV=test
-- bundle exec rake
+  - bundle exec rake db:migrate RAILS_ENV=test
+  - bundle exec rake
+env:
+  global:
+  - secure: BYap2c2Ln6jDsOZEJBxKtodCxNrUfoBkC/+2eOMSnTE2Pzu65lNhLkiF3Ph3M4lS9MN6hDrr/9ndGDdo6G9vXb2AGnHLx7fNrouT+7Fc9iym9hWPzCLuyRavqTddN6vUKU8VgMdInx2m46eeRuD0VfikCsz3pb/++gM/lpg7rRjohSBFzBs615nRy8thjUFs/B97UsqkDvXuT8/GF8gK3rThID6mUDOBEzI+yIdgoyTpSvwM8KL7UZ79ixWMZrWhDlXMgirY4sB1Wu1Mq+gHy1FFberKYjcOcBt92a+4wK/WgW+tDS/iIVV3Fs0Z1WIpSRQ/RsurZXDY7jH+Ry3tN+DjlEnOuHzkoMFVgrq1Q/SX+1Cbn0mb2OKmPxZEIbY98GdGu0nbMVFvEI6TEvyOD43ZRH48EhhC8ml6h3mcQfcnwfIMtFcowPauzOAqdkhN6HlJbh2uLbQ1080uMmuAXpTVAQGPu+JdMkFC3OamPX7r4dDHJkkIRUcCL1wv4/YRhSoYHfGSCsPBQrb/P47FRfyO0KPHbvXqq2cNuK1TNV2g+4ZR1TV0NvUVqguexoUOJth+XSajgF2xAyH0m1sm6xmVk2fSt+3LjKXgfd8bKi+I2i2c0FCxUxf4yschscqi+H12kIM/maThT/u0TBzbyEhZN6VZ+6WVAJDG8Y1crqk=
+after_success:
+  - openssl aes-256-cbc -k $DEPLOY_KEY -in config/deploy_id_rsa_enc_travis -d -a -out config/deploy_id_rsa
+  - bundle exec cap pontos deploy
