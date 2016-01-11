@@ -12,7 +12,6 @@ Rails.application.routes.draw do
   resources :courses do
    collection do
      post 'add_to_course', to: 'courses#add_to_course'
-     get 'set_current_course', to: 'courses#set_current_course'
      get 'search', to: 'courses#search'
      get 'clone_course', to: 'courses#clone_course'
      get 'send_email', to: 'courses#send_email'
