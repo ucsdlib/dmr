@@ -25,3 +25,9 @@ database:
 test:
   post:
     - bundle exec rake
+    
+deployment:
+  staging:
+    branch: develop
+    commands:
+      - bundle exec cap pontos deploy
