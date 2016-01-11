@@ -102,14 +102,6 @@ feature 'Course' do
     visit courses_path
     expect(page).to_not have_content('Test Course 1')           
   end
-  
-  scenario 'wants to set current Course Reserve List' do
-    visit edit_course_path(@course1)
-    click_on 'Set Current Course'
-    expect(page).to have_content('Current Course was successfully set.')
-    click_on 'View Current Course Reserve List'
-    current_path.should == edit_course_path(@course1)        
-  end
 
   scenario 'wants to add a media object to the current Course Reserve List when no current course is set' do
     visit edit_medium_path(@media1)
@@ -120,7 +112,6 @@ feature 'Course' do
   scenario 'wants to add a media object to the current Course Reserve List from media edit page' do
     # set current course
     visit edit_course_path(@course1)
-    click_on 'Set Current Course'
     
     #add to course list  
     visit edit_medium_path(@media1)
@@ -137,7 +128,6 @@ feature 'Course' do
   scenario 'wants to add multiple media objects to the current Course Reserve List from media search results page' do
     # set current course 
     visit edit_course_path(@course1)
-    click_on 'Set Current Course'  
 
     # search for media objects
     visit search_media_path( {:search => 'Test'} )  
@@ -185,7 +175,6 @@ feature 'Course' do
   scenario 'wants to remove media from Course Reserve List' do
     # set current course   
     visit edit_course_path(@course1) 
-    click_on 'Set Current Course'
      
     # search for media objects
     visit search_media_path( {:search => 'Test'} )  
@@ -222,7 +211,6 @@ feature 'Course' do
   scenario 'wants to clone a Course Reserve List' do
     # set current course   
     visit edit_course_path(@course1) 
-    click_on 'Set Current Course'
     
     # add media to course 
     visit edit_medium_path(@media1)
@@ -248,7 +236,6 @@ feature 'Course' do
   scenario 'wants to move one media up in Course Reserve List' do
     # set current course   
     visit edit_course_path(@course1) 
-    click_on 'Set Current Course'
      
     # search for media objects
     visit search_media_path( {:search => 'Test'} )  
@@ -289,7 +276,6 @@ feature 'Course' do
   scenario 'wants to move one media down in Course Reserve List' do
     # set current course   
     visit edit_course_path(@course1) 
-    click_on 'Set Current Course'
      
     # search for media objects
     visit search_media_path( {:search => 'Test'} )  
@@ -330,7 +316,6 @@ feature 'Course' do
   scenario 'expects to see a friendly url Course Reserve List' do
     # set current course   
     visit edit_course_path(@course1) 
-    click_on 'Set Current Course'
      
     # search for media objects
     visit search_media_path( {:search => 'Test'} )  
@@ -354,5 +339,11 @@ feature 'Course' do
     visit edit_course_path(@course1) 
     click_on 'Send List' 
     expect(page).to have_content('The confirmation email has been sent.')      
-  end                                                
+  end
+  
+  scenario 'automatically set the course being edit to current course' do
+    visit edit_course_path(@course1)
+    click_on 'View Current Course Reserve List'
+    current_path.should == edit_course_path(@course1)        
+  end                                               
 end
