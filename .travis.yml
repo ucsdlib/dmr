@@ -26,4 +26,8 @@ env:
   - secure: BYap2c2Ln6jDsOZEJBxKtodCxNrUfoBkC/+2eOMSnTE2Pzu65lNhLkiF3Ph3M4lS9MN6hDrr/9ndGDdo6G9vXb2AGnHLx7fNrouT+7Fc9iym9hWPzCLuyRavqTddN6vUKU8VgMdInx2m46eeRuD0VfikCsz3pb/++gM/lpg7rRjohSBFzBs615nRy8thjUFs/B97UsqkDvXuT8/GF8gK3rThID6mUDOBEzI+yIdgoyTpSvwM8KL7UZ79ixWMZrWhDlXMgirY4sB1Wu1Mq+gHy1FFberKYjcOcBt92a+4wK/WgW+tDS/iIVV3Fs0Z1WIpSRQ/RsurZXDY7jH+Ry3tN+DjlEnOuHzkoMFVgrq1Q/SX+1Cbn0mb2OKmPxZEIbY98GdGu0nbMVFvEI6TEvyOD43ZRH48EhhC8ml6h3mcQfcnwfIMtFcowPauzOAqdkhN6HlJbh2uLbQ1080uMmuAXpTVAQGPu+JdMkFC3OamPX7r4dDHJkkIRUcCL1wv4/YRhSoYHfGSCsPBQrb/P47FRfyO0KPHbvXqq2cNuK1TNV2g+4ZR1TV0NvUVqguexoUOJth+XSajgF2xAyH0m1sm6xmVk2fSt+3LjKXgfd8bKi+I2i2c0FCxUxf4yschscqi+H12kIM/maThT/u0TBzbyEhZN6VZ+6WVAJDG8Y1crqk=
 after_success:
   - openssl aes-256-cbc -k $DEPLOY_KEY -in config/deploy_id_rsa_enc_travis -d -a -out config/deploy_id_rsa
-  - bundle exec cap pontos deploy
+deploy:
+  on:
+    branch: feature/staging_deploy
+  run:
+    - bundle exec cap staging deploy
