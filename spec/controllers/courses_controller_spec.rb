@@ -187,32 +187,16 @@ describe CoursesController do
     end         
   end
 
-  describe 'GET set_current_course' do
-    before(:each) do
-      @course = Fabricate(:course)                
-    end
-
-    it 'sets the last created course as current Course Reserve List automatically' do
-      post :create, course: Fabricate.attributes_for(:course)  
-      expect(session[:current_course].to_i).to eq(Course.last.id)
-    end
-
-    it 'sets the first created course as current Course Reserve List' do
-      get :set_current_course, id: @course.id  
-      expect(session[:current_course].to_i).to eq(@course.id)
-    end
-  end
-  
   describe 'POST add_to_course' do
     before(:each) do
-      @course = Fabricate(:course)
       @media = Fabricate(:media)
       @media2 = Fabricate(:media)
       @media3 = Fabricate(:media)
-      get :set_current_course, id: @course.id                
+      post :create, course: Fabricate.attributes_for(:course)
+      @course = Course.last                 
     end
     
-    it 'adds a media object to the current Course Reserve List' do       
+    it 'adds a media object to the current Course Reserve List' do    
       post :add_to_course, media_ids: ["#{@media.id}"]             
       expect(session[:current_course].to_i).to eq(@course.id)
       expect(response).to redirect_to edit_course_path(@course)
@@ -252,10 +236,10 @@ describe CoursesController do
   
   describe 'GET clone_course' do
     before(:each) do
-      @course = Fabricate(:course)    
+      post :create, course: Fabricate.attributes_for(:course)
+      @course = Course.last
       @media = Fabricate(:media)
-      get :set_current_course, id: @course.id
-      post :add_to_course, media_ids: ["#{@media.id}"]                    
+      post :add_to_course, media_ids: ["#{@media.id}"]                 
     end
 
     it 'changes the count of the Course after the clone action' do
@@ -281,9 +265,9 @@ describe CoursesController do
   
   describe 'GET send_mail' do
     before(:each) do
-      @course = Fabricate(:course)    
+      post :create, course: Fabricate.attributes_for(:course)
+      @course = Course.last     
       @media = Fabricate(:media)      
-      get :set_current_course, id: @course.id 
       post :add_to_course, media_ids: ["#{@media.id}"]
       ActionMailer::Base.deliveries.clear
       get :send_email, id: @course.id, commit: 'Send List'                      

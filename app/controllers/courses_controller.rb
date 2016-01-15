@@ -9,6 +9,7 @@ class CoursesController < ApplicationController
 
   before_action :set_course, only: [:show, :edit, :update, :destroy, :clone_course, :send_email]
   before_action :set_sorted_media, only: [:show, :edit, :send_email, :update]
+  before_action :set_current, only: [:show, :edit, :update, :clone_course, :send_email]
 
   ##
   # Handles GET index request to display last 10 Courses from the database
@@ -109,18 +110,6 @@ class CoursesController < ApplicationController
   end
 
   ##
-  # Handles set a current Course object
-  # /courses/set_current_course?id=1
-  #
-  # @return [String] - redirect to the Course edit page
-  #
-  def set_current_course
-    return unless params[:id]
-    session[:current_course] = params[:id]
-    redirect_to edit_course_path(params[:id].to_s), notice: 'Current Course was successfully set.'
-  end
-
-  ##
   # Clone a Course Reserve List object
   # /courses/clone_course?id=1
   #
@@ -200,5 +189,9 @@ class CoursesController < ApplicationController
   def remove_items
     delete_media(params[:media_ids])
     redirect_to media_path, notice: 'Selected Records were successfully deleted.'
+  end
+
+  def set_current
+    session[:current_course] = params[:id]
   end
 end

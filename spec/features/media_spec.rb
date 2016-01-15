@@ -164,7 +164,6 @@ feature 'Media' do
   scenario 'wants to use delete selected media records' do
     # set current course   
     visit edit_course_path(@course1) 
-    click_on 'Set Current Course'
       
     # search for media objects
     visit search_media_path( {:search => 'Test'} )  
