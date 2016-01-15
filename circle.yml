@@ -27,6 +27,10 @@ test:
     - bundle exec rake
     
 deployment:
+  feature:
+    branch: feature/staging_deploy
+    commands:
+      - bundle exec cap staging deploy
   staging:
     branch: develop
     commands:
