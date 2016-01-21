@@ -35,22 +35,22 @@ gem 'activerecord', '~> 4.2.5'
 gem 'sqlite3', '1.3.11'
 
 group :development do
-  gem 'spring', '1.4.4'
+  gem 'spring', '1.6.2'
 end
 
 group :development, :test do
   gem 'rspec-rails', '3.4.0'
-  gem 'byebug', '8.2.0'
-  gem 'capybara', '~> 2.5.0'
+  gem 'byebug', '8.2.1'
+  gem 'capybara', '~> 2.6.0'
   gem 'launchy', '~> 2.4.3'
   gem 'unicorn', '~> 5.0.1'
   gem 'pry', '0.10.3'
-  gem 'rubocop', '0.35.1', require: false
+  gem 'rubocop', '0.36.0', require: false
   gem 'rubocop-rspec'
 end
 
 group :test do
   gem 'database_cleaner', '1.5.1'
-  gem 'shoulda-matchers', '3.0.1'
+  gem 'shoulda-matchers', '3.1.0'
   gem 'codeclimate-test-reporter', '0.4.8', require: nil
 end
