@@ -20,7 +20,7 @@ gem 'omniauth-shibboleth', '1.2.1'
 gem 'net-ldap', '0.13.0'
 gem 'amoeba'
 gem 'letter_opener', '1.4.1'
-gem 'nokogiri', '1.6.7.1'
+gem 'nokogiri', '1.6.7.2'
 
 # Deploy with Capistrano
 gem 'capistrano', '~> 3.4.0'
