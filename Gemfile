@@ -1,7 +1,7 @@
 # encoding: utf-8
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.5'
+gem 'rails', '4.2.5.1'
 gem 'sass-rails', '5.0.4'
 gem 'uglifier', '2.7.2'
 gem 'coffee-rails', '4.1.1'
@@ -29,9 +29,9 @@ gem 'capistrano-rbenv', '~> 2.0.4'
 gem 'capistrano-bundler'
 gem 'equivalent-xml', '~> 0.6.0'
 
-gem 'activesupport', '~> 4.2.5'
-gem 'activemodel', '~> 4.2.5'
-gem 'activerecord', '~> 4.2.5'
+gem 'activesupport', '~> 4.2.5.1'
+gem 'activemodel', '~> 4.2.5.1'
+gem 'activerecord', '~> 4.2.5.1'
 gem 'sqlite3', '1.3.11'
 
 group :development do
@@ -39,7 +39,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'rspec-rails', '3.4.0'
+  gem 'rspec-rails', '3.4.1'
   gem 'byebug', '8.2.1'
   gem 'capybara', '~> 2.6.0'
   gem 'launchy', '~> 2.4.3'
