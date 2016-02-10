@@ -73,7 +73,7 @@ $ rails s
 ## DMR will be available at 
 
 ```
-http://localhost:3000/dmr/
+http://localhost:3000/dmr/ 
 ```
 
 ## Running the Test Suites
