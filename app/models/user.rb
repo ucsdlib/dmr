@@ -67,7 +67,7 @@ class User < ActiveRecord::Base
   def self.create_ldap_connection
     Net::LDAP.new host: Rails.application.secrets.ldap_host,
                   port: Rails.application.secrets.ldap_port,
-                  encryption: :simple_tls,
+                  encryption: { method: :simple_tls },
                   base: Rails.application.secrets.ldap_base,
                   auth: {
                     method: :simple,

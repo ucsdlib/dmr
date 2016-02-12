@@ -54,7 +54,7 @@ class CoursesController < ApplicationController
     @course = Course.new(course_params)
 
     if @course.save
-      session[:current_course] = "#{@course.id}"
+      session[:current_course] = @course.id.to_s
       redirect_to edit_course_path(@course), notice: 'Course was successfully created.'
     else
       render :new
