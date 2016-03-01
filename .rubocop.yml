@@ -44,3 +44,7 @@ Style/AndOr:
 Style/ClassAndModuleChildren:
   Exclude:
     - 'app/controllers/users/sessions_controller.rb'
+
+Style/SignalException:
+  Exclude:
+    - 'app/models/user.rb'
