@@ -21,6 +21,10 @@ gem 'net-ldap', '0.14.0'
 gem 'amoeba'
 gem 'letter_opener', '1.4.1'
 gem 'nokogiri', '1.6.7.2'
+# gem 'google-api-client', '0.8.2', require: 'google/api_client'
+gem 'splunk-sdk-ruby'
+gem 'time_diff'
+gem 'bootstrap-datepicker-rails'
 
 # Deploy with Capistrano
 gem 'capistrano', '~> 3.4.0'

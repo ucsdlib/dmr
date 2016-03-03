@@ -44,6 +44,8 @@ GEM
     autoprefixer-rails (6.3.1)
       execjs
       json
+    bootstrap-datepicker-rails (1.5.0)
+      railties (>= 3.0)
     bootstrap-sass (3.3.6)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
@@ -213,6 +215,7 @@ GEM
     simplecov-html (0.10.0)
     slop (3.6.0)
     sparkr (0.4.1)
+    splunk-sdk-ruby (1.0.5)
     spring (1.6.4)
     sprockets (3.5.2)
       concurrent-ruby (~> 1.0)
@@ -230,6 +233,9 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.2)
+    time_diff (0.3.0)
+      activesupport
+      i18n
     tins (1.8.2)
     turbolinks (2.5.3)
       coffee-rails
@@ -255,6 +261,7 @@ DEPENDENCIES
   activerecord (~> 4.2.5.1)
   activesupport (~> 4.2.5.1)
   amoeba
+  bootstrap-datepicker-rails
   bootstrap-sass (= 3.3.6)
   bootstrap_form
   byebug (= 8.2.2)
@@ -286,8 +293,10 @@ DEPENDENCIES
   rubocop-rspec (= 1.4.0)
   sass-rails (= 5.0.4)
   shoulda-matchers (= 3.1.1)
+  splunk-sdk-ruby
   spring (= 1.6.4)
   sqlite3 (= 1.3.11)
+  time_diff
   turbolinks
   uglifier (= 2.7.2)
   unicorn (~> 5.0.1)
