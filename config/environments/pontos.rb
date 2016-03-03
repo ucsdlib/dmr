@@ -47,5 +47,6 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
   config.wowza_baseurl = 'lib-streaming-test.ucsd.edu:1935/dmrnew/_definst_/'
   config.shibboleth = true
-  config.receiver_emails = ''     
+  config.receiver_emails = ''
+  config.splunk_host = 'librarytest'     
 end            

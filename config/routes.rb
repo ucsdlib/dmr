@@ -17,7 +17,8 @@ Rails.application.routes.draw do
      get 'send_email', to: 'courses#send_email'
    end
   end
-  
+  resources :analytics
+    
   get 'media/:id/:ds', :to => 'file#show', :constraints => { :ds => /[^\/]+/ }, :as => 'file'  
   match 'courses/:id/:quarter/:year/:course', :to => 'courses#show', :as => :course_report, via: [:get]
   
