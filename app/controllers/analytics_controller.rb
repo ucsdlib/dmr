@@ -10,6 +10,7 @@ class AnalyticsController < ApplicationController
     return unless params[:start_date] && params[:end_date]
     s_date = time_convert(params[:start_date], '12:00AM')
     e_date = time_convert(params[:end_date], '11:59PM')
+    @item_count = new_item_count(s_date, e_date)
     @course_count = new_course_count(s_date, e_date) + clone_course_count(s_date, e_date)
     @record_count = new_record_count(s_date, e_date)
     @view_counter = view_count(s_date, e_date)

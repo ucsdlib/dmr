@@ -37,6 +37,11 @@ module Dmr
       count.to_i
     end
 
+    def new_item_count(s_date, e_date)
+      q = "search sourcetype=access_common host=#{S_HOST} dmr/courses/add_to_course 302 #{TOTAL}"
+      data_count(q, s_date, e_date)
+    end
+
     def new_course_count(s_date, e_date)
       q = "search sourcetype=access_common host=#{S_HOST} edu/dmr/courses/new 200 #{TOTAL}"
       data_count(q, s_date, e_date)
