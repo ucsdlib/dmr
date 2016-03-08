@@ -3,14 +3,17 @@
   s_date = params[:start_date] ? params[:start_date] : ""
   e_date = params[:end_date] ? params[:end_date] : ""
 %>
-<%= form_tag analytics_path, method: "GET", class: "navbar-form navbar-right" do%>
+<br>
+<did class="center-block">
+<%= form_tag analytics_path, method: "GET", class: "navbar-form" do%>
   <fieldset>
     <%= text_field_tag :start_date, s_date, size: 20, placeholder: "mm/dd/yyyy", class: "datepicker" %> to
     <%= text_field_tag :end_date, e_date, size: 20, placeholder: "mm/dd/yyyy", class: "enddatepicker" %>
     <%= submit_tag "reload", name: nil, class: "btn btn-primary" %>    
   </fieldset>
 <% end %>
-<br/><br/><br/>
+</div>
+<br/>
 <div class="container">
     <div class="row">
       <div class="panel panel-default">

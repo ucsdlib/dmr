@@ -27,3 +27,8 @@ $(function(){
     dataType: "script"
   });
 });
+
+$(document).ready(function(){
+  $('.datepicker').datepicker();
+  $('.enddatepicker').datepicker();
+});
