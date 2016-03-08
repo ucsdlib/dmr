@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap-sprockets
+//= require bootstrap-datepicker
 //= require helper
 //= require_tree .
 
@@ -25,4 +26,9 @@ $(function(){
     cache: true,
     dataType: "script"
   });
+});
+
+$(document).ready(function(){
+  $('.datepicker').datepicker();
+  $('.enddatepicker').datepicker();
 });

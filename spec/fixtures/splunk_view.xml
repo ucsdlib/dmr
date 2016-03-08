@@ -1,0 +1,193 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<results preview='0'>
+<meta>
+<fieldOrder>
+<field>_bkt</field>
+<field>_cd</field>
+<field>_indextime</field>
+<field>_raw</field>
+<field>_serial</field>
+<field>_si</field>
+<field>_sourcetype</field>
+<field>_time</field>
+<field>host</field>
+<field>index</field>
+<field>linecount</field>
+<field>source</field>
+<field>sourcetype</field>
+<field>splunk_server</field>
+</fieldOrder>
+</meta>
+	<result offset='0'>
+		<field k='_bkt'>
+			<value><text>main~35~91CF6D99-55B2-47AC-8110-773EECBFA300</text></value>
+		</field>
+		<field k='_cd'>
+			<value><text>35:57540807</text></value>
+		</field>
+		<field k='_indextime'>
+			<value><text>1456787283</text></value>
+		</field>
+		<field k='_raw'><v xml:space='preserve' trunc='0'>2016-02-29	15:08:03	PST	<sg h='1'>stop</sg>	<sg h='1'>stream</sg>	INF<sg h='1'>200</sg>	toystory.mp4	-	_defaultVHost_	dmrnew	_definst_	103.015	[any]	1935	rtmp://lib-streaming-test.ucsd.edu:1935/dmrnew/_definst_/	132.239.120.201	rtmp	http://libraries.ucsd.edu/jwplayer/jwplayer.flash.swf	WIN 20,0,0,306	1576202241	3950	29335760	1	110421	0	29331877	toystory.mp4	-	/mnt/isilon/DMR/MP4_Archive/toystory.mp4	mp4	1297317225	4838.396	rtmp://lib-streaming-test.ucsd.edu:1935/dmrnew/_definst_//toystory.mp4	rtmp://lib-streaming-test.ucsd.edu:1935/dmrnew/_definst_//toystory.mp4	-	rtmp://lib-streaming-test.ucsd.edu:1935/dmrnew/_definst_/	-</v></field>
+		<field k='_serial'>
+			<value><text>0</text></value>
+		</field>
+		<field k='_si'>
+			<value><text>nimue.ucsd.edu</text></value>
+			<value><text>main</text></value>
+		</field>
+		<field k='_sourcetype'>
+			<value><text>wowza_access</text></value>
+		</field>
+		<field k='_time'>
+			<value><text>2016-02-29T15:08:03.000-08:00</text></value>
+		</field>
+		<field k='host'>
+			<value h='1'><text>lib-streaming-test.ucsd.edu</text></value>
+		</field>
+		<field k='index'>
+			<value><text>main</text></value>
+		</field>
+		<field k='linecount'>
+			<value><text>1</text></value>
+		</field>
+		<field k='source'>
+			<value><text>wowzastreamingengine_access.log</text></value>
+		</field>
+		<field k='sourcetype'>
+			<value h='1'><text>wowza_access</text></value>
+		</field>
+		<field k='splunk_server'>
+			<value><text>nimue.ucsd.edu</text></value>
+		</field>
+	</result>
+	<result offset='1'>
+		<field k='_bkt'>
+			<value><text>main~35~91CF6D99-55B2-47AC-8110-773EECBFA300</text></value>
+		</field>
+		<field k='_cd'>
+			<value><text>35:47489825</text></value>
+		</field>
+		<field k='_indextime'>
+			<value><text>1456772242</text></value>
+		</field>
+		<field k='_raw'><v xml:space='preserve' trunc='0'>2016-02-29	10:57:22	PST	<sg h='1'>stop</sg>	<sg h='1'>stream</sg>	INF<sg h='1'>200</sg>	thematrix.mp4	-	_defaultVHost_	dmrnew	_definst_	245.693	[any]	1935	rtmp://lib-streaming-test.ucsd.edu:1935/dmrnew/_definst_/	132.239.120.201	rtmp	http://libraries.ucsd.edu/jwplayer/jwplayer.flash.swf	WIN 20,0,0,306	1836649317	3987	64666817	1	239765	0	64662932	thematrix.mp4	-	/mnt/isilon/DMR/MP4_Archive/thematrix.mp4	mp4	2216283920	8181.254	rtmp://lib-streaming-test.ucsd.edu:1935/dmrnew/_definst_//thematrix.mp4	rtmp://lib-streaming-test.ucsd.edu:1935/dmrnew/_definst_//thematrix.mp4	-	rtmp://lib-streaming-test.ucsd.edu:1935/dmrnew/_definst_/	-</v></field>
+		<field k='_serial'>
+			<value><text>1</text></value>
+		</field>
+		<field k='_si'>
+			<value><text>nimue.ucsd.edu</text></value>
+			<value><text>main</text></value>
+		</field>
+		<field k='_sourcetype'>
+			<value><text>wowza_access</text></value>
+		</field>
+		<field k='_time'>
+			<value><text>2016-02-29T10:57:22.000-08:00</text></value>
+		</field>
+		<field k='host'>
+			<value h='1'><text>lib-streaming-test.ucsd.edu</text></value>
+		</field>
+		<field k='index'>
+			<value><text>main</text></value>
+		</field>
+		<field k='linecount'>
+			<value><text>1</text></value>
+		</field>
+		<field k='source'>
+			<value><text>wowzastreamingengine_access.log</text></value>
+		</field>
+		<field k='sourcetype'>
+			<value h='1'><text>wowza_access</text></value>
+		</field>
+		<field k='splunk_server'>
+			<value><text>nimue.ucsd.edu</text></value>
+		</field>
+	</result>
+	<result offset='2'>
+		<field k='_bkt'>
+			<value><text>main~35~91CF6D99-55B2-47AC-8110-773EECBFA300</text></value>
+		</field>
+		<field k='_cd'>
+			<value><text>35:47015580</text></value>
+		</field>
+		<field k='_indextime'>
+			<value><text>1456771291</text></value>
+		</field>
+		<field k='_raw'><v xml:space='preserve' trunc='0'>2016-02-29	10:41:30	PST	<sg h='1'>stop</sg>	<sg h='1'>stream</sg>	INF<sg h='1'>200</sg>	toystory.mp4	-	_defaultVHost_	dmrnew	_definst_	417.689	[any]	1935	rtmp://lib-streaming-test.ucsd.edu:1935/dmrnew/_definst_/	132.239.120.201	rtmp	http://libraries.ucsd.edu/jwplayer/jwplayer.flash.swf	WIN 20,0,0,306	265993456	4351	107404561	1	400256	0	107400205	toystory.mp4	-	/mnt/isilon/DMR/MP4_Archive/toystory.mp4	mp4	1297317225	4838.396	rtmp://lib-streaming-test.ucsd.edu:1935/dmrnew/_definst_//toystory.mp4	rtmp://lib-streaming-test.ucsd.edu:1935/dmrnew/_definst_//toystory.mp4	-	rtmp://lib-streaming-test.ucsd.edu:1935/dmrnew/_definst_/	-</v></field>
+		<field k='_serial'>
+			<value><text>2</text></value>
+		</field>
+		<field k='_si'>
+			<value><text>nimue.ucsd.edu</text></value>
+			<value><text>main</text></value>
+		</field>
+		<field k='_sourcetype'>
+			<value><text>wowza_access</text></value>
+		</field>
+		<field k='_time'>
+			<value><text>2016-02-29T10:41:30.000-08:00</text></value>
+		</field>
+		<field k='host'>
+			<value h='1'><text>lib-streaming-test.ucsd.edu</text></value>
+		</field>
+		<field k='index'>
+			<value><text>main</text></value>
+		</field>
+		<field k='linecount'>
+			<value><text>1</text></value>
+		</field>
+		<field k='source'>
+			<value><text>wowzastreamingengine_access.log</text></value>
+		</field>
+		<field k='sourcetype'>
+			<value h='1'><text>wowza_access</text></value>
+		</field>
+		<field k='splunk_server'>
+			<value><text>nimue.ucsd.edu</text></value>
+		</field>
+	</result>
+	<result offset='3'>
+		<field k='_bkt'>
+			<value><text>main~29~91CF6D99-55B2-47AC-8110-773EECBFA300</text></value>
+		</field>
+		<field k='_cd'>
+			<value><text>29:360054461</text></value>
+		</field>
+		<field k='_indextime'>
+			<value><text>1456425468</text></value>
+		</field>
+		<field k='_raw'><v xml:space='preserve' trunc='0'>2016-02-25	10:37:47	PST	<sg h='1'>stop</sg>	<sg h='1'>stream</sg>	INF<sg h='1'>200</sg>	flow.mp4	-	_defaultVHost_	dmrnew	_definst_	375.371	[any]	1935	rtmp://lib-streaming-test.ucsd.edu:1935/dmrnew/_definst_/	132.239.120.201	rtmp	http://libraries.ucsd.edu/jwplayer/jwplayer.flash.swf	WIN 20,0,0,306	143724122	4168	101872228	1	383061	0	101868353	flow.mp4	-	/mnt/isilon/DMR/MP4_Archive/flow.mp4	mp4	1335965182	5012.174	rtmp://lib-streaming-test.ucsd.edu:1935/dmrnew/_definst_//flow.mp4	rtmp://lib-streaming-test.ucsd.edu:1935/dmrnew/_definst_//flow.mp4	-	rtmp://lib-streaming-test.ucsd.edu:1935/dmrnew/_definst_/	-</v></field>
+		<field k='_serial'>
+			<value><text>3</text></value>
+		</field>
+		<field k='_si'>
+			<value><text>nimue.ucsd.edu</text></value>
+			<value><text>main</text></value>
+		</field>
+		<field k='_sourcetype'>
+			<value><text>wowza_access</text></value>
+		</field>
+		<field k='_time'>
+			<value><text>2016-02-25T10:37:47.000-08:00</text></value>
+		</field>
+		<field k='host'>
+			<value h='1'><text>lib-streaming-test.ucsd.edu</text></value>
+		</field>
+		<field k='index'>
+			<value><text>main</text></value>
+		</field>
+		<field k='linecount'>
+			<value><text>1</text></value>
+		</field>
+		<field k='source'>
+			<value><text>wowzastreamingengine_access.log</text></value>
+		</field>
+		<field k='sourcetype'>
+			<value h='1'><text>wowza_access</text></value>
+		</field>
+		<field k='splunk_server'>
+			<value><text>nimue.ucsd.edu</text></value>
+		</field>
+	</result>
+</results>

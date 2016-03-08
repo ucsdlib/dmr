@@ -6,7 +6,7 @@
 
 DMR is a Digital Media Reserves Tool to manage videos created for the UCSD campus.
 
-## Requirements
+## Requirements 
 
 * Ruby 2.2.3+
 * git
@@ -73,7 +73,7 @@ $ rails s
 ## DMR will be available at 
 
 ```
-http://localhost:3000/dmr/
+http://localhost:3000/dmr/ 
 ```
 
 ## Running the Test Suites
