@@ -30,6 +30,7 @@ production: &production
 
 staging:
   <<: *production
+  host: <%= ENV["DMR_S_DB_HOST"] %>
 
 pontos:
   <<: *production
