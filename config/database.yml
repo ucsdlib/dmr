@@ -23,14 +23,23 @@ test:
 production: &production
   <<: *default
   adapter: postgresql
-  database: <%= ENV["DMR_DB"] %>
-  host: <%= ENV["DMR_DB_HOST"] %>
-  username: <%= ENV["DMR_DB_USER"] %>
-  password: <%= ENV["DMR_DB_PW"] %>
+  database: <%= ENV.fetch('APPS_DMR_PROD_DB') %>
+  host: <%= ENV.fetch('APPS_DMR_PROD_DB_HOST') %>
+  username: <%= ENV.fetch('APPS_DMR_PROD_DB_USER') %>
+  password: <%= ENV.fetch('APPS_DMR_PROD_DB_PASS') %>
 
 staging:
-  <<: *production
-  host: <%= ENV["DMR_S_DB_HOST"] %>
+  <<: *default
+  adapter: postgresql
+  database: <%= ENV.fetch('APPS_DMR_STAGING_DB') %>
+  host: <%= ENV.fetch('APPS_DMR_STAGING_DB_HOST') %>
+  username: <%= ENV.fetch('APPS_DMR_STAGING_DB_USER') %>
+  password: <%= ENV.fetch('APPS_DMR_STAGING_DB_PASS') %>
 
 pontos:
-  <<: *production
+  <<: *default
+  adapter: postgresql
+  database: <%= ENV.fetch('APPS_DMR_PONTOS_DB') %>
+  host: <%= ENV.fetch('APPS_DMR_PONTOS_DB_HOST') %>
+  username: <%= ENV.fetch('APPS_DMR_PONTOS_DB_USER') %>
+  password: <%= ENV.fetch('APPS_DMR_PONTOS_DB_PASS') %>

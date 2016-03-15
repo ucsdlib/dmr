@@ -4,7 +4,7 @@ machine:
       2.2.3        
   environment:
     CIRCLE_ENV: test
-    DMR_STREAMING_KEY: 1234567891234567
+    APPS_DMR_STREAMING_KEY: 1234567891234567
 
 dependencies:
   pre:
