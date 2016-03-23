@@ -59,3 +59,11 @@ Style/AlignHash:
 Style/SignalException:
   Exclude:
     - 'app/models/user.rb'
+
+Style/NegatedIf:
+  Exclude:
+    - 'lib/dmr/splunk_api_helper.rb'
+
+Style/BlockDelimiters:
+  Exclude:
+    - 'lib/dmr/splunk_api_helper.rb'

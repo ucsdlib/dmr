@@ -8,8 +8,8 @@ class AnalyticsController < ApplicationController
 
   def index
     return unless params[:start_date] && params[:end_date]
-    s_date = time_convert(params[:start_date], '12:00AM')
-    e_date = time_convert(params[:end_date], '11:59PM')
+    s_date = convert_time(params[:start_date], '00:00:00-8')
+    e_date = convert_time(params[:end_date], '23:59:59-8')
     @item_count = new_item_count(s_date, e_date)
     @course_count = new_course_count(s_date, e_date) + clone_course_count(s_date, e_date)
     @record_count = new_record_count(s_date, e_date)
