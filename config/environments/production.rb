@@ -89,5 +89,6 @@ Rails.application.configure do
   config.shibboleth = true
   config.wowza_baseurl = 'lib-streaming.ucsd.edu:1935/dmrnew/_definst_/'
   config.receiver_emails = 'reserves@ucsd.edu,'
-  config.splunk_host = 'library'    
+  config.splunk_host = 'library'
+  config.rails_host = 'lib-hydrahead-prod'   
 end

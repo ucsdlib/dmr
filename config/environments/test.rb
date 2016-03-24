@@ -41,5 +41,6 @@ Rails.application.configure do
   config.wowza_baseurl = 'lib-streaming-test.ucsd.edu:1935/dmrnew/_definst_/'
   config.shibboleth = false
   config.receiver_emails = 'landrews@ucsd.edu,reserves@ucsd.edu,'
-  config.splunk_host = 'librarytest'   
+  config.splunk_host = 'librarytest'
+  config.rails_host = 'lib-hydrahead-staging'   
 end

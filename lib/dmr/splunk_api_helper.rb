@@ -14,6 +14,7 @@ module Dmr
   module SplunkApiHelper
     WOWZAHOST = Rails.configuration.wowza_baseurl.split(':')[0]
     S_HOST = Rails.configuration.splunk_host
+    RAILS_HOST = Rails.configuration.rails_host
     TOTAL = '| stats count as Total'
 
     def stats(query, start_date, end_date)
@@ -37,8 +38,15 @@ module Dmr
     end
 
     def new_item_count(s_date, e_date)
-      q = "search sourcetype=access_common host=#{S_HOST} dmr/courses/add_to_course 302 #{TOTAL}"
-      data_count(q, s_date, e_date)
+      q = "search sourcetype=rails host=#{RAILS_HOST} CoursesController#add_to_course media_ids"
+      data = stats(q, s_date, e_date)
+      media_ids = []
+      data.each do |result|
+        tmp = result['_raw'].delete('"')
+        tmp_result = tmp.split(/media_ids=>\[/)[1]
+        media_ids |= tmp_result.split(/\]/).first.split(',')
+      end
+      media_ids.length
     end
 
     def new_course_count(s_date, e_date)
