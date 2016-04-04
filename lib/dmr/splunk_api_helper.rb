@@ -40,13 +40,13 @@ module Dmr
     def new_item_count(s_date, e_date)
       q = "search sourcetype=rails host=#{RAILS_HOST} CoursesController#add_to_course media_ids"
       data = stats(q, s_date, e_date)
-      media_ids = []
+      id_count = 0
       data.each do |result|
         tmp = result['_raw'].delete('"').delete(' ')
         tmp_result = tmp.split(/media_ids=>\[/)[1]
-        media_ids |= tmp_result.split(/\]/).first.split(',')
+        id_count += tmp_result.split(/\]/).first.split(',').length
       end
-      media_ids.length
+      id_count
     end
 
     def new_course_count(s_date, e_date)
