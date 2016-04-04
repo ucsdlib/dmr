@@ -29,34 +29,16 @@ $ cd dmr
 
 ```
 $ git checkout develop
-```
-
-3.Copy DB Sample.
 
 ```
-$ cp config/database.yml.example config/database.yml
-```
 
-4.Copy Secret Token Sample and edit config/secrets.yml
-Replace the secret_key_base hex string with a new random string (you can generate a new random key with rake secret).
-
-```
-$ cp config/secrets.yml.example config/secrets.yml
-```
-
-5.Copy Streaming Key.
-
-```
-$ cp config/streaming.key.sample config/streaming.key
-```
-
-6.Update DB.
+3.Update DB.
 
 ```
 $ bundle exec rake db:migrate
 ```
 
-7.Update Test DB
+4.Update Test DB
 
 ```
 $ bundle exec rake db:migrate RAILS_ENV=test

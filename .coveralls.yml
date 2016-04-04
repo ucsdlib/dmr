@@ -1,0 +1,1 @@
+repo_token: <%= ENV.fetch('APPS_DMR_REPO_TOKEN') %>

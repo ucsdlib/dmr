@@ -14,6 +14,7 @@ module Dmr
   module SplunkApiHelper
     WOWZAHOST = Rails.configuration.wowza_baseurl.split(':')[0]
     S_HOST = Rails.configuration.splunk_host
+    RAILS_HOST = Rails.configuration.rails_host
     TOTAL = '| stats count as Total'
 
     def stats(query, start_date, end_date)
@@ -23,8 +24,7 @@ module Dmr
       job = service.create_search(query, earliest_time: start_date, latest_time: end_date)
       sleep(0.1) until job.is_ready?
       sleep(0.1) until job.is_done?
-
-      stream = job.results(offset: 0)
+      stream = job.results(count: 100_000, offset: 0)
       Splunk::ResultsReader.new(stream)
     end
 
@@ -38,8 +38,15 @@ module Dmr
     end
 
     def new_item_count(s_date, e_date)
-      q = "search sourcetype=access_common host=#{S_HOST} dmr/courses/add_to_course 302 #{TOTAL}"
-      data_count(q, s_date, e_date)
+      q = "search sourcetype=rails host=#{RAILS_HOST} CoursesController#add_to_course media_ids"
+      data = stats(q, s_date, e_date)
+      id_count = 0
+      data.each do |result|
+        tmp = result['_raw'].delete('"').delete(' ')
+        tmp_result = tmp.split(/media_ids=>\[/)[1]
+        id_count += tmp_result.split(/\]/).first.split(',').length
+      end
+      id_count
     end
 
     def new_course_count(s_date, e_date)
@@ -65,17 +72,25 @@ module Dmr
     end
 
     def process_count(data, stop_time)
-      v_count = 0
+      tmp_view = {}
       data.each do |result|
         tmp = result['_raw'].to_s.split
-        filename = tmp[7]
-
-        if stop_time.key?("#{filename}-#{tmp[21]}")
-          time_min_diff = Time.diff(tmp[1], stop_time["#{filename}-#{tmp[21]}"])[:minute]
-          v_count += 1 if time_min_diff >= 5
+        if stop_time.key?(process_id(tmp))
+          time_diff = Time.diff(tmp[1], stop_time[process_id(tmp)])[:minute]
+          tmp_view[process_id(tmp)] = time_diff if time_diff >= 5
         end
       end
-      v_count
+      unique_count(tmp_view)
+    end
+
+    def unique_count(view)
+      key_prefix = ''
+      key_array = []
+      view.keys.sort.each { |key|
+        key_prefix = "#{key.split('-')[0]}-#{key.split('-')[1]}"
+        key_array << key_prefix if !key_array.include?(key_prefix)
+      }
+      key_array.length
     end
 
     def stop_time_view(s_date, e_date)
@@ -84,16 +99,20 @@ module Dmr
       files = {}
       data.each do |result|
         tmp_result = result['_raw'].to_s.split
-        files["#{tmp_result[7]}-#{tmp_result[21]}"] = tmp_result[1]
+        files[process_id(tmp_result)] = tmp_result[1]
       end
       files
     end
 
-    def time_convert(date, time)
+    def process_id(row)
+      "#{row[7]}-#{row[row.length - 18]}-#{row[row.length - 15]}"
+    end
+
+    def convert_time(date, time)
       if DateTime.current.strftime('%m/%d/%Y').include?(date) && time.include?('PM')
         d_time = 'now'
       else
-        d_time = DateTime.strptime("#{date} #{time}", '%m/%d/%Y %H:%M%p')
+        d_time = DateTime.strptime("#{date} #{time}", '%m/%d/%Y %H:%M:%S%z')
       end
       d_time
     end

@@ -16,10 +16,6 @@
 !/log/.keep
 /tmp
 .project
-config/database.yml
-config/secrets.yml
-config/streaming.key
-.coveralls.yml
 .DS_Store
 DMR_Data.csv
 /coverage/*

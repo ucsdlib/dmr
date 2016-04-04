@@ -41,8 +41,7 @@ module MediaHelper
     nonce = create_nonce
 
     # load key from file
-    key = File.read "#{APP_ROOT}/config/" + 'streaming.key'
-
+    key = ENV.fetch('APPS_DMR_STREAMING_KEY')
     # encrypt
     str = "#{pid} #{fid} #{ip}"
     cipher = OpenSSL::Cipher::AES.new(128, :CBC)
