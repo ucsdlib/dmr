@@ -42,7 +42,7 @@ module Dmr
       data = stats(q, s_date, e_date)
       media_ids = []
       data.each do |result|
-        tmp = result['_raw'].delete('"')
+        tmp = result['_raw'].delete('"').delete(' ')
         tmp_result = tmp.split(/media_ids=>\[/)[1]
         media_ids |= tmp_result.split(/\]/).first.split(',')
       end
