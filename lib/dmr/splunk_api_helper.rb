@@ -21,11 +21,9 @@ module Dmr
       service = Splunk.connect(host: Rails.application.secrets.splunk_uri,
                            username: Rails.application.secrets.splunk_username,
                            password: Rails.application.secrets.splunk_password)
-      job = service.create_search(query, earliest_time: start_date, latest_time: end_date)
-      sleep(0.1) until job.is_ready?
-      sleep(0.1) until job.is_done?
-      stream = job.results(count: 100_000, offset: 0)
-      Splunk::ResultsReader.new(stream)
+      job = service.create_oneshot(query, earliest_time: start_date, latest_time: end_date,
+                                   count: 100_000, offset: 0)
+      Splunk::ResultsReader.new(job)
     end
 
     def data_count(query, s_date, e_date)
