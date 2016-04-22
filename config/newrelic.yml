@@ -45,6 +45,10 @@ staging:
   <<: *default_settings
   app_name: Staging dmr
 
+qa:
+  <<: *default_settings
+  app_name: QA dmr
+
 production:
   <<: *default_settings
   app_name: Production dmr
