@@ -25,6 +25,7 @@ gem 'nokogiri', '1.6.7.2'
 gem 'splunk-sdk-ruby'
 gem 'time_diff'
 gem 'bootstrap-datepicker-rails'
+gem 'newrelic_rpm'
 
 # Deploy with Capistrano
 gem 'capistrano', '~> 3.4.0'
