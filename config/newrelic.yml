@@ -36,6 +36,11 @@ development:
   # Do not use for production or load testing.
   developer_mode: true
 
+pontos:
+  <<: *default_settings
+  app_name: Pontos dmr
+  developer_mode: true
+  
 test:
   <<: *default_settings
   # It doesn't make sense to report to New Relic from automated test runs.
