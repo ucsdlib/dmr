@@ -5,17 +5,15 @@ machine:
   environment:
     CIRCLE_ENV: test
     APPS_DMR_STREAMING_KEY: 1234567891234567
+    RAILS_ENV: test
 
 dependencies:
-  pre:
-    - gem install bundler --pre
-
   override:
-    - bundle install
+    - bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
 
 database:
   override:
-    - bundle exec rake db:migrate RAILS_ENV=test
+    - bundle exec rake db:migrate
 
 test:
   post:

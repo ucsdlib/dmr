@@ -1,5 +1,10 @@
+<!DOCTYPE html>
+<html>
 <%= render :partial => 'shared/head'%>
+<body>
 <div class="container-fluid">
   <h3><%= @media.title%></h3>
   <%= render :partial => 'video_viewer' , :locals => {:obj => @media}%>  
 </div>
+</body>
+</html>
