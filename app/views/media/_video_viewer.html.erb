@@ -4,7 +4,7 @@
 
 <% if wowzaURL != nil %>
 
-	<div id="dar-video">Loading the player...</div>
+    <div id="dar-video">Loading the player...</div>
 
 	<script type="text/javascript">
 		jwplayer("dar-video").setup({
@@ -21,8 +21,8 @@
 			aspectratio: "16:9",
 			rtmp: {bufferlength: 3},
 			analytics: {enabled: false},
-			primary: "flash",
-			fallback: false
+            primary: "flash",
+            fallback: true			
 		});
 	</script>
 
