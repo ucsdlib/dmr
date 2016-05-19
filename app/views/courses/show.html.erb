@@ -3,10 +3,11 @@
   <%= render :partial => 'shared/report_header'%>
   <body>
     <%= render :partial => 'shared/report_menu'%>	
-	<div id="tdr_content" class="tdr_fonts">
-	  <div id="tdr_content_content" style="width:100%;max-width:80%;">    			
+	<div id="tdr_content" class="tdr_fonts" style="display: flex; padding-left:7%; width:860px;padding-right:7%; margin-left: auto ; margin-right: auto ;">
+	  <div id="tdr_content_content" style="flex 0 0 65%; width:640px;">    			
         <%= render :partial => 'video_playlist'%>
       </div>
+      <div id="listbar"></div>
     </div>
     <%= render :partial => 'shared/report_footer'%>		
   </body>

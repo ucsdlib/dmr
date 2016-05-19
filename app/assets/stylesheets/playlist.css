@@ -1,0 +1,7 @@
+.listbar_item {width: 95%;display: block;float:left;clear:both;color:rgb(185, 185, 190);display: flex; margin: 10px 0 10px 10px; width:95%; height:70px;overflow:hidden;}
+div.listbar_item:hover {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANIAAAABCAIAAAAkUWeUAAAAEUlEQVR42mPQ1zccRaOIzggAmuR1T+nadMkAAAAASUVORK5CYII=");}
+#listbar {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABMAQMAAAASt2oTAAAAA1BMVEU8PD44mUV6AAAAFklEQVR4AWMYMmAUjIJRMApGwSgYBQAHuAABIqNCjAAAAABJRU5ErkJggg==");text-align:left;flex: 1; overflow-y: auto ;height: 360px; overflow-x : hidden; width:220px;}
+.jwplaylistdivider {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANIAAAABCAIAAAAkUWeUAAAAEUlEQVR42mPQ1zccRaOIzggAmuR1T+nadMkAAAAASUVORK5CYII=");background-size: 100% 1px;width: 100%;height: 1px;display: block;float:left;clear:both;}
+.desc {color: rgb(236, 236, 244);}
+.playlist_text {display: inline-block;vertical-align: middle;line-height: normal; word-wrap: normal;padding-left: 5px;}
+img.playlist_thumbnail {height: 50px; width: 70px; margin-right: 5px; position: relative; top: 50%; transform: translateY(-50%);}
