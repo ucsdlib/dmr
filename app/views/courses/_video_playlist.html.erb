@@ -18,7 +18,7 @@
 	      title: "<%= m.title %>",
 	      
           <!--Brief media description text area-->
-	      description: "Director: <%= m.director %> Year: <%= m.year %>",
+	      description: "Director: <%= m.director %> <br/>Year: <%= m.year %>",
 	  	  
 	      <!--add image: to display thumbnail-->
 	      image: "<%= thumbnailURL%>"
@@ -31,16 +31,23 @@
       rtmp: {
         bufferlength: 5,
       },
-
-	  listbar: {
-        position: 'right',
-        size: "25%",
-      },
+	  //listbar: {
+      //  position: 'right',
+      //  size: "25%",
+      //},
 	  width: "100%",
 	  height: "100%",
-	  aspectratio: "16:6",
+	  //aspectratio: "16:6",
 	  skin: 'glow'
     });
-
+	jwplayer().onReady(function(){
+      var myVideos = jwplayer().getPlaylist();
+      for (var i = 0; i < myVideos.length; i++) {
+		//document.getElementById('listbar').innerHTML += '<div class=listbar_item id=video'+ i +' onClick="jwplayer().playlistItem(' + i + ');jwplayer().play();"><div class="playlist_left"><img class="playlist_thumbnail" src=' + myVideos[i].image + '></div><div class="playlist_right"><span class="playlist_text"><b>' + myVideos[i].title + '</b><br/><span class="desc">' + myVideos[i].description + '</span></span></div></div><div class="jwplaylistdivider"></div>';
+		document.getElementById('listbar').innerHTML += '<div style="display: flex; margin: 10px 0 10px 10px; width:95%; height:70px; " class=listbar_item id=video'+ i +' onClick="jwplayer().playlistItem(' + i + ');jwplayer().play();"><div style="flex: 0 0 10%;"><img class="playlist_thumbnail" src=' + myVideos[i].image + '></div><div style="flex:1; line-height: 75px;"><span class="playlist_text"><b>' + myVideos[i].title + '</b><br/><span class="desc">' + myVideos[i].description + '</span></span></div></div><div class="jwplaylistdivider"></div>';
+	  } 
+	});
+	jwplayer().onPlaylist(function(){		
+	});
   </script>
 <% end %>
