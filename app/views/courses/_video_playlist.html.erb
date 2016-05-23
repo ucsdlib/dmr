@@ -45,10 +45,13 @@
       for (var i = 0; i < myVideos.length; i++) {
 		//document.getElementById('listbar').innerHTML += '<div class=listbar_item id=video'+ i +' onClick="jwplayer().playlistItem(' + i + ');jwplayer().play();"><div class="playlist_left"><img class="playlist_thumbnail" src=' + myVideos[i].image + '></div><div class="playlist_right"><span class="playlist_text"><b>' + myVideos[i].title + '</b><br/><span class="desc">' + myVideos[i].description + '</span></span></div></div><div class="jwplaylistdivider"></div>';
 		//document.getElementById('listbar').innerHTML += '<div style="display: flex; margin: 10px 0 10px 10px; width:95%; height:70px; " class=listbar_item id=video'+ i +' onClick="jwplayer().playlistItem(' + i + ');jwplayer().play();"><div style="flex: 0 0 10%;"><img class="playlist_thumbnail" src=' + myVideos[i].image + '></div><div style="flex:1; line-height: 75px;"><span class="playlist_text"><b>' + myVideos[i].title + '</b><br/><span class="desc">' + myVideos[i].description + '</span></span></div></div><div class="jwplaylistdivider"></div>';
-        document.getElementById('list').innerHTML += '<li><span class="dropt" title="'+myVideos[i].title+'"><a href="javascript:jwplayer().playlistItem(' + i + ');jwplayer().play()"><img class="img-responsive" src="'+myVideos[i].image+'" <="" img="" height="75" width="120"><br>'+myVideos[i].title+'<br/>'+myVideos[i].description+'</a><br><span style="width:500px;" <="" span=""></span></span></li>';
+        document.getElementById('list').innerHTML += '<li><span class="dropt" title="'+myVideos[i].title+'"><a href="javascript:playThis('+i+')"><img class="img-responsive" src="'+myVideos[i].image+'" <="" img="" height="75" width="120"><br>'+myVideos[i].title+'<br/>'+myVideos[i].description+'</a><br><span style="width:500px;" <="" span=""></span></span></li>';
 	  } 
 	});
 	jwplayer().onPlaylist(function(){		
 	});
+    function playThis(index) {
+      jwplayer().playlistItem(index);
+    }	
   </script>
 <% end %>
