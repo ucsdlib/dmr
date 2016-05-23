@@ -1,7 +1,55 @@
-.listbar_item {width: 95%;display: block;float:left;clear:both;color:rgb(185, 185, 190);display: flex; margin: 10px 0 10px 10px; width:95%; height:70px;overflow:hidden;}
-div.listbar_item:hover {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANIAAAABCAIAAAAkUWeUAAAAEUlEQVR42mPQ1zccRaOIzggAmuR1T+nadMkAAAAASUVORK5CYII=");}
-#listbar {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABMAQMAAAASt2oTAAAAA1BMVEU8PD44mUV6AAAAFklEQVR4AWMYMmAUjIJRMApGwSgYBQAHuAABIqNCjAAAAABJRU5ErkJggg==");text-align:left;flex: 1; overflow-y: auto ;height: 360px; overflow-x : hidden; width:220px;}
-.jwplaylistdivider {background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANIAAAABCAIAAAAkUWeUAAAAEUlEQVR42mPQ1zccRaOIzggAmuR1T+nadMkAAAAASUVORK5CYII=");background-size: 100% 1px;width: 100%;height: 1px;display: block;float:left;clear:both;}
-.desc {color: rgb(236, 236, 244);}
-.playlist_text {display: inline-block;vertical-align: middle;line-height: normal; word-wrap: normal;padding-left: 5px;}
-img.playlist_thumbnail {height: 50px; width: 70px; margin-right: 5px; position: relative; top: 50%; transform: translateY(-50%);}
+.ListItems div {
+margin-left:10%;
+align-content: left;
+width: 81.5%; height: 200px;
+text-indent: 0px;
+background: #000000;
+box-shadow: inset 0 3px 10px rgba(0,0,0,.85);
+-webkit-box-shadow: inset 0 3px 10px rgba(0,0,0,.85);
+-moz-box-shadow: inset 0 3px 10px rgba(0,0,0,.85);
+border-bottom-left-radius: 5px;
+border-bottom-right-radius: 5px;
+-moz-border-radius-bottomleft: 5px;
+-moz-border-radius-bottomright: 5px;
+-webkit-border-bottom-left-radius: 5px;
+-webkit-border-bottom-right-radius: 5px;
+font-family: helvetica;
+color: #000000;
+text-decoration: none;
+list-style-type: none;
+list-style-position:inside;
+padding:0 0 0 0px;
+overflow-x: scroll;        
+}
+
+.ListItems div li {
+display: block;
+float: left;
+list-style-type: none;
+list-style: none;
+padding: 15px 0 0 11px;
+line-height:200%;
+height: 200px;
+}
+
+.ListItems div a {
+text-indent: 0px;
+display: block;
+background: #000;
+border: 1px solid #666;
+height: 75px; width: 120px;
+margin: 0;
+color: #ffffff;
+text-decoration: none;
+text-align:center;
+margin: 0;
+list-style-type: none;
+list-style-position:inside;
+margin:0;
+line-height:200%;
+}
+
+.ListItems div a:hover {
+list-style-type: none;
+border: 1px solid #ff0046;
+}
