@@ -1,6 +1,6 @@
 <!--JWPlayer player config. and script-->
 
-<div id="player">Loading the player...</div>
+<video controls="controls" id="player">Loading the player...</video>
 
 <% if @course.reports and @course.reports.size > 0 %> 
   <script type="text/javascript">
@@ -11,8 +11,9 @@
         <% if wowzaURL != nil %>
           <% thumbnailURL = "#{Rails.configuration.file_path}#{m.file_name.gsub('.mp4','.jpg')}"%>      
 	      sources: [
-	        {file: "rtmp://<%=wowzaURL%>"},
-	        {file: "http://<%=wowzaURL%>/playlist.m3u8"}
+	        {file: "http://<%=wowzaURL%>/manifest.mpd"},
+	        {file: "http://<%=wowzaURL%>/playlist.m3u8"},
+	        {file: "rtmp://<%=wowzaURL%>"}
 	      ],
 	      <!--title of media file-->
 	      title: "<%= m.title %>",
@@ -38,7 +39,8 @@
 	  width: "100%",
 	  height: "100%",
 	  aspectratio: "16:6",
-	  skin: 'glow'
+	  skin: 'glow',
+	  fallback: false
     });
 	jwplayer().onReady(function(){
       var myVideos = jwplayer().getPlaylist();
