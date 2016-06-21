@@ -215,5 +215,24 @@ module Dmr
         media.destroy
       end
     end
+
+    ##
+    # Handles search request for Media or Course object
+    #
+    # @param query [String] the search query
+    # @return [ActiveRecord::Relation] the resulting objects
+    #
+    def full_search(query, model)
+      if query
+        tokens = query.split(' ')
+        q = 'lower(title || director || year || call_number || file_name) like ?'
+        q = 'lower(course || quarter || year || instructor) like ?' if model.to_s.include?('Course')
+        results = model.where(q, "%#{query.downcase}%")
+        tokens.each do |token|
+          results = results.union(model.where(q, "%#{token.downcase}%"))
+        end
+        results
+      end
+    end
   end
 end

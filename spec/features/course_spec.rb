@@ -5,6 +5,8 @@ feature 'Course' do
   before(:all) do
     @course1 = Course.create course: 'Test Course 1', instructor: 'Test Instructor 1', year: '2015', quarter: 'Spring'
     @course2 = Course.create course: 'Test Course 2', instructor: 'Test Instructor 2', year: '2015', quarter: 'Summer'
+    @course3 = Course.create course: 'Course 3', instructor: 'Instructor 3', year: '9999', quarter: 'Summer'
+    @course4 = Course.create course: 'Course 4', instructor: 'Instructor 4', year: '2015', quarter: 'Fall'
     @media1 = Media.create title: 'Test Media 1', director: 'Test Director 1', year: '2015', call_number: '11111111', file_name: 'toystory.mp4'
     @media2 = Media.create title: 'Test Media 2', director: 'Test Director 2', year: '2016', call_number: '77777777', file_name: 'file2.mp4'          
     @media3 = Media.create title: 'Test Media 3', director: 'Test Director 1', year: '2015', call_number: '11111111', file_name: 'toystory.mp4'
@@ -19,6 +21,8 @@ feature 'Course' do
   after(:all) do
     @course1.delete
     @course2.delete
+    @course3.delete
+    @course4.delete
     @media1.delete
     @media2.delete
     @media3.delete
@@ -98,7 +102,7 @@ feature 'Course' do
     expect(page).to have_selector("input#course_course[value='Test Course 1']")
     click_on('Delete')
     expect(page).to have_content('Course was successfully destroyed.')
-    expect(Course.count).to eq(1)
+    expect(Course.count).to eq(3)
     visit courses_path
     expect(page).to_not have_content('Test Course 1')           
   end
@@ -156,7 +160,16 @@ feature 'Course' do
     expect(page).to have_content('Test Course 2')
     expect(page).to have_content('Showing all 2 courses')        
   end
-  
+
+  scenario 'wants to do combined searches for Courses' do
+    visit search_courses_path( {:search => 'Test 9999 Fall'} )  
+    expect(page).to have_content('Test Course 1')
+    expect(page).to have_content('Test Course 2')
+    expect(page).to have_content('9999')
+    expect(page).to have_content('Fall')
+    expect(page).to have_content('Showing all 4 courses')        
+  end
+    
   scenario 'wants to search for courses with no matching search term' do    
     visit search_courses_path( {:search => 'abcdef'} )
     expect(page).to have_content('There were no results for the search: "abcdef"')        
