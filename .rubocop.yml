@@ -64,6 +64,10 @@ Style/NegatedIf:
   Exclude:
     - 'lib/dmr/splunk_api_helper.rb'
 
+Metrics/ModuleLength:
+  Exclude:
+    - 'lib/dmr/controller_helper.rb'
+
 Style/BlockDelimiters:
   Exclude:
     - 'lib/dmr/splunk_api_helper.rb'

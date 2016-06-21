@@ -6,11 +6,14 @@ feature 'Media' do
     @course1 = Course.create course: 'Test Course 1', instructor: 'Test Instructor 1', year: '2015', quarter: 'Spring'
     @media1 = Media.create title: 'Test Media 1', director: 'Test Director 1', year: '2015', call_number: '11111111', file_name: 'toystory.mp4'
     @media2 = Media.create title: 'Test Media 2', director: 'Test Director 2', year: '2016', call_number: '77777777', file_name: 'file2.mp4'    
+    @media3 = Media.create title: 'Combined Search Title', director: 'Director 3', year: '9999', call_number: '22222222', file_name: 'file3.mp4'    
+
   end
   after(:all) do
     @course1.delete
     @media1.delete
     @media2.delete
+    @media3.delete
   end
   before(:each) do
     sign_in_developer
@@ -94,13 +97,13 @@ feature 'Media' do
     visit media_path   
     expect(page).to have_content('Test Media 1')
     expect(page).to have_content('Test Media 2')  
-    expect(Media.count).to eq(2)
+    expect(Media.count).to eq(3)
     
     visit edit_medium_path(@media1)
     expect(page).to have_selector("input#media_title[value='Test Media 1']")
     click_on('Delete')
     expect(page).to have_content('Media was successfully destroyed.')
-    expect(Media.count).to eq(1)
+    expect(Media.count).to eq(2)
     visit media_path
     expect(page).to_not have_content('Test Media 1')           
   end   
@@ -111,7 +114,15 @@ feature 'Media' do
     expect(page).to have_content('Test Media 2')
     expect(page).to have_content('Showing all 2 media')        
   end
- 
+
+  scenario 'wants to do combined searches for Media' do
+    visit search_media_path( {:search => 'Test 9999'} )  
+    expect(page).to have_content('Test Media 1')
+    expect(page).to have_content('Test Media 2')
+    expect(page).to have_content('9999')
+    expect(page).to have_content('Showing all 3 media')        
+  end
+   
   scenario 'wants to search for media with no search term' do
     visit search_media_path( {:search => ''} )  
     expect(page).to have_content('No text is inputted.')

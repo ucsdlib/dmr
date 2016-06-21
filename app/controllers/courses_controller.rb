@@ -105,7 +105,7 @@ class CoursesController < ApplicationController
   #
   def search
     return unless params[:search] && !params[:search].blank?
-    @courses = Course.search(params[:search]).order(:course).page(params[:page]).per(20)
+    @courses = full_search(params[:search], Course).order(:course).page(params[:page]).per(20)
     create_search_session(@courses)
   end
 
