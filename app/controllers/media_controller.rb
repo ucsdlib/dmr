@@ -3,6 +3,7 @@
 # @author Vivian <tchu@ucsd.edu>
 #
 class MediaController < ApplicationController
+  include Dmr::ControllerHelper
   before_action :authorize
   before_action :set_media, only: [:show, :edit, :update, :destroy]
   ##
@@ -128,7 +129,7 @@ class MediaController < ApplicationController
       redirect_to controller: 'courses', action: 'search',
                   search: params[:search], search_option: params[:search_option]
     else
-      @media = Media.search(params[:search]).order(:title).page(params[:page]).per(20)
+      @media = full_search(params[:search], Media).order(:title).page(params[:page]).per(20)
       @search_count = @media.count
     end
   end

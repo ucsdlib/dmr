@@ -14,18 +14,4 @@ class Media < ActiveRecord::Base
   amoeba do
     enable
   end
-
-  ##
-  # Handles search request for Media object
-  #
-  # @param query [String] the search query
-  # @return [String] the resulting Media objects whose titles contain one ore more words
-  # that form the query
-  #
-  def self.search(q)
-    if q
-      where('lower(title || director || year || call_number || file_name) like ?',
-            "%#{q.downcase}%")
-    end
-  end
 end

@@ -19,15 +19,4 @@ class Course < ActiveRecord::Base
     clone [:media]
     clone [:reports]
   end
-
-  ##
-  # Handles search request for Course object
-  #
-  # @param query [String] the search query
-  # @return [String] the resulting Course objects whose course contain one ore
-  # more words that form the query
-  #
-  def self.search(query)
-    where('lower(course || quarter || year || instructor) like ?', "%#{query.downcase}%")
-  end
 end
