@@ -1,4 +1,3 @@
-# encoding: utf-8
 # Load DSL and Setup Up Stages
 require 'capistrano/setup'
 

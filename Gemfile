@@ -1,23 +1,22 @@
-# encoding: utf-8
 source 'https://rubygems.org'
 
 gem 'rails', '4.2.6'
-gem 'sass-rails', '5.0.4'
+gem 'sass-rails', '5.0.6'
 gem 'uglifier', '3.0.0'
-gem 'coffee-rails', '4.1.1'
+gem 'coffee-rails', '4.2.1'
 gem 'jquery-rails', '4.1.1'
-gem 'turbolinks'
-gem 'jbuilder', '2.5.0'
-gem 'bootstrap-sass', '3.3.6'
+gem 'turbolinks', '2.5.3'
+gem 'jbuilder', '2.6.0'
+gem 'bootstrap-sass', '3.3.7'
 gem 'pg', '0.18.4'
 gem 'fabrication', '2.15.2'
 gem 'yard'
 gem 'inch', '0.7.1', require: false
-gem 'bootstrap_form'
+gem 'bootstrap_form', '2.4.0'
 gem 'kaminari', '0.17.0'
 gem 'omniauth', '1.3.1'
 gem 'omniauth-shibboleth', '1.2.1'
-gem 'net-ldap', '0.14.0'
+gem 'net-ldap', '0.15.0'
 gem 'amoeba'
 gem 'letter_opener', '1.4.1'
 gem 'nokogiri', '1.6.8'
@@ -29,7 +28,7 @@ gem 'newrelic_rpm', '3.16.0.318'
 gem 'active_record_union', '~> 1.2.0'
 
 # Deploy with Capistrano
-gem 'capistrano', '~> 3.5.0'
+gem 'capistrano', '~> 3.6.0'
 gem 'capistrano-rails', '~> 1.1.7'
 gem 'capistrano-rbenv', '~> 2.0.4'
 gem 'capistrano-bundler'
@@ -41,18 +40,18 @@ gem 'activerecord', '~> 4.2.6'
 gem 'sqlite3', '1.3.11'
 
 group :development do
-  gem 'spring', '1.7.1'
+  gem 'spring', '1.7.2'
 end
 
 group :development, :test do
-  gem 'rspec-rails', '3.4.2'
+  gem 'rspec-rails', '3.5.1'
   gem 'byebug', '9.0.5'
   gem 'capybara', '~> 2.7.1'
   gem 'launchy', '~> 2.4.3'
   gem 'unicorn', '~> 5.1.0'
-  gem 'pry', '0.10.3'
-  gem 'rubocop', '0.37.2', require: false
-  gem 'rubocop-rspec', '1.4.0'
+  gem 'pry', '0.10.4'
+  gem 'rubocop', '0.42.0', require: false
+  gem 'rubocop-rspec', '1.5.1'
 end
 
 group :test do
