@@ -3,8 +3,10 @@
 #
 class CoursesController < ApplicationController
   include Dmr::ControllerHelper
+  include Dmr::CourseControllerHelper
   before_action :authorize_student, only: [:show] if Rails.configuration.shibboleth
-  before_action :authorize, only: [:index, :create, :edit, :update, :new, :destroy, :search]
+  before_action :authorize, only: [:index, :create, :edit, :update, :new, :destroy,
+                                   :search, :archive, :archive_search]
 
   before_action :set_course, only: [:show, :edit, :update, :destroy, :clone_course, :send_email]
   before_action :set_sorted_media, only: [:show, :edit, :send_email, :update]
@@ -104,7 +106,9 @@ class CoursesController < ApplicationController
   #
   def search
     return unless params[:search] && !params[:search].blank?
-    @courses = full_search(params[:search], Course).order(:course).page(params[:page]).per(20)
+    # fq = ' AND course NOT LIKE "%ARCHIVE%"'
+    # @courses = full_search(params[:search], Course, fq).order(:course)
+    @courses = course_search(params[:search]).order(:course)
     create_search_session(@courses)
   end
 
@@ -118,6 +122,46 @@ class CoursesController < ApplicationController
     new_course = @course.amoeba_dup
     return unless new_course.save!
     redirect_to edit_course_path(new_course), notice: 'Course was successfully cloned.'
+  end
+
+  ##
+  # Archive Courses
+  # /courses/archive
+  #
+  # @return [String] - redirect to the Courses index page
+  #
+  def archive
+    if deleting_archive?
+      delete_archive(params[:course_ids])
+      redirect_to courses_path, notice: 'Courses were successfully destroyed.'
+    elsif archive_courses?(params[:course_ids])
+      redirect_to courses_path, notice: 'Courses were successfully archived.'
+    else
+      redirect_to courses_path, alert: 'Courses were failed to archive.'
+    end
+  end
+
+  ##
+  # Search for Courses to archive
+  # /courses/archive_search
+  #
+  #
+  def archive_search
+    redirect_to welcome_index_path if params[:commit] == 'Cancel'
+    # q = "#{params[:course_q]} #{params[:quarter_q]} #{params[:year_q]} #{params[:instructor_q]}"
+    # fq = ' AND course LIKE "%ARCHIVE%"'
+    # @courses = full_search(q, Course, fq).order(:course)
+    # q = "#{params[:course_q]} #{params[:quarter_q]} #{params[:year_q]} #{params[:instructor_q]}"
+    # fq = ' AND course LIKE "%ARCHIVE%"'
+    @courses = archive_full_search(params).order(:course)
+  end
+
+  ##
+  # Search Courses page
+  # /courses/lookup
+  #
+  #
+  def lookup
   end
 
   ##
@@ -177,6 +221,10 @@ class CoursesController < ApplicationController
 
   def deleting_media?
     params[:commit] == 'Delete Selected Records'
+  end
+
+  def deleting_archive?
+    params[:commit] == 'Delete'
   end
 
   def create_search_session(courses)
