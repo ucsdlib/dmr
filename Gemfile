@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.6'
+gem 'rails', '4.2.7.1'
 gem 'sass-rails', '5.0.6'
 gem 'uglifier', '3.0.0'
 gem 'coffee-rails', '4.2.1'
@@ -34,9 +34,9 @@ gem 'capistrano-rbenv', '~> 2.0.4'
 gem 'capistrano-bundler'
 gem 'equivalent-xml', '~> 0.6.0'
 
-gem 'activesupport', '~> 4.2.6'
-gem 'activemodel', '~> 4.2.6'
-gem 'activerecord', '~> 4.2.6'
+gem 'activesupport', '~> 4.2.7.1'
+gem 'activemodel', '~> 4.2.7.1'
+gem 'activerecord', '~> 4.2.7.1'
 gem 'sqlite3', '1.3.11'
 
 group :development do

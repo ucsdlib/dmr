@@ -158,18 +158,26 @@ feature 'Course' do
     visit search_courses_path( {:search => 'Test'} )  
     expect(page).to have_content('Test Course 1')
     expect(page).to have_content('Test Course 2')
-    expect(page).to have_content('Showing all 2 courses')        
+    expect(page).to have_content('Displaying 2 results')        
   end
 
   scenario 'wants to do combined searches for Courses' do
-    visit search_courses_path( {:search => 'Test 9999 Fall'} )  
+    visit search_courses_path( {:search => 'Test 9999 Summer'} )  
     expect(page).to have_content('Test Course 1')
     expect(page).to have_content('Test Course 2')
     expect(page).to have_content('9999')
-    expect(page).to have_content('Fall')
-    expect(page).to have_content('Showing all 4 courses')        
+    expect(page).to have_content('Summer')
+    expect(page).to have_content('Displaying 3 results')        
   end
-    
+
+  scenario 'wants to do search for quarter and year' do
+    visit search_courses_path( {:search => 'spring 2015'} )
+    expect(page).to have_content('Displaying 1 results')
+    expect(page).to have_content('Test Course 1')
+    expect(page).to have_content('Spring')
+    expect(page).to have_content('2015')
+  end
+      
   scenario 'wants to search for courses with no matching search term' do    
     visit search_courses_path( {:search => 'abcdef'} )
     expect(page).to have_content('There were no results for the search: "abcdef"')        
@@ -179,7 +187,7 @@ feature 'Course' do
     visit search_courses_path( {:search => 'Test',:search_option => 'courses'} )  
     expect(page).to have_content('Test Course 1')
     expect(page).to have_content('Test Course 2')
-    expect(page).to have_content('Showing all 2 courses')
+    expect(page).to have_content('Displaying 2 results')
     
     #Check that the search_option radio button is still selected
     find("input[name='search_option'][type='radio'][value='courses']").should be_checked        
@@ -358,5 +366,93 @@ feature 'Course' do
     visit edit_course_path(@course1)
     click_on 'View Current Course Reserve List'
     current_path.should == edit_course_path(@course1)        
-  end                                               
+  end
+
+  scenario 'wants to cancel search courses' do
+    visit welcome_index_path
+    click_on 'Archive'
+    expect(page).to have_selector('h3', :text => 'Search Courses')
+    fill_in 'course_q', :with => 'Test'
+    click_on 'Cancel'
+    current_path.should == welcome_index_path     
+  end
+    
+  scenario 'wants to archive some courses' do
+    visit search_courses_path( {:search => 'Test'} )    
+    expect(page).to have_content('Displaying 2 results')
+    expect(page).to have_content('Test Course 1')
+    expect(page).to have_content('Test Course 2')
+        
+    # select courses to archive   
+    find("input[type='checkbox'][value='#{@course1.id}']").set(true)
+    find("input[type='checkbox'][value='#{@course2.id}']").set(true)
+    find('input[value="Archive"]').click
+    current_path.should == courses_path
+    expect(page).to have_content('Courses were successfully archived.')
+    expect(page).to have_content("Test Course 1 - ARCHIVE #{@course1.updated_at}")
+    expect(page).to have_content("Test Course 2 - ARCHIVE #{@course2.updated_at}")
+    click_on "Test Course 1 - ARCHIVE #{@course1.updated_at}"
+    report_url = "Spring/2015/test_course_1_-_archive_#{@course1.updated_at.to_s.parameterize("_")}"
+    expect(page).to have_link('View', href: "#{report_url}" )
+    click_on "View"
+    current_path.should == "/courses/#{@course1.id}/#{report_url}"    
+  end 
+
+  scenario 'wants to search for archived course' do
+    visit search_courses_path( {:search => 'Test'} )    
+    expect(page).to have_content('Displaying 2 results')
+    expect(page).to have_content('Test Course 1')
+    expect(page).to have_content('Test Course 2')
+        
+    # select courses to archive   
+    find("input[type='checkbox'][value='#{@course1.id}']").set(true)
+    find('input[value="Archive"]').click
+    current_path.should == courses_path
+    expect(page).to have_content('Courses were successfully archived.')
+    expect(page).to have_content("Test Course 1 - ARCHIVE #{@course1.updated_at}")
+      
+    visit welcome_index_path
+    click_on 'Archive'
+    expect(page).to have_selector('h3', :text => 'Search Courses')
+    fill_in 'year_q', :with => '2015'
+    click_on 'Search'
+    expect(page).to have_content('Displaying 1 results')
+    expect(page).to have_content("Test Course 1 - ARCHIVE #{@course1.updated_at}")    
+  end
+  
+  scenario 'fails to archive some courses' do
+    visit search_courses_path( {:search => 'Test'} )    
+    expect(page).to have_content('Displaying 2 results')
+    expect(page).to have_content('Test Course 1')
+    expect(page).to have_content('Test Course 2')
+        
+    # no course is selected   
+    find('input[value="Archive"]').click
+    current_path.should == courses_path
+    expect(page).to have_content('Courses were failed to archive.')
+  end
+  
+  scenario 'fails to view old report url after the course is archived' do
+    # report url works before archiving a course
+    visit edit_course_path(@course1)
+    report_url = "Spring/2015/test_course_1"
+    expect(page).to have_link('View', href: "#{report_url}" )
+    click_on "View"
+    current_path.should == "/courses/#{@course1.id}/#{report_url}"  
+        
+    # archive a course    
+    visit search_courses_path( {:search => 'Test'} )  
+    expect(page).to have_content('Test Course 1')
+        
+    find("input[type='checkbox'][value='#{@course1.id}']").set(true)  
+    find('input[value="Archive"]').click
+    expect(page).to have_content('Courses were successfully archived.')
+    
+    visit edit_course_path(@course1)
+    expect(page).to_not have_link('View', href: "#{report_url}" )
+
+    # view old report url
+    visit "/courses/#{@course1.id}/#{report_url}"
+    expect(page).to have_content('The page you were looking for doesn\'t exist')
+  end                                                     
 end
