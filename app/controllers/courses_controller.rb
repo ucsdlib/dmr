@@ -106,8 +106,6 @@ class CoursesController < ApplicationController
   #
   def search
     return unless params[:search] && !params[:search].blank?
-    # fq = ' AND course NOT LIKE "%ARCHIVE%"'
-    # @courses = full_search(params[:search], Course, fq).order(:course)
     @courses = course_search(params[:search]).order(:course)
     create_search_session(@courses)
   end
@@ -148,11 +146,6 @@ class CoursesController < ApplicationController
   #
   def archive_search
     redirect_to welcome_index_path if params[:commit] == 'Cancel'
-    # q = "#{params[:course_q]} #{params[:quarter_q]} #{params[:year_q]} #{params[:instructor_q]}"
-    # fq = ' AND course LIKE "%ARCHIVE%"'
-    # @courses = full_search(q, Course, fq).order(:course)
-    # q = "#{params[:course_q]} #{params[:quarter_q]} #{params[:year_q]} #{params[:instructor_q]}"
-    # fq = ' AND course LIKE "%ARCHIVE%"'
     @courses = archive_full_search(params).order(:course)
   end
 
