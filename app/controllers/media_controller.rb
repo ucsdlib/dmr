@@ -128,7 +128,7 @@ class MediaController < ApplicationController
       redirect_to controller: 'courses', action: 'search',
                   search: params[:search], search_option: params[:search_option]
     else
-      @media = full_search(params[:search], Media).order(:title).page(params[:page]).per(20)
+      @media = full_search(params[:search], Media, nil).order(:title).page(params[:page]).per(20)
       @search_count = @media.count
     end
   end

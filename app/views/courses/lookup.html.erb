@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-10">
+	  <h3>Search Courses</h3>
+      <%= form_tag archive_search_courses_path, method: "GET" do %> 
+         <div class="form-group">
+           <label class="control-label" for="course">Course</label>
+           <%= text_field_tag :course_q, params[:course_q], class: "form-control"%>
+         </div>       
+         <div class="form-group">
+           <label class="control-label" for="quarter">Quarter</label><br/>
+           <%= select_tag(:quarter_q, options_for_select([["Spring", "Spring"], ["Summer", "Summer"],["Fall", "Fall"], ["Winter", "Winter"]])) %>
+         </div> 
+         <div class="form-group">
+           <label class="control-label" for="year">Year</label>
+           <%= text_field_tag :year_q, params[:year_query], class: "form-control"%>
+         </div>
+         <div class="form-group">
+           <label class="control-label" for="instructor">Instructor</label>
+           <%= text_field_tag :instructor_q, params[:instructor_query], class: "form-control"%>
+         </div>
+         <div class="center-block">                 
+           <%= submit_tag "Search", name: 'commit', class: "btn btn-primary" %>
+           <%= submit_tag "Cancel", name: 'commit', class: "btn btn-primary" %>
+         </div>
+       <% end %>
+
+    </div>
+  </div>
+</div>
