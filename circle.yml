@@ -1,3 +1,7 @@
+general:
+  artifacts:
+    - "tmp"
+
 machine:
   ruby:
     version:
@@ -6,11 +10,16 @@ machine:
     CIRCLE_ENV: test
     APPS_DMR_STREAMING_KEY: 1234567891234567
     RAILS_ENV: test
-
+    CIRCLE_TOKEN: <CircleCI API token>
+    ACCESSLINT_GITHUB_TOKEN: <GitHub Personal Access Token>
+    
 dependencies:
   override:
     - bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
-
+  post:
+    - npm install -g accesslint-cli
+    - gem install accesslint-ci
+    
 database:
   override:
     - bundle exec rake db:migrate
@@ -18,3 +27,4 @@ database:
 test:
   post:
     - bundle exec rake
+    - middleman server -d -p 4567 && accesslint-ci scan http://localhost:4567
