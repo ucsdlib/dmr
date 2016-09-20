@@ -19,6 +19,7 @@ dependencies:
   post:
     - npm install -g accesslint-cli
     - gem install accesslint-ci
+    - gem install middleman
     
 database:
   override:
