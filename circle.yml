@@ -3,6 +3,8 @@ general:
     - "tmp"
 
 machine:
+  node:
+    version: 6.1.0
   ruby:
     version:
       2.2.3        
