@@ -19,7 +19,6 @@ dependencies:
   post:
     - npm install -g accesslint-cli
     - gem install accesslint-ci
-    - gem install middleman
     
 database:
   override:
@@ -28,4 +27,5 @@ database:
 test:
   post:
     - bundle exec rake
-    - middleman server -d -p 4567 && accesslint-ci scan http://localhost:4567
+    - bundle exec rails s -d -p 3000
+    - accesslint-ci scan http://localhost:3000
