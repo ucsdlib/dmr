@@ -16,11 +16,8 @@ machine:
 dependencies:
   override:
     - bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
-  post:
     - npm install -g accesslint-cli
     - gem install accesslint-ci
-    - gem install middleman
-    - gem install middleman-cli
     
 database:
   override:
@@ -28,4 +25,5 @@ database:
 
 test:
   post:
-    - bundle exec middleman server --daemon --port=4567 --watcher-disable && accesslint-ci scan http://localhost:4567
+    - bundle exec rails server -d -p 3000
+    - accesslint-ci scan http://localhost:3000
