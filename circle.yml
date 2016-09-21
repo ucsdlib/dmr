@@ -12,14 +12,13 @@ machine:
     CIRCLE_ENV: test
     APPS_DMR_STREAMING_KEY: 1234567891234567
     RAILS_ENV: test
-
+    
 dependencies:
   override:
     - bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
   post:
     - npm install -g accesslint-cli
     - gem install accesslint-ci
-    - gem install middleman
     
 database:
   override:
@@ -27,4 +26,6 @@ database:
 
 test:
   post:
-    - middleman server -d -p 4567 && accesslint-ci scan http://localhost:4567
+    - bundle exec rake
+    - bundle exec rails s -d -p 3000
+    - accesslint-ci scan http://localhost:3000
