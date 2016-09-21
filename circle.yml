@@ -20,6 +20,7 @@ dependencies:
     - npm install -g accesslint-cli
     - gem install accesslint-ci
     - gem install middleman
+    - gem install middleman-cli
     
 database:
   override:
@@ -27,5 +28,4 @@ database:
 
 test:
   post:
-    - bundle exec rake
     - bundle exec middleman server --daemon --port=4567 --watcher-disable && accesslint-ci scan http://localhost:4567
