@@ -12,9 +12,7 @@ machine:
     CIRCLE_ENV: test
     APPS_DMR_STREAMING_KEY: 1234567891234567
     RAILS_ENV: test
-    CIRCLE_TOKEN: <CircleCI API token>
-    ACCESSLINT_GITHUB_TOKEN: <GitHub Personal Access Token>
-    
+
 dependencies:
   override:
     - bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
