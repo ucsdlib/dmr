@@ -27,8 +27,4 @@ test:
   override:
     - bundle exec rake
   post:
-    - |
-      if [ -a "${CI_PULL_REQUEST}" != '' ] ; then   
-        bundle exec rails server -d -p 3000
-        accesslint-ci scan http://localhost:3000
-      fi
+    - if [ -a "${CI_PULL_REQUEST}" != '' ] ; then bundle exec rails server -d -p 3000 && accesslint-ci scan http://localhost:3000 ; fi
