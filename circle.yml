@@ -12,6 +12,8 @@ machine:
     CIRCLE_ENV: test
     APPS_DMR_STREAMING_KEY: 1234567891234567
     RAILS_ENV: test
+    CIRCLE_TOKEN: 639be04c64a2560d99ebac4f886cd9a5d253518f
+    ACCESSLINT_GITHUB_TOKEN: ec514b3d574d8de9c840eabb5d65223d42b893b5
     
 dependencies:
   override:
