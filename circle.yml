@@ -25,5 +25,5 @@ database:
 
 test:
   post:
-    - echo $CI_PULL_REQUEST
-    - echo $CIRCLE_PROJECT_REPONAME
+    - bundle exec rails server -d -p 3000
+    - accesslint-ci scan http://localhost:3000
