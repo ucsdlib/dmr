@@ -28,7 +28,7 @@ test:
     - bundle exec rake
   post:
     - |
-      if [["${CI_PULL_REQUEST}" != '']] ; then   
+      if [ -a "${CI_PULL_REQUEST}" != '' ] ; then   
         bundle exec rails server -d -p 3000
         accesslint-ci scan http://localhost:3000
       fi
