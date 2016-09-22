@@ -25,5 +25,6 @@ database:
 
 test:
   post:
+    - bundle exec rake
     - bundle exec rails server -d -p 3000
     - accesslint-ci scan http://localhost:3000
