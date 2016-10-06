@@ -43,5 +43,8 @@ test:
         accesslint-ci scan http://localhost:3000/courses/1/Spring/2015/test_course_1
         accesslint-ci scan http://localhost:3000/courses/lookup
         accesslint-ci scan http://localhost:3000/analytics
+        accesslint-ci scan http://localhost:3000/media/search?search=test&search_option=media
+        accesslint-ci scan http://localhost:3000/courses/search?search=test&search_option=courses
+        accesslint-ci scan http://localhost:3000/courses/archive_search?course_q=&quarter_q=Winter&year_q=&instructor_q=&commit=Search
       fi
       
