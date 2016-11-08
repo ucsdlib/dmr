@@ -3,20 +3,20 @@
   <table class="table table-striped table-hover table-bordered">
     <thead>
       <tr>
-        <th class="col-xs-1"><%= check_box_tag 'check_all',false%></th>
-        <th class="col-xs-1">No</th>
-        <th class="col-xs-3">Title</th>
-        <th class="col-xs-2">Director</th>
-        <th class="col-xs-2">Call Number</th>
-        <th class="col-xs-1">Year</th>
-        <th class="col-xs-1">File Name</th>
+        <th class="col-xs-1" scope="col"><%= label_tag 'check_all', 'check_all', class: "hide-label"%><%= check_box_tag 'check_all',false%></th>
+        <th class="col-xs-1" scope="col">No</th>
+        <th class="col-xs-3" scope="col">Title</th>
+        <th class="col-xs-2" scope="col">Director</th>
+        <th class="col-xs-2" scope="col">Call Number</th>
+        <th class="col-xs-1" scope="col">Year</th>
+        <th class="col-xs-1" scope="col">File Name</th>
       </tr>
     </thead>
     <tbody>		    
       <% sorted_media.each do |m| %>
         <% counter += 1 %> 
         <tr>
-          <td><%= check_box_tag 'media_ids[]', m.id%></td>
+          <td><fieldset><legend class="hide-label">Type</legend><%= label_tag "media_ids_#{m.id}", 'media_ids[]', class: "hide-label"%><%= check_box_tag 'media_ids[]', m.id, false, id: "media_ids_#{m.id}"%></fieldset></td>
           <td><%= counter %></td>          
           <td><%= m.title %></td>
           <td><%= m.director %></td>
