@@ -1,15 +1,21 @@
 <% if session[:search_option] && session[:search_option].include?("courses") %>
-  <label class="radio-inline">
-    <input type="radio" name="search_option" value="media">Media
-  </label>
-  <label class="radio-inline">
-    <input type="radio" name="search_option"  value="courses" checked="checked">Courses
-  </label>      
+  <fieldset>
+    <legend class="hide-label">Type</legend>
+    <label class="radio-inline">
+      <input type="radio" name="search_option" value="media">Media
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="search_option"  value="courses" checked="checked">Courses
+    </label>
+  </fieldset>        
 <% else %>
-  <label class="radio-inline">
-    <input type="radio" name="search_option" value="media" checked="checked">Media
-  </label>
-  <label class="radio-inline">
-    <input type="radio" name="search_option"  value="courses">Courses
-  </label>
+  <fieldset>
+    <legend class="hide-label">Type</legend>
+    <label class="radio-inline">
+      <input type="radio" name="search_option" value="media" checked="checked">Media
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="search_option"  value="courses">Courses
+    </label>
+  </fieldset>
 <% end %>

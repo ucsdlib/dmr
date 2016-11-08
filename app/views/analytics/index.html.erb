@@ -7,7 +7,9 @@
 <did class="center-block">
 <%= form_tag analytics_path, method: "GET", class: "navbar-form" do%>
   <fieldset>
+    <label class="hide-label" for="start_date">Start Date</label>
     <%= text_field_tag :start_date, s_date, size: 20, placeholder: "mm/dd/yyyy", class: "datepicker" %> to
+    <label class="hide-label" for="end_date">End Date</label>
     <%= text_field_tag :end_date, e_date, size: 20, placeholder: "mm/dd/yyyy", class: "enddatepicker" %>
     <%= submit_tag "reload", name: nil, class: "btn btn-primary" %>    
   </fieldset>
