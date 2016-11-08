@@ -12,8 +12,7 @@
           <% thumbnailURL = "#{Rails.configuration.file_path}#{m.file_name.gsub('.mp4','.jpg')}"%>      
 	      sources: [
 	        {file: "http://<%=wowzaURL%>/manifest.mpd"},
-	        {file: "http://<%=wowzaURL%>/playlist.m3u8"},
-	        {file: "rtmp://<%=wowzaURL%>"}
+	        {file: "http://<%=wowzaURL%>/playlist.m3u8"}
 	      ],
 	      <!--title of media file-->
 	      title: "<%= m.title %>",
@@ -40,7 +39,7 @@
 	  height: "100%",
 	  aspectratio: "16:6",
 	  skin: 'glow',
-	  fallback: false
+	  hlshtml: true
     });
 	jwplayer().onReady(function(){
       var myVideos = jwplayer().getPlaylist();

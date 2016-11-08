@@ -13,8 +13,7 @@
 				sources:
 				[
 					{file: "http://<%=wowzaURL%>/manifest.mpd"},
-					{file: "http://<%=wowzaURL%>/playlist.m3u8"},
-					{file: "rtmp://<%=wowzaURL%>"}
+					{file: "http://<%=wowzaURL%>/playlist.m3u8"}
 				]
 			}],
 			width: "100%",
@@ -22,7 +21,7 @@
 			aspectratio: "16:9",
 			rtmp: {bufferlength: 3},
 			analytics: {enabled: false},
-            fallback: false			
+            hlshtml: true			
 		});
 	</script>
 
