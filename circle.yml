@@ -32,13 +32,13 @@ test:
     - bundle exec rails server -d -p 3000
     - | 
       if [ "${CI_PULL_REQUEST}" != '' ] ; then 
-        accesslint-ci scan --skip-ci http://localhost:3000
-        accesslint-ci scan --skip-ci http://localhost:3000/media
-        accesslint-ci scan --skip-ci http://localhost:3000/media/new
+        accesslint-ci scan http://localhost:3000
+        accesslint-ci scan http://localhost:3000/media
+        accesslint-ci scan http://localhost:3000/media/new
         accesslint-ci scan --skip-ci http://localhost:3000/media/1
         accesslint-ci scan --skip-ci http://localhost:3000/media/1/edit
-        accesslint-ci scan --skip-ci http://localhost:3000/courses
-        accesslint-ci scan --skip-ci http://localhost:3000/courses/new
+        accesslint-ci scan http://localhost:3000/courses
+        accesslint-ci scan http://localhost:3000/courses/new
         accesslint-ci scan --skip-ci http://localhost:3000/courses/1/edit
         accesslint-ci scan --skip-ci http://localhost:3000/courses/1/Spring/2015/test_course_1
         accesslint-ci scan http://localhost:3000/courses/lookup
