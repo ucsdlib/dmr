@@ -31,6 +31,6 @@ test:
   post:      
     - | 
       if [ "${CI_PULL_REQUEST}" != '' ] ; then 
-        bundle exec rails server -d -p 3000 && accesslint-ci scan http://localhost:3000/media/1
+        bundle exec rails server --daemon -p 3000 --watcher-disable && accesslint-ci scan http://localhost:3000/media/1
       fi
       
