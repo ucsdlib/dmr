@@ -11,9 +11,8 @@
         <% if wowzaURL != nil %>
           <% thumbnailURL = "#{Rails.configuration.file_path}#{m.file_name.gsub('.mp4','.jpg')}"%>      
 	      sources: [
-	        {file: "http://<%=wowzaURL%>/manifest.mpd"},
-	        {file: "http://<%=wowzaURL%>/playlist.m3u8"},
-	        {file: "rtmp://<%=wowzaURL%>"}
+	        {file: "http://<%=wowzaURL%>/playlist.m3u8"},      
+	        {file: "http://<%=wowzaURL%>/manifest.mpd"}
 	      ],
 	      <!--title of media file-->
 	      title: "<%= m.title %>",
@@ -39,14 +38,11 @@
 	  width: "100%",
 	  height: "100%",
 	  aspectratio: "16:6",
-	  skin: 'glow',
-	  fallback: false
+	  skin: 'glow'
     });
 	jwplayer().onReady(function(){
       var myVideos = jwplayer().getPlaylist();
       for (var i = 0; i < myVideos.length; i++) {
-		//document.getElementById('listbar').innerHTML += '<div class=listbar_item id=video'+ i +' onClick="jwplayer().playlistItem(' + i + ');jwplayer().play();"><div class="playlist_left"><img class="playlist_thumbnail" src=' + myVideos[i].image + '></div><div class="playlist_right"><span class="playlist_text"><b>' + myVideos[i].title + '</b><br/><span class="desc">' + myVideos[i].description + '</span></span></div></div><div class="jwplaylistdivider"></div>';
-		//document.getElementById('listbar').innerHTML += '<div style="display: flex; margin: 10px 0 10px 10px; width:95%; height:70px; " class=listbar_item id=video'+ i +' onClick="jwplayer().playlistItem(' + i + ');jwplayer().play();"><div style="flex: 0 0 10%;"><img class="playlist_thumbnail" src=' + myVideos[i].image + '></div><div style="flex:1; line-height: 75px;"><span class="playlist_text"><b>' + myVideos[i].title + '</b><br/><span class="desc">' + myVideos[i].description + '</span></span></div></div><div class="jwplaylistdivider"></div>';
         document.getElementById('list').innerHTML += '<li><span class="dropt" title="'+myVideos[i].title+'"><a href="javascript:playThis('+i+')"><img class="img-responsive" src="'+myVideos[i].image+'" <="" img="" height="75" width="auto"><br>'+myVideos[i].title+'<br/>'+myVideos[i].description+'</a><br><span style="width:500px;" <="" span=""></span></span></li>';
 	  } 
 	});

@@ -1,4 +1,10 @@
+general:
+  artifacts:
+    - "tmp"
+
 machine:
+  node:
+    version: 6.1.0
   ruby:
     version:
       2.2.3        
@@ -6,15 +12,39 @@ machine:
     CIRCLE_ENV: test
     APPS_DMR_STREAMING_KEY: 1234567891234567
     RAILS_ENV: test
-
+    
 dependencies:
   override:
     - bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
-
+    - npm install -g accesslint-cli
+    - gem install accesslint-ci
+    
 database:
   override:
     - bundle exec rake db:migrate
-
+    - bundle exec rake db:migrate RAILS_ENV=development
+    - bundle exec rake db:seed RAILS_ENV=development
+ 
 test:
-  post:
+  override:
     - bundle exec rake
+  post:      
+    - bundle exec rails server -d -p 3000
+    - | 
+      if [ "${CI_PULL_REQUEST}" != '' ] ; then 
+        accesslint-ci scan http://localhost:3000
+        accesslint-ci scan http://localhost:3000/media
+        accesslint-ci scan http://localhost:3000/media/new
+        accesslint-ci scan http://localhost:3000/media/1
+        accesslint-ci scan http://localhost:3000/media/1/edit
+        accesslint-ci scan http://localhost:3000/courses
+        accesslint-ci scan http://localhost:3000/courses/new
+        accesslint-ci scan http://localhost:3000/courses/1/edit
+        accesslint-ci scan http://localhost:3000/courses/1/Spring/2015/test_course_1
+        accesslint-ci scan http://localhost:3000/courses/lookup
+        accesslint-ci scan http://localhost:3000/analytics
+        accesslint-ci scan http://localhost:3000/media/search?search=test&search_option=media
+        accesslint-ci scan http://localhost:3000/courses/search?search=test&search_option=courses
+        accesslint-ci scan http://localhost:3000/courses/archive_search?course_q=&quarter_q=Winter&year_q=&instructor_q=&commit=Search
+      fi
+      

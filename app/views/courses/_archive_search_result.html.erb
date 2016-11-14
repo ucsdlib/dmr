@@ -12,11 +12,11 @@
         <table class="table table-striped table-hover table-bordered">
           <thead>
             <tr>
-              <th class="col-xs-1"><%= check_box_tag 'check_all_courses',false%></th>
-              <th class="col-xs-4">Course</th>
-              <th class="col-xs-2">Quarter</th>
-              <th class="col-xs-2">Year</th>
-              <th class="col-xs-1">Instructor</th>
+              <th class="col-xs-1" scope="col"><%= label_tag 'check_all', 'check_all', class: "hide-label"%><%= check_box_tag 'check_all_courses',false%></th>
+              <th class="col-xs-4" scope="col">Course</th>
+              <th class="col-xs-2" scope="col">Quarter</th>
+              <th class="col-xs-2" scope="col">Year</th>
+              <th class="col-xs-1" scope="col">Instructor</th>
             </tr>
           </thead>
           <tbody>

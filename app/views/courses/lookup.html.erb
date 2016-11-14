@@ -4,19 +4,19 @@
 	  <h3>Search Courses</h3>
       <%= form_tag archive_search_courses_path, method: "GET" do %> 
          <div class="form-group">
-           <label class="control-label" for="course">Course</label>
+           <label class="control-label" for="course_q">Course</label>
            <%= text_field_tag :course_q, params[:course_q], class: "form-control"%>
          </div>       
          <div class="form-group">
-           <label class="control-label" for="quarter">Quarter</label><br/>
+           <label class="control-label" for="quarter_q">Quarter</label><br/>
            <%= select_tag(:quarter_q, options_for_select([["Spring", "Spring"], ["Summer", "Summer"],["Fall", "Fall"], ["Winter", "Winter"]])) %>
          </div> 
          <div class="form-group">
-           <label class="control-label" for="year">Year</label>
+           <label class="control-label" for="year_q">Year</label>
            <%= text_field_tag :year_q, params[:year_query], class: "form-control"%>
          </div>
          <div class="form-group">
-           <label class="control-label" for="instructor">Instructor</label>
+           <label class="control-label" for="instructor_q">Instructor</label>
            <%= text_field_tag :instructor_q, params[:instructor_query], class: "form-control"%>
          </div>
          <div class="center-block">                 
