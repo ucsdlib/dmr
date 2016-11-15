@@ -133,6 +133,13 @@ feature 'Media' do
     expect(page).to have_content('There were no results for the search: "abcdef"')        
   end
 
+  scenario 'wants to search for media with exact string match with quotes' do    
+    visit search_media_path( {:search => '"Test Media"'} )
+    expect(page).to have_content('Test Media 1')
+    expect(page).to have_content('Test Media 2')
+    expect(page).to have_content('Showing all 2 media')
+  end
+  
   scenario 'wants to search for media file name' do
     visit search_media_path( {:search => 'toystory'} )  
     expect(page).to have_content('Showing 1 media')   

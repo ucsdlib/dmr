@@ -161,6 +161,12 @@ feature 'Course' do
     expect(page).to have_content('Displaying 2 results')        
   end
 
+  scenario 'wants to search for courses with exact string match with quotes' do
+    visit search_courses_path( {:search => '"Test Course 1"'} )  
+    expect(page).to have_content('Test Course 1')
+    expect(page).to have_content('Displaying 1 results')        
+  end
+  
   scenario 'wants to do combined searches for Courses' do
     visit search_courses_path( {:search => 'Test 9999 Summer'} )  
     expect(page).to have_content('Test Course 1')
