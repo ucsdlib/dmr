@@ -45,7 +45,12 @@ module Dmr
     #
     def course_search(query)
       if query
-        tokens = query.split(' ')
+        tokens = []
+        if query.start_with?('"') && query.end_with?('"')
+          query = query.delete('"')
+        else
+          tokens = query.split(' ')
+        end
         fq = "course NOT LIKE '%ARCHIVE%'"
         q = "#{fq} AND lower(course || quarter || year || instructor) like ?"
         results = Course.where(q, "%#{query.downcase}%")
