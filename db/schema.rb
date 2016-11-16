@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150827204504) do
+ActiveRecord::Schema.define(version: 20161115232613) do
+
+  create_table "audios", force: :cascade do |t|
+    t.string   "track"
+    t.string   "album"
+    t.string   "artist"
+    t.string   "composer"
+    t.string   "call_number"
+    t.string   "year"
+    t.string   "file_name"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "courses", force: :cascade do |t|
     t.string   "quarter"
@@ -31,6 +43,8 @@ ActiveRecord::Schema.define(version: 20150827204504) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  add_index "media", ["title", "director", "call_number", "year", "file_name"], name: "index_media_fields"
 
   create_table "reports", force: :cascade do |t|
     t.datetime "created_at", null: false

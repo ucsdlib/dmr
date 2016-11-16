@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row">
+	<div class="object-panel">
+	  <h3>New Audio Record Core Data</h3>
+	  <%= render :partial => 'shared/error_messages' , :locals => {:obj => @audio}%>
+	  <p class="required">* Required field </p>
+	
+	  <%= bootstrap_form_for :audio, url: audios_path do |f| %>
+        <%= render :partial => 'form' , :locals => {:f => f}%>
+        <div class="center-block">
+          <%= f.primary "Save"%>
+	      <input class="btn btn-primary" type="reset" value="Cancel"/>
+	    </div>
+	  <% end %>
+	</div>
+  </div>
+</div>

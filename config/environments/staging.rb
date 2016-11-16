@@ -57,6 +57,7 @@ Rails.application.configure do
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
   config.wowza_baseurl = 'lib-streaming.ucsd.edu:1935/dmrnew/_definst_/'
+  config.wowza_audio_baseurl = 'lib-streaming.ucsd.edu:1935/dmrmp3/_definst_/'
   config.shibboleth = true
   config.receiver_emails = ''
   config.splunk_host = 'librarytest'

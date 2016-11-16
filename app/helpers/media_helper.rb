@@ -21,7 +21,11 @@ module MediaHelper
   def grab_wowza_url(filename, objid)
     return unless filename
     encrypted = encrypt_stream_name(objid, filename, request.ip)
-    "#{Rails.configuration.wowza_baseurl}#{encrypted}"
+    if filename.include?('.mp4')
+      "#{Rails.configuration.wowza_baseurl}#{encrypted}"
+    else
+      "#{Rails.configuration.wowza_audio_baseurl}#{encrypted}"
+    end
   end
 
   ##
