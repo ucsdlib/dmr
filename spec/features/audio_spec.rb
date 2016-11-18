@@ -100,5 +100,10 @@ feature 'Audio' do
     visit audios_path
     expect(page).to_not have_content('Test Audio 1')           
   end   
-                          
+
+  scenario 'wants to view audio drop down menu' do
+    visit root_path   
+    expect(page).to have_content('Create New Audio Record')
+    expect(page).to have_content('View Last 10 Audio Records')        
+  end                           
 end
