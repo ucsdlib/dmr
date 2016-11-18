@@ -31,7 +31,7 @@ module Dmr
     config.assets.version = '1.0'
     config.autoload_paths += %W(#{config.root}/lib)
     # DMR-specific config 
-    #config.file_path = '/mnt/isilon/DMR/MP4_Archive/'
+    config.audio_file_path = 'https://library.ucsd.edu/DMR_MP3_thumbs/'
     config.file_path = 'https://library.ucsd.edu/dmrthumbs/' 
   end
 end

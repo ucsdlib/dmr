@@ -9,6 +9,7 @@ class CourseConstraint
 end
   
 Rails.application.routes.draw do
+  resources :audios
   root 'welcome#index'
   get 'welcome/index'
   get '/ruby-version' => 'application#ruby_version'

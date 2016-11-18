@@ -1,3 +1,12 @@
 <div class="col-xs-3 col-sm-3">
-  <%=image_tag "/media/#{obj.id}/#{obj.file_name.gsub('.mp4','.jpg')}", :alt => '', :class => 'media-thumbnail' %>
+  <% if obj.file_name.include?('.mp3') %>
+    <% thumbnailURL = "#{Rails.configuration.audio_file_path}#{obj.file_name.gsub('.mp3','.jpg')}"%>
+    <% if url_exist?(thumbnailURL) %>
+      <%=image_tag "#{thumbnailURL}", :alt => '', :class => 'media-thumbnail' %>
+    <% else %>
+       <%=image_tag "speaker.gif", :alt => '', :class => 'media-thumbnail' %>
+    <% end %>  
+  <% else %>
+    <%=image_tag "/media/#{obj.id}/#{obj.file_name.gsub('.mp4','.jpg')}", :alt => '', :class => 'media-thumbnail' %>
+  <% end %>
 </div>
