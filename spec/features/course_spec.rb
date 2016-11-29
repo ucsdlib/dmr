@@ -122,7 +122,7 @@ feature 'Course' do
     click_on 'Add to Course Reserve List'
     
     #Check that changes are saved
-    expect(page).to have_content('Media was successfully added to Course.')
+    expect(page).to have_content('Video was successfully added to Course.')
     current_path.should == edit_course_path(@course1)
     expect(@course1.media.size).to eq(1)
     expect(page).to have_content('Test Media 1')
@@ -137,7 +137,7 @@ feature 'Course' do
     visit search_media_path( {:search => 'Test'} )  
     expect(page).to have_content('Test Media 1')
     expect(page).to have_content('Test Media 2')
-    expect(page).to have_content('Showing all 10 media')   
+    expect(page).to have_content('Displaying 10 results')   
         
     # add to course list    
     find("input[type='checkbox'][value='#{@media1.id}']").set(true)
@@ -145,7 +145,7 @@ feature 'Course' do
     click_on 'Add to Course Reserve List'
     
     #Check that changes are saved
-    expect(page).to have_content('Media was successfully added to Course.')
+    expect(page).to have_content('Video was successfully added to Course.')
     current_path.should == edit_course_path(@course1)
     expect(@course1.media.size).to eq(2)
     expect(page).to have_content('Test Media 1')
@@ -207,7 +207,7 @@ feature 'Course' do
     visit search_media_path( {:search => 'Test'} )  
     expect(page).to have_content('Test Media 1')
     expect(page).to have_content('Test Media 2')
-    expect(page).to have_content('Showing all 10 media')   
+    expect(page).to have_content('Displaying 10 results')   
         
     # add to course list    
     find("input[type='checkbox'][value='#{@media1.id}']").set(true)
@@ -215,7 +215,7 @@ feature 'Course' do
     click_on 'Add to Course Reserve List'
     
     #Check that changes are saved
-    expect(page).to have_content('Media was successfully added to Course.')
+    expect(page).to have_content('Video was successfully added to Course.')
     current_path.should == edit_course_path(@course1)
     expect(@course1.media.size).to eq(2)
     expect(page).to have_content('Test Media 1')
@@ -244,7 +244,7 @@ feature 'Course' do
     click_on 'Add to Course Reserve List'  
 
     #Check that changes are saved
-    expect(page).to have_content('Media was successfully added to Course.')
+    expect(page).to have_content('Video was successfully added to Course.')
     current_path.should == edit_course_path(@course1)
     
     click_on 'Clone'
@@ -268,7 +268,7 @@ feature 'Course' do
     visit search_media_path( {:search => 'Test'} )  
     expect(page).to have_content('Test Media 1')
     expect(page).to have_content('Test Media 2')
-    expect(page).to have_content('Showing all 10 media')   
+    expect(page).to have_content('Displaying 10 results')   
         
     # add to course list    
     find("input[type='checkbox'][value='#{@media1.id}']").set(true)
@@ -284,7 +284,7 @@ feature 'Course' do
     click_on 'Add to Course Reserve List'
     
     #Check that changes are saved
-    expect(page).to have_content('Media was successfully added to Course.')
+    expect(page).to have_content('Video was successfully added to Course.')
     expect(@course1.media.size).to eq(10)  
     
     # check that media object is in order
@@ -308,7 +308,7 @@ feature 'Course' do
     visit search_media_path( {:search => 'Test'} )  
     expect(page).to have_content('Test Media 1')
     expect(page).to have_content('Test Media 2')
-    expect(page).to have_content('Showing all 10 media')   
+    expect(page).to have_content('Displaying 10 results')   
         
     # add to course list    
     find("input[type='checkbox'][value='#{@media1.id}']").set(true)
@@ -324,7 +324,7 @@ feature 'Course' do
     click_on 'Add to Course Reserve List'
     
     #Check that changes are saved
-    expect(page).to have_content('Media was successfully added to Course.')
+    expect(page).to have_content('Video was successfully added to Course.')
     expect(@course1.media.size).to eq(10)  
     
     # check that media object is in order
@@ -348,7 +348,7 @@ feature 'Course' do
     visit search_media_path( {:search => 'Test'} )  
     expect(page).to have_content('Test Media 1')
     expect(page).to have_content('Test Media 2')
-    expect(page).to have_content('Showing all 10 media')   
+    expect(page).to have_content('Displaying 10 results')   
         
     # add to course list    
     find("input[type='checkbox'][value='#{@media1.id}']").set(true)
