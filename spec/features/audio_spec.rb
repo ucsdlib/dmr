@@ -18,11 +18,24 @@ feature 'Audio' do
   end  
   scenario 'is on audio index page' do
     visit audios_path
-    expect(page).to have_content('Listing Audios')   
+    expect(page).to have_content('Listing Audio')   
     expect(page).to have_content('Test Audio 1')
     expect(page).to have_content('Test Audio 2')
+    expect(page).to have_selector('th[3]', :text => 'Track')
+    expect(page).to have_selector('th[4]', :text => 'Album')
+    expect(page).to have_selector('th[5]', :text => 'Artist')
+    expect(page).to have_selector('th[6]', :text => 'Composer')
+    expect(page).to have_selector('th[7]', :text => 'Call Number')
+    expect(page).to have_selector('th[8]', :text => 'Year')
+    expect(page).to have_selector('th[9]', :text => 'File Name')     
   end
- 
+
+  scenario "is on audio index page with 'Create New Audio Record' button" do
+    visit audios_path
+    expect(page).to have_selector('h3', :text => 'Listing Audio')
+    expect(page).to have_selector('a.btn-primary', :text => 'Create New Audio Record')
+  end
+   
   scenario 'is on the audio show page' do
     visit audio_path(@audio1)
     expect(page).to have_content(@audio1.track)
