@@ -43,7 +43,7 @@ class MediaController < ApplicationController
   def create
     @media = Media.new(media_params)
     if @media.save
-      redirect_to edit_medium_path(@media), notice: 'Media was successfully created.'
+      redirect_to edit_medium_path(@media), notice: 'Video was successfully created.'
     else
       render :new
     end
@@ -67,7 +67,7 @@ class MediaController < ApplicationController
   #
   def update
     if @media.update_attributes(media_params)
-      redirect_to edit_medium_path(@media), notice: 'Media successfully updated.'
+      redirect_to edit_medium_path(@media), notice: 'Video successfully updated.'
     else
       render :edit
     end
@@ -80,7 +80,7 @@ class MediaController < ApplicationController
   #
   def destroy
     @media.destroy
-    redirect_to media_path, notice: 'Media was successfully destroyed.'
+    redirect_to media_path, notice: 'Video was successfully destroyed.'
   end
 
   ##
