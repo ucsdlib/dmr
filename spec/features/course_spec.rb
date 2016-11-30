@@ -72,7 +72,15 @@ feature 'Course' do
     expect(page).to have_content('Winter')
     expect(page).to have_content('2009')                  
   end
-  
+
+  scenario 'wants to see different order of quarter for new course page' do
+    visit new_course_path
+    expect(page).to have_selector('option[1]', :text => 'Fall')
+    expect(page).to have_selector('option[2]', :text => 'Winter')
+    expect(page).to have_selector('option[3]', :text => 'Spring')
+    expect(page).to have_selector('option[4]', :text => 'Summer')      
+  end
+    
   scenario 'is on the course page to be edited' do
     visit edit_course_path(@course1)
     expect(page).to have_selector('h3', :text => 'Course Reserve List')
