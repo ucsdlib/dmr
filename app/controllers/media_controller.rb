@@ -118,6 +118,10 @@ class MediaController < ApplicationController
     params[:search_option] == 'courses'
   end
 
+  def search_audio_option?
+    params[:search_option] == 'audio'
+  end
+
   def create_search_session
     session[:search] = params[:search]
     session[:search_option] = params[:search_option] if params[:search_option]
@@ -126,6 +130,9 @@ class MediaController < ApplicationController
   def perform_search
     if search_course_option?
       redirect_to controller: 'courses', action: 'search',
+                  search: params[:search], search_option: params[:search_option]
+    elsif search_audio_option?
+      redirect_to controller: 'audios', action: 'search',
                   search: params[:search], search_option: params[:search_option]
     else
       @media = full_search(params[:search], Media).order(:title).page(params[:page]).per(20)
