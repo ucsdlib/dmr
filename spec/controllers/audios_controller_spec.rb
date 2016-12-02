@@ -139,4 +139,24 @@ describe AudiosController do
     end
   end
 
+  describe 'GET search' do
+    before(:each) do
+      @audio = Fabricate(:audio) 
+    end
+    
+    it 'returns Audio objects if there is a match' do
+      get :search, search: 'Test', search_option: 'audio'
+      expect(assigns(:audios)).to eq([@audio])
+    end
+
+    it 'returns nil if there is no match' do
+      get :search, search_term: 'abcd', search_option: 'audio'
+      expect(assigns(:audios)).to eq(nil)
+    end
+    
+    it 'returns number of Audio objects if there is a match' do
+      get :search, search: 'Test', search_option: 'audio'
+      expect(assigns(:search_count)).to eq(1)
+    end  
+  end
 end

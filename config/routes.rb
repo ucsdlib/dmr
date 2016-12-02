@@ -9,7 +9,6 @@ class CourseConstraint
 end
   
 Rails.application.routes.draw do
-  resources :audios
   root 'welcome#index'
   get 'welcome/index'
   get '/ruby-version' => 'application#ruby_version'
@@ -18,6 +17,11 @@ Rails.application.routes.draw do
      get 'search', to: 'media#search'
    end 
   end
+  resources :audios do
+   collection do
+     get 'search', to: 'audios#search'
+   end 
+  end  
   resources :courses do
    collection do
      post 'add_to_course', to: 'courses#add_to_course'

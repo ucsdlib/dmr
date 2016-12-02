@@ -51,6 +51,25 @@ class AudiosController < ApplicationController
     redirect_to audios_path, notice: 'Audio was successfully destroyed.'
   end
 
+  ##
+  # Handles GET search for Audio object
+  #
+  def search
+    return unless params[:search]
+    if params[:search].blank?
+      redirect_to root_path, alert: 'No text is inputted.'
+    else
+      @audios = full_search(params[:search], Audio).order(:track).page(params[:page]).per(20)
+      create_search_session(@audios)
+    end
+  end
+
+  def create_search_session(audios)
+    @search_count = audios.count
+    session[:search] = params[:search]
+    session[:search_option] = params[:search_option] if params[:search_option]
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

@@ -5,10 +5,12 @@ feature 'Audio' do
   before(:all) do
     @audio1 = Audio.create track: 'Test Audio 1', album: 'Album 1', artist: 'Artist 1', composer: 'Composer 1', year: '2015', call_number: '11111111', file_name: 'pureAwareness.mp3'
     @audio2 = Audio.create track: 'Test Audio 2', album: 'Album 2', artist: 'Artist 2', composer: 'Composer 2', year: '2016', call_number: '77777777', file_name: 'test.mp3'    
+    @audio3 = Audio.create track: 'Combined Search Title', album: 'Album 3', artist: 'Artist 3', composer: 'Composer 3', year: '1999', call_number: '88888888', file_name: 'combine.mp3'    
   end
   after(:all) do
     @audio1.delete
     @audio2.delete
+    @audio3.delete
   end
   before(:each) do
     sign_in_developer
@@ -103,13 +105,13 @@ feature 'Audio' do
     visit audios_path   
     expect(page).to have_content('Test Audio 1')
     expect(page).to have_content('Test Audio 2')  
-    expect(Audio.count).to eq(2)
+    expect(Audio.count).to eq(3)
     
     visit edit_audio_path(@audio1)
     expect(page).to have_selector("input#audio_track[value='Test Audio 1']")
     click_on('Delete')
     expect(page).to have_content('Audio was successfully destroyed.')
-    expect(Audio.count).to eq(1)
+    expect(Audio.count).to eq(2)
     visit audios_path
     expect(page).to_not have_content('Test Audio 1')           
   end   
@@ -118,5 +120,54 @@ feature 'Audio' do
     visit root_path   
     expect(page).to have_content('Create New Audio Record')
     expect(page).to have_content('View Last 10 Audio Records')        
-  end                           
+  end
+  
+  scenario 'wants to search for Audio with a matching search term' do
+    visit search_audios_path( {:search => 'Test'} )  
+    expect(page).to have_content('Test Audio 1')
+    expect(page).to have_content('Test Audio 2')
+    expect(page).to have_content('Displaying 2 results')        
+  end
+
+  scenario 'wants to do combined searches for Audio' do
+    visit search_audios_path( {:search => 'Test 1999'} )  
+    expect(page).to have_content('Test Audio 1')
+    expect(page).to have_content('Test Audio 2')
+    expect(page).to have_content('1999')
+    expect(page).to have_content('Displaying 3 results')        
+  end
+   
+  scenario 'wants to search for Audio with no search term' do
+    visit search_audios_path( {:search => ''} )  
+    expect(page).to have_content('No text is inputted.')
+  end
+   
+  scenario 'wants to search for Audio with no matching search term' do    
+    visit search_audios_path( {:search => 'abcdef'} )
+    expect(page).to have_content('There were no results for the search: "abcdef"')        
+  end
+
+  scenario 'wants to search for Audio with exact string match with quotes' do    
+    visit search_audios_path( {:search => '"Test Audio"'} )
+    expect(page).to have_content('Test Audio 1')
+    expect(page).to have_content('Test Audio 2')
+    expect(page).to have_content('Displaying 2 results')
+  end
+  
+  scenario 'wants to search for Audio file name' do
+    visit search_audios_path( {:search => 'pureAwareness'} )  
+    expect(page).to have_content('Displaying 1 result')   
+    expect(page).to have_content('Test Audio 1')
+    expect(page).to have_content('pureAwareness.mp3') 
+  end
+
+  scenario "wants to select 'audio' option to search for Audio" do
+    visit search_media_path( {:search => 'Test',:search_option => 'audio'} )  
+    expect(page).to have_content('Test Audio 1')
+    expect(page).to have_content('Test Audio 2')
+    expect(page).to have_content('Displaying 2 results')
+    
+    #Check that the search_option radio button is still selected
+    find("input[name='search_option'][type='radio'][value='audio']").should be_checked        
+  end                             
 end
