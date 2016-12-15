@@ -390,7 +390,15 @@ feature 'Course' do
     click_on 'Cancel'
     current_path.should == welcome_index_path     
   end
-    
+
+  scenario 'wants to see different order of quarter for archive course search page' do
+    visit lookup_courses_path
+    expect(page).to have_selector('option[1]', :text => 'Fall')
+    expect(page).to have_selector('option[2]', :text => 'Winter')
+    expect(page).to have_selector('option[3]', :text => 'Spring')
+    expect(page).to have_selector('option[4]', :text => 'Summer')      
+  end
+      
   scenario 'wants to archive some courses' do
     visit search_courses_path( {:search => 'Test'} )    
     expect(page).to have_content('Displaying 2 results')
@@ -429,6 +437,7 @@ feature 'Course' do
     click_on 'Archive'
     expect(page).to have_selector('h3', :text => 'Search Courses')
     fill_in 'year_q', :with => '2015'
+    page.select('Spring', match: :first) 
     click_on 'Search'
     expect(page).to have_content('Displaying 1 results')
     expect(page).to have_content("Test Course 1 - ARCHIVE #{@course1.updated_at}")    
