@@ -420,6 +420,24 @@ feature 'Course' do
     current_path.should == "/courses/#{@course1.id}/#{report_url}"    
   end 
 
+  scenario 'wants to see a red banner when in archive search' do
+    visit lookup_courses_path
+    expect(page).to have_selector('div.ribbon')
+  end
+
+  scenario 'wants to see a red banner when in archive search results' do
+    visit search_courses_path( {:search => 'Test'} )
+    find("input[type='checkbox'][value='#{@course1.id}']").set(true)
+    find('input[value="Archive"]').click
+    expect(page).to have_content("Test Course 1 - ARCHIVE #{@course1.updated_at}")  
+    visit lookup_courses_path
+    page.select('Spring', match: :first) 
+    expect(page).to have_selector('div.ribbon')
+    click_on 'Search'
+    click_on "Test Course 1 - ARCHIVE #{@course1.updated_at}"
+    expect(page).to have_selector('div.ribbon')  
+  end
+    
   scenario 'wants to search for archived course' do
     visit search_courses_path( {:search => 'Test'} )    
     expect(page).to have_content('Displaying 2 results')

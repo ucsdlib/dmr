@@ -1,9 +1,17 @@
-<div class="container">
+<%= form_tag archive_courses_path, method: "GET" do %> 
+  <div class="container">
     <div class="row">
+      <% if obj && obj[0] && !obj[0].course.include?('ARCHIVE')%>
+        <%= submit_tag "Archive", name: 'commit', class: "btn btn-primary", data: { confirm: 'Are you sure you want to archive these courses? This operation cannot be undone.' }%>      
+      <% else %>
+        <%= submit_tag "Delete", name: 'commit', class: "btn btn-primary", data: { confirm: 'Are you sure you want to delete these courses? This operation cannot be undone.' }%>      
+      <% end %>
+      <br/><br/>
       <div class="panel panel-default">
         <table class="table table-striped table-hover table-bordered">
           <thead>
             <tr>
+              <th class="col-xs-1" scope="col"><%= label_tag 'check_all', 'check_all', class: "hide-label"%><%= check_box_tag 'check_all_courses',false%></th>
               <th class="col-xs-4" scope="col">Course</th>
               <th class="col-xs-2" scope="col">Quarter</th>
               <th class="col-xs-2" scope="col">Year</th>
@@ -12,7 +20,8 @@
           </thead>
           <tbody>
             <% obj.each do |c| %>
-              <tr>    
+              <tr>
+                <td><%= check_box_tag 'course_ids[]', c.id%></td>                  
                 <td><%= link_to "#{c.course}", edit_course_path(c.id)%></td>
                 <td><%= c.quarter %></td>
                 <td><%= c.year %></td>
@@ -23,4 +32,5 @@
         </table>
       </div>
     </div>
-</div>
+  </div>
+<% end %>
