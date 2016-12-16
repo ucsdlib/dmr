@@ -69,6 +69,7 @@ class CoursesController < ApplicationController
   # @return [String] the resulting webpage with the Course object
   #
   def edit
+    @is_archive = params[:isArchive]
   end
 
   ##
