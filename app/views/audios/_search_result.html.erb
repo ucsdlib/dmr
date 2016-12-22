@@ -1,3 +1,4 @@
+<%= bootstrap_form_for :course, url: add_to_course_courses_path do |f| %>
   <div class="container">
     <div class="row">
       <div class="panel panel-default">
@@ -20,8 +21,8 @@
     				<% thumbnailURL = "#{Rails.configuration.audio_file_path}#{m.file_name.gsub('.mp3','.jpg')}"%>
                 
     			  <tr>
-                <td><fieldset><legend class="hide-label">Type</legend><%= label_tag "audio_ids_#{m.id}", 'audio_ids[]', class: "hide-label"%>
-                <%= check_box_tag 'audio_ids[]', m.id, false, id: "audio_ids_#{m.id}"%></fieldset></td>
+                <td><fieldset><legend class="hide-label">Type</legend><%= label_tag "media_ids_#{m.id}", 'media_ids[]', class: "hide-label"%>
+                <%= check_box_tag 'media_ids[]', m.id, false, id: "media_ids_#{m.id}"%></fieldset></td>
                 <td>
     				  <% if url_exist?(thumbnailURL) %>
       				<%=image_tag "#{thumbnailURL}", :alt => '', :class => 'search-thumbnail' %>
@@ -44,7 +45,9 @@
     </div>
   </div>
  <div class="text-center">
-    <%#= f.primary "Add to Course Reserve List"%>    
+    <%= hidden_field_tag 'type', 'audio' %>
+    <%= f.primary "Add to Course Reserve List"%>    
     <%= link_to "Create New Audio Record", new_audio_path, class: "btn btn-primary"%>
     <%#= f.primary "Delete Selected Records", data: { confirm: 'Are you sure?' }%>
   </div>  
+<% end %>

@@ -59,6 +59,7 @@ Style/MutableConstant:
 Style/ConditionalAssignment:
   Exclude:
     - 'lib/dmr/splunk_api_helper.rb'
+    - 'lib/dmr/controller_helper.rb'
 
 Style/AlignHash:
   Enabled: false

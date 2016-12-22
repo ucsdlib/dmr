@@ -14,10 +14,11 @@ module Dmr
     #
     ##
 
-    def add_media_to_course(media_ids, current_course)
+    def add_media_to_course(media_ids, current_course, type)
       @course = Course.find_by_id(current_course.to_i) if current_course
       current_course_media_ids = @course.media.map(&:id) if @course.media
-      add_to_report(media_ids, @course, current_course_media_ids)
+      current_course_media_ids = @course.audios.map(&:id) if @course.audios
+      add_to_report(media_ids, @course, current_course_media_ids, type)
     end
 
     ##
@@ -28,13 +29,17 @@ module Dmr
     # @param filename [Array] set of Current Course Media's ids
     #
     ##
-    def add_to_report(media_ids, current_course, current_course_media_ids)
+    def add_to_report(media_ids, current_course, current_course_media_ids, type)
       counter = get_next_report_counter(current_course.id)
       return unless media_ids && current_course
       media_ids.each do |id|
-        med = Media.find_by_id(id.to_i)
+        med = get_object(id.to_i, type)
         if med && !current_course_media_ids.include?(id.to_i)
-          current_course.reports.create(media: med, counter: counter.to_s)
+          if type
+            current_course.audioreports.create(audio: med, counter: counter.to_s)
+          else
+            current_course.reports.create(media: med, counter: counter.to_s)
+          end
         end
         counter = get_next_report_counter(current_course.id)
       end
@@ -121,6 +126,43 @@ module Dmr
     end
 
     ##
+    # Sorts the audio objects in the Course Reserve List
+    #
+    # @param course [Course] Course object
+    #
+    # @return audio_array[Array] the list of Audio object
+    #
+    ##
+
+    def get_sorted_audio(course)
+      audio_array = []
+      course.audioreports.sort { |a, b| a.counter.to_i <=> b.counter.to_i }.each do |r|
+        audio = Audio.find_by_id(r.audio_id)
+        audio_array << audio if audio
+      end
+      audio_array
+    end
+
+    ##
+    # Returns the Audio or Video object based on the type
+    #
+    # @param id [String] object id
+    # @param type [String] object type
+    #
+    # @return Audio or Video object
+    #
+    ##
+
+    def get_object(id, type)
+      if type
+        obj = Audio.find_by_id(id)
+      else
+        obj = Media.find_by_id(id)
+      end
+      obj
+    end
+
+    ##
     # Sorts the media counter in the Course Reserve List
     #
     # @param course [Course] Course object
@@ -203,10 +245,12 @@ module Dmr
     # @param filename [Array] set of Media's ids
     #
     ##
-    def delete_media(media_ids)
+    def delete_media(media_ids, type)
       media_ids.each do |id|
-        media = Media.find(id.to_i)
+        # media = Media.find(id.to_i)
+        media = get_object(id.to_i, type)
         report_tags = Report.where(media_id: id.to_i)
+        report_tags = Audioreport.where(audio_id: id.to_i) if type
         report_tags.each do |tag|
           course = Course.find(tag.course_id)
           course.reports.delete(tag)
