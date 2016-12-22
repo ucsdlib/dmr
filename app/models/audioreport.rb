@@ -1,9 +1,9 @@
 #
 # @author Vivian <tchu@ucsd.edu>
 #
-class Report < ActiveRecord::Base
+class Audioreport < ActiveRecord::Base
   belongs_to :course, dependent: :destroy
-  belongs_to :media, dependent: :destroy
+  belongs_to :audio, dependent: :destroy
 
   ##
   # Enables copying
