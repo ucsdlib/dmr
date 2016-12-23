@@ -232,7 +232,8 @@ class CoursesController < ApplicationController
 
   def remove_items
     delete_media(params[:media_ids], params[:type])
-    redirect_to media_path, notice: 'Selected Records were successfully deleted.'
+    path = params[:type] ? audios_path : media_path
+    redirect_to path, notice: 'Selected Records were successfully deleted.'
   end
 
   def set_current

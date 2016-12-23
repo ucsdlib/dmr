@@ -48,6 +48,6 @@
     <%= hidden_field_tag 'type', 'audio' %>
     <%= f.primary "Add to Course Reserve List"%>    
     <%= link_to "Create New Audio Record", new_audio_path, class: "btn btn-primary"%>
-    <%#= f.primary "Delete Selected Records", data: { confirm: 'Are you sure?' }%>
+    <%= f.primary "Delete Selected Records", data: { confirm: 'Are you sure?' }%>
   </div>  
 <% end %>

@@ -247,13 +247,16 @@ module Dmr
     ##
     def delete_media(media_ids, type)
       media_ids.each do |id|
-        # media = Media.find(id.to_i)
         media = get_object(id.to_i, type)
         report_tags = Report.where(media_id: id.to_i)
         report_tags = Audioreport.where(audio_id: id.to_i) if type
         report_tags.each do |tag|
           course = Course.find(tag.course_id)
-          course.reports.delete(tag)
+          if type
+            course.audioreports.delete(tag)
+          else
+            course.reports.delete(tag)
+          end
         end
         media.destroy
       end
