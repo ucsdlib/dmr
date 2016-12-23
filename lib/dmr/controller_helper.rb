@@ -185,11 +185,16 @@ module Dmr
     # @param course [Course] Course object
     #
     ##
-    def remove_media_from_course(media_ids, course)
+    def remove_media_from_course(media_ids, course, type)
       return unless media_ids && course
       media_ids.each do |id|
-        report_tag = Report.where(course_id: course.id, media_id: id.to_i)
-        course.reports.delete(report_tag) if report_tag
+        if type
+          report_tag = Audioreport.where(course_id: course.id, audio_id: id.to_i)
+          course.audioreports.delete(report_tag) if report_tag
+        else
+          report_tag = Report.where(course_id: course.id, media_id: id.to_i)
+          course.reports.delete(report_tag) if report_tag
+        end
       end
     end
 

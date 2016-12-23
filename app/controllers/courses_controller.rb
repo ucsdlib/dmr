@@ -82,7 +82,7 @@ class CoursesController < ApplicationController
   # @return [String] the edit Course form
   #
   def update
-    remove_media_from_course(params[:media_ids], @course) if removing_item?
+    remove_media_from_course(params[:media_ids], @course, params[:type]) if removing_item?
     change_media_order(params[:media_ids], @course, params[:commit])
     if @course.update_attributes(course_params)
       send_email
