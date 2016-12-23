@@ -83,7 +83,7 @@ class CoursesController < ApplicationController
   #
   def update
     remove_media_from_course(params[:media_ids], @course, params[:type]) if removing_item?
-    change_media_order(params[:media_ids], @course, params[:commit])
+    change_media_order(params[:media_ids], @course, params[:commit], params[:type])
     if @course.update_attributes(course_params)
       send_email
     else

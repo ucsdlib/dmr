@@ -30,7 +30,7 @@ module Dmr
     #
     ##
     def add_to_report(media_ids, current_course, current_course_media_ids, type)
-      counter = get_next_report_counter(current_course.id)
+      counter = get_next_report_counter(current_course.id, type)
       return unless media_ids && current_course
       media_ids.each do |id|
         med = get_object(id.to_i, type)
@@ -41,7 +41,7 @@ module Dmr
             current_course.reports.create(media: med, counter: counter.to_s)
           end
         end
-        counter = get_next_report_counter(current_course.id)
+        counter = get_next_report_counter(current_course.id, type)
       end
     end
 
@@ -53,9 +53,13 @@ module Dmr
     # @return next_counter [Integer] the next report counter
     #
     ##
-    def get_next_report_counter(course_id)
+    def get_next_report_counter(course_id, type)
       next_counter = 1
-      report = Report.where(course_id: course_id).order('created_at DESC')
+      if type
+        report = Audioreport.where(course_id: course_id).order('created_at DESC')
+      else
+        report = Report.where(course_id: course_id).order('created_at DESC')
+      end
       next_counter = report.first.counter.to_i + 1 if report && report.first
       next_counter
     end
@@ -70,9 +74,9 @@ module Dmr
     # @return counter [Integer] the previous report counter
     #
     ##
-    def get_counter(course_id, counter, counter_type)
+    def get_counter(course_id, counter, counter_type, type)
       next_counter = 0
-      counter_list = get_sorted_counter(Course.find(course_id))
+      counter_list = get_sorted_counter(Course.find(course_id), type)
       counter_pos = counter_list.index(counter.to_s)
       if counter_type == 'next'
         next_counter = counter_list[counter_pos + 1]
@@ -90,8 +94,12 @@ module Dmr
     # @param new_counter [Integer] the new report counter
     #
     ##
-    def update_report(course_id, current_counter, new_counter)
-      report = Report.where(course_id: course_id, counter: current_counter)
+    def update_report(course_id, current_counter, new_counter, type)
+      if type
+        report = Audioreport.where(course_id: course_id, counter: current_counter)
+      else
+        report = Report.where(course_id: course_id, counter: current_counter)
+      end
       update_report_counter(report, new_counter)
     end
 
@@ -170,10 +178,16 @@ module Dmr
     # @return counter_array[Array] the list of Media object counter
     #
     ##
-    def get_sorted_counter(course)
+    def get_sorted_counter(course, type)
       counter_array = []
-      course.reports.sort { |a, b| a.counter.to_i <=> b.counter.to_i }.each do |r|
-        counter_array << r.counter
+      if type
+        course.audioreports.sort { |a, b| a.counter.to_i <=> b.counter.to_i }.each do |r|
+          counter_array << r.counter
+        end
+      else
+        course.reports.sort { |a, b| a.counter.to_i <=> b.counter.to_i }.each do |r|
+          counter_array << r.counter
+        end
       end
       counter_array
     end
@@ -205,10 +219,10 @@ module Dmr
     # @param course [String] Current Course ID
     #
     ##
-    def move_up(course, current_counter, report)
+    def move_up(course, current_counter, report, type)
       return unless current_counter > 1
-      pre_counter = get_counter(course.id, current_counter, 'previous')
-      update_report(course.id, pre_counter, current_counter)
+      pre_counter = get_counter(course.id, current_counter, 'previous', type)
+      update_report(course.id, pre_counter, current_counter, type)
       update_report_counter(report, pre_counter)
     end
 
@@ -219,9 +233,9 @@ module Dmr
     # @param course [String] Current Course ID
     #
     ##
-    def move_down(course, current_counter, report)
-      next_counter = get_counter(course.id, current_counter, 'next')
-      update_report(course.id, next_counter, current_counter)
+    def move_down(course, current_counter, report, type)
+      next_counter = get_counter(course.id, current_counter, 'next', type)
+      update_report(course.id, next_counter, current_counter, type)
       update_report_counter(report, next_counter)
     end
 
@@ -233,14 +247,18 @@ module Dmr
     # @param type [String] submit type
     #
     ##
-    def change_media_order(media_ids, course, type)
+    def change_media_order(media_ids, course, type, object_type)
       return unless media_ids && course
       current_counter = 0
       media_ids.each do |id|
-        report = Report.where(course_id: course.id, media_id: id.to_i)
+        if object_type
+          report = Audioreport.where(course_id: course.id, audio_id: id.to_i)
+        else
+          report = Report.where(course_id: course.id, media_id: id.to_i)
+        end
         current_counter = report.first.counter.to_i if report && report.first
-        move_up(course, current_counter, report) if type == 'Move Up One'
-        move_down(course, current_counter, report) if type == 'Move Down One'
+        move_up(course, current_counter, report, object_type) if type == 'Move Up One'
+        move_down(course, current_counter, report, object_type) if type == 'Move Down One'
       end
     end
 
