@@ -169,5 +169,26 @@ feature 'Audio' do
     
     #Check that the search_option radio button is still selected
     find("input[name='search_option'][type='radio'][value='audio']").should be_checked        
-  end                             
+  end
+  
+  scenario 'wants to use delete selected Audio records from search results' do      
+    # search for audio objects
+    visit search_audios_path( {:search => 'Test'} )  
+    expect(page).to have_content('Test Audio 1')
+    expect(page).to have_content('Test Audio 2')
+    expect(page).to have_content('Displaying 2 results')   
+        
+    find("input[type='checkbox'][value='#{@audio1.id}']").set(true)
+    find("input[type='checkbox'][value='#{@audio2.id}']").set(true)
+
+    click_on 'Delete Selected Records'
+    
+    expect(page).to have_content('Selected Records were successfully deleted.')
+    
+    # search for audio objects
+    visit search_audios_path( {:search => 'Test'} )
+    expect(page).to have_content('There were no results for the search: "Test"')  
+    expect(page).to_not have_content('Test Audio 1')
+    expect(page).to_not have_content('Test Audio 2')   
+  end                              
 end
