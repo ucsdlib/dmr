@@ -453,6 +453,70 @@ feature 'Course' do
     page.all('tr')[1].text.should include '1 Test Media 10'
     page.all('tr')[2].text.should include '2 Test Media 1'               
   end
+
+  scenario 'wants to move one audio up in Course Reserve List' do
+    # set current course   
+    visit edit_course_path(@course1) 
+     
+    # search for audio objects
+    visit search_audios_path( {:search => 'Test'} )  
+    expect(page).to have_content('Test Audio 1')
+    expect(page).to have_content('Test Audio 2')
+    expect(page).to have_content('Displaying 2 results')   
+        
+    # add to course list    
+    find("input[type='checkbox'][value='#{@audio1.id}']").set(true)
+    find("input[type='checkbox'][value='#{@audio2.id}']").set(true)
+    click_on 'Add to Course Reserve List'
+    
+    #Check that changes are saved
+    expect(page).to have_content('Audio was successfully added to Course.')
+    expect(@course1.audios.size).to eq(2)  
+    
+    # check that audio object is in order
+    page.all('tr')[1].text.should include '1 Test Audio 1'
+    page.all('tr')[2].text.should include '2 Test Audio 2' 
+    
+    # select 2nd audio object and click the 'Move Up One' button
+    find("input[type='checkbox'][value='#{@audio2.id}']").set(true)
+    click_on 'Move Up One' 
+    
+    # check that 2nd audio object is displayed first
+    page.all('tr')[1].text.should include '1 Test Audio 2'
+    page.all('tr')[2].text.should include '2 Test Audio 1'               
+  end
+  
+  scenario 'wants to move one audio down in Course Reserve List' do
+    # set current course   
+    visit edit_course_path(@course1) 
+     
+    # search for audio objects
+    visit search_audios_path( {:search => 'Test'} )  
+    expect(page).to have_content('Test Audio 1')
+    expect(page).to have_content('Test Audio 2')
+    expect(page).to have_content('Displaying 2 results')   
+        
+    # add to course list    
+    find("input[type='checkbox'][value='#{@audio1.id}']").set(true)
+    find("input[type='checkbox'][value='#{@audio2.id}']").set(true)
+    click_on 'Add to Course Reserve List'
+    
+    #Check that changes are saved
+    expect(page).to have_content('Audio was successfully added to Course.')
+    expect(@course1.audios.size).to eq(2)  
+    
+    # check that audio object is in order
+    page.all('tr')[1].text.should include '1 Test Audio 1'
+    page.all('tr')[2].text.should include '2 Test Audio 2' 
+    
+    # select 2nd audio object and click the 'Move Up One' button
+    find("input[type='checkbox'][value='#{@audio1.id}']").set(true)
+    click_on 'Move Down One'
+    
+    # check that 2nd audio object is displayed first
+    page.all('tr')[1].text.should include '1 Test Audio 2'
+    page.all('tr')[2].text.should include '2 Test Audio 1'            
+  end
   
   scenario 'expects to see a friendly url Course Reserve List' do
     # set current course   
