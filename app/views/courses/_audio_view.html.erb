@@ -28,7 +28,8 @@
     <tbody>
   </table>    
   <div class="center-block">
-    <%#= f.submit "Remove Item(s)", class: "btn btn-primary"%>
+    <%= hidden_field_tag 'type', 'audio' %>
+    <%= f.submit "Remove Item(s)", class: "btn btn-primary"%>
     <%#= f.submit "Move Up One", class: "btn btn-primary"%>
     <%#= f.submit "Move Down One", class: "btn btn-primary"%>
   </div>  
