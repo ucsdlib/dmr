@@ -87,8 +87,8 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.shibboleth = true
-  config.wowza_baseurl = 'lib-streaming.ucsd.edu:1935/dmrnew/_definst_/'
-  config.wowza_audio_baseurl = 'lib-streaming.ucsd.edu:1935/dmrmp3/_definst_/'
+  config.wowza_baseurl = 'lib-streaming.ucsd.edu:1936/dmrnew/_definst_/'
+  config.wowza_audio_baseurl = 'lib-streaming.ucsd.edu:1936/dmrmp3/_definst_/'
   config.receiver_emails = 'reserves@ucsd.edu,'
   config.splunk_host = 'library'
   config.rails_host = 'lib-hydrahead-prod'   
