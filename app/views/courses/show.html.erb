@@ -4,15 +4,13 @@
   <body>
     <%= render :partial => 'shared/report_menu'%>	
 	<div id="tdr_content" class="tdr_fonts" style="width:80%;margin-left:auto;margin-right:auto;">
-	  <div id="tdr_content_content" style="width:100%;max-width:100%;">
-	    <h1 class="hide-label">Video</h1>    			
-        <%= render :partial => 'video_playlist'%>
-      </div>
-      <div class="ListItems" style="position:inherit;width:100%;">
-        <div id="list">
-        </div>
-      </div>
-    </div>
+  
+	    <% if @course.audioreports and @course.audioreports.size > 0  %>
+	      <%= render :partial => 'audio_playlist'%>
+	    <% else %> 			
+          <%= render :partial => 'video_playlist'%>
+        <% end %>
+
     <%= render :partial => 'shared/report_footer'%>		
   </body>
 </html>
