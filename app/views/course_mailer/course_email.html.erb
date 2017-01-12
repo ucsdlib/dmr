@@ -9,7 +9,13 @@
          <% end %>         
        </ul>
      <% end %>
-     
+     <% if (@sorted_audio) %>    
+       <ul>
+         <% @sorted_audio.each do |m| %>                 
+           <li><%= m.track %></li>
+         <% end %>         
+       </ul>
+     <% end %>     
      </p>The path to this DMR course reserve list is:</p>     
      <% url = course_report_url(:id => "#{@course.id}", :course => "#{@course.course.parameterize('_')}", :quarter => "#{@course.quarter}", :year => "#{@course.year}")%>
      <%= link_to "#{url}", url%>

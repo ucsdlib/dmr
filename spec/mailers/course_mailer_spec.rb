@@ -11,7 +11,7 @@ describe CourseMailer do
     @course = Fabricate(:course)
   end
   
-  let(:email) {CourseMailer.course_email(@user, @course, nil)}
+  let(:email) {CourseMailer.course_email(@user, @course, nil, nil)}
   
   it 'renders the subject' do
     expect(email.subject).to eql("DMR Confirmation for #{@course.course}")
