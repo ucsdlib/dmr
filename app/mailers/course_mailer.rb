@@ -10,9 +10,10 @@ class CourseMailer < ApplicationMailer
   # @param sorted_media [Array] the list of media belong to the course
   #
 
-  def course_email(user, course, sorted_media)
+  def course_email(user, course, sorted_media, sorted_audio)
     @course = course
     @sorted_media = sorted_media
+    @sorted_audio = sorted_audio
     receiver_emails = "#{Rails.configuration.receiver_emails}#{user.email}"
     mail to: receiver_emails, from: user.email, subject: "DMR Confirmation for #{@course.course}"
   end

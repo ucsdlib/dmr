@@ -183,7 +183,7 @@ class CoursesController < ApplicationController
   #
   def send_email
     if send_list?
-      CourseMailer.course_email(current_user, @course, @sorted_media).deliver_now
+      CourseMailer.course_email(current_user, @course, @sorted_media, @sorted_audio).deliver_now
       redirect_to edit_course_path(@course), notice: 'The confirmation email has been sent.'
     else
       redirect_to edit_course_path(@course), notice: 'Course successfully updated.'
