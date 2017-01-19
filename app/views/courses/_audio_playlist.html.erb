@@ -1,0 +1,66 @@
+<div id="tdr_content_content" style="width:70%;max-width:70%;">
+  <h1 class="hide-label">Audio</h1>
+<!--JWPlayer player config. and script-->	     
+<div id="player">Loading the player...</div>
+
+<% if @course.audioreports and @course.audioreports.size > 0 %> 
+  <script type="text/javascript">
+    jwplayer("player").setup({
+      playlist: [{
+      <% @sorted_audio.each do |m| %>
+        <%  wowzaURL = grab_wowza_url(m.file_name,m.id) if !m.nil?%>
+        <% if wowzaURL != nil %>
+          <% 
+            thumbnailURL = "#{Rails.configuration.audio_file_path}#{m.file_name.gsub('.mp3','.jpg')}"
+            if !url_exist?(thumbnailURL)
+              thumbnailURL = "https://library.ucsd.edu/dmrthumbs/audio_icon.png"              
+            end          
+          %>
+          sources: [
+	        {file: "rtmps://<%=wowzaURL%>"},      
+	        {file: "https://<%=wowzaURL%>/manifest.mpd"}
+	      ],
+	      <!--title of media file-->
+	      title: "<%= m.track %>",
+	      
+          <!--Brief media description text area-->
+	      description: "Album: <%= m.album %> <br/>Year: <%= m.year %>",
+	  	  
+	      <!--add image: to display thumbnail-->
+	      image: "<%= thumbnailURL%>"
+	  
+          },{
+        <% end %>
+      <% end %>
+	
+      }],
+      visualplaylist:false,
+      height: 40,
+      width: '100%',
+      skin: 'vapor',
+      rtmp: {bufferlength: 3},
+    });
+    jwplayer().onReady(function(){
+      var myVideos = jwplayer().getPlaylist();
+      for (var i = 0; i < myVideos.length; i++) {
+        document.getElementById('listbar').innerHTML += '<div style="margin:10px 0 0 0;" class=listbar_item id=video'+ i +' onClick="javascript:playThis('+i+')"><a href="javascript:playThis('+i+')"><img style="float: left; height: 50px; width: 50px; margin-right: 10px; margin-left:10px;" src="' + myVideos[i].image + '"></a><b>' + myVideos[i].title + '</b><br>' + myVideos[i].description + '</div><div class="jwplaylistdivider"></div>';
+    }});jwplayer().onPlaylist(function(){});
+    jwplayer().onPlay(function(){updateActiveDiv(jwplayer().getPlaylistItem().index);});
+    function playThis(index) {
+      jwplayer().playlistItem(index);
+      updateActiveDiv(index);   
+    }
+    
+    function updateActiveDiv(index) {
+      var activeDiv = document.getElementsByClassName("active");
+      if (activeDiv[0] != null) {
+         activeDiv[0].className = "listbar_item";
+      }
+      var div = document.getElementById( 'video'+index );
+      div.className += " active";    
+    }    	
+  </script>
+<% end %>
+  <div id="listbar" style="height:300px;width:100%;overflow-y: scroll; align:center;"></div>
+  </div>
+</div>

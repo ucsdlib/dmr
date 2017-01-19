@@ -17,6 +17,8 @@ feature 'Course' do
     @media8 = Media.create title: 'Test Media 8', director: 'Test Director 1', year: '2015', call_number: '11111111', file_name: 'toystory.mp4'
     @media9 = Media.create title: 'Test Media 9', director: 'Test Director 2', year: '2016', call_number: '77777777', file_name: 'file2.mp4'
     @media10 = Media.create title: 'Test Media 10', director: 'Test Director 1', year: '2015', call_number: '11111111', file_name: 'toystory.mp4'
+    @audio1 = Audio.create track: 'Test Audio 1', album: 'Album 1', artist: 'Artist 1', composer: 'Composer 1', year: '2015', call_number: '11111111', file_name: 'pureAwareness.mp3'
+    @audio2 = Audio.create track: 'Test Audio 2', album: 'Album 2', artist: 'Artist 2', composer: 'Composer 2', year: '2016', call_number: '77777777', file_name: 'test.mp3'   
   end
   after(:all) do
     @course1.delete
@@ -33,6 +35,8 @@ feature 'Course' do
     @media8.delete
     @media9.delete
     @media10.delete
+    @audio1.delete
+    @audio2.delete
   end
   before(:each) do
     sign_in_developer
@@ -72,7 +76,15 @@ feature 'Course' do
     expect(page).to have_content('Winter')
     expect(page).to have_content('2009')                  
   end
-  
+
+  scenario 'wants to see different order of quarter for new course page' do
+    visit new_course_path
+    expect(page).to have_selector('option[1]', :text => 'Fall')
+    expect(page).to have_selector('option[2]', :text => 'Winter')
+    expect(page).to have_selector('option[3]', :text => 'Spring')
+    expect(page).to have_selector('option[4]', :text => 'Summer')      
+  end
+    
   scenario 'is on the course page to be edited' do
     visit edit_course_path(@course1)
     expect(page).to have_selector('h3', :text => 'Course Reserve List')
@@ -122,13 +134,29 @@ feature 'Course' do
     click_on 'Add to Course Reserve List'
     
     #Check that changes are saved
-    expect(page).to have_content('Media was successfully added to Course.')
+    expect(page).to have_content('Video was successfully added to Course.')
     current_path.should == edit_course_path(@course1)
     expect(@course1.media.size).to eq(1)
     expect(page).to have_content('Test Media 1')
     expect(page).to have_content('Test Director 1')         
   end
-  
+
+  scenario 'wants to add an audio object to the current Course Reserve List from audio edit page' do
+    # set current course
+    visit edit_course_path(@course1)
+    
+    #add to course list  
+    visit edit_audio_path(@audio1)
+    click_on 'Add to Course Reserve List'
+    
+    #Check that changes are saved
+    expect(page).to have_content('Audio was successfully added to Course.')
+    current_path.should == edit_course_path(@course1)
+    expect(@course1.audios.size).to eq(1)
+    expect(page).to have_content('Test Audio 1')
+    expect(page).to have_content('Album 1')         
+  end
+    
   scenario 'wants to add multiple media objects to the current Course Reserve List from media search results page' do
     # set current course 
     visit edit_course_path(@course1)
@@ -137,7 +165,7 @@ feature 'Course' do
     visit search_media_path( {:search => 'Test'} )  
     expect(page).to have_content('Test Media 1')
     expect(page).to have_content('Test Media 2')
-    expect(page).to have_content('Showing all 10 media')   
+    expect(page).to have_content('Displaying 10 results')   
         
     # add to course list    
     find("input[type='checkbox'][value='#{@media1.id}']").set(true)
@@ -145,7 +173,7 @@ feature 'Course' do
     click_on 'Add to Course Reserve List'
     
     #Check that changes are saved
-    expect(page).to have_content('Media was successfully added to Course.')
+    expect(page).to have_content('Video was successfully added to Course.')
     current_path.should == edit_course_path(@course1)
     expect(@course1.media.size).to eq(2)
     expect(page).to have_content('Test Media 1')
@@ -153,7 +181,32 @@ feature 'Course' do
     expect(page).to have_content('Test Media 2')
     expect(page).to have_content('Test Director 2')                    
   end
-  
+
+  scenario 'wants to add multiple audio objects to the current Course Reserve List from audio search results page' do
+    # set current course 
+    visit edit_course_path(@course1)
+
+    # search for media objects
+    visit search_audios_path( {:search => 'Test'} )  
+    expect(page).to have_content('Test Audio 1')
+    expect(page).to have_content('Test Audio 2')
+    expect(page).to have_content('Displaying 2 results')   
+        
+    # add to course list    
+    find("input[type='checkbox'][value='#{@audio1.id}']").set(true)
+    find("input[type='checkbox'][value='#{@audio2.id}']").set(true)
+    click_on 'Add to Course Reserve List'
+    
+    #Check that changes are saved
+    expect(page).to have_content('Audio was successfully added to Course.')
+    current_path.should == edit_course_path(@course1)
+    expect(@course1.audios.size).to eq(2)
+    expect(page).to have_content('Test Audio 1')
+    expect(page).to have_content('Album 1')
+    expect(page).to have_content('Test Audio 2')
+    expect(page).to have_content('Album 2')                    
+  end
+    
   scenario 'wants to search for courses with a matching search term' do
     visit search_courses_path( {:search => 'Test'} )  
     expect(page).to have_content('Test Course 1')
@@ -207,7 +260,7 @@ feature 'Course' do
     visit search_media_path( {:search => 'Test'} )  
     expect(page).to have_content('Test Media 1')
     expect(page).to have_content('Test Media 2')
-    expect(page).to have_content('Showing all 10 media')   
+    expect(page).to have_content('Displaying 10 results')   
         
     # add to course list    
     find("input[type='checkbox'][value='#{@media1.id}']").set(true)
@@ -215,7 +268,7 @@ feature 'Course' do
     click_on 'Add to Course Reserve List'
     
     #Check that changes are saved
-    expect(page).to have_content('Media was successfully added to Course.')
+    expect(page).to have_content('Video was successfully added to Course.')
     current_path.should == edit_course_path(@course1)
     expect(@course1.media.size).to eq(2)
     expect(page).to have_content('Test Media 1')
@@ -234,7 +287,43 @@ feature 'Course' do
     expect(page).to_not have_content('Test Media 1')
     expect(page).to_not have_content('Test Director 1')                   
   end 
-  
+
+  scenario 'wants to remove audio from Course Reserve List' do
+    # set current course   
+    visit edit_course_path(@course1) 
+     
+    # search for audio objects
+    visit search_audios_path( {:search => 'Test'} )  
+    expect(page).to have_content('Test Audio 1')
+    expect(page).to have_content('Test Audio 2')
+    expect(page).to have_content('Displaying 2 results')   
+        
+    # add to course list    
+    find("input[type='checkbox'][value='#{@audio1.id}']").set(true)
+    find("input[type='checkbox'][value='#{@audio2.id}']").set(true)
+    click_on 'Add to Course Reserve List'
+    
+    #Check that changes are saved
+    expect(page).to have_content('Audio was successfully added to Course.')
+    current_path.should == edit_course_path(@course1)
+    expect(@course1.audios.size).to eq(2)
+    expect(page).to have_content('Test Audio 1')
+    expect(page).to have_content('Album 1')
+    expect(page).to have_content('Test Audio 2')
+    expect(page).to have_content('Album 2')
+    
+    # select media object and click the 'Remove Item(s)' button
+    find("input[type='checkbox'][value='#{@audio1.id}']").set(true)
+    click_on 'Remove Item(s)'
+    
+    # Check that selected media object does not exist
+    expect(page).to have_content('Course successfully updated.')
+    current_path.should == edit_course_path(@course1)
+    expect(@course1.audios.size).to eq(1)
+    expect(page).to_not have_content('Test Audio 1')
+    expect(page).to_not have_content('Album 1')                   
+  end
+    
   scenario 'wants to clone a Course Reserve List' do
     # set current course   
     visit edit_course_path(@course1) 
@@ -244,7 +333,7 @@ feature 'Course' do
     click_on 'Add to Course Reserve List'  
 
     #Check that changes are saved
-    expect(page).to have_content('Media was successfully added to Course.')
+    expect(page).to have_content('Video was successfully added to Course.')
     current_path.should == edit_course_path(@course1)
     
     click_on 'Clone'
@@ -259,7 +348,32 @@ feature 'Course' do
     expect(page).to have_content('Test Media 1')
     expect(page).to have_content('Test Director 1')              
   end
-  
+
+  scenario 'wants to clone a Audio Course Reserve List' do
+    # set current course   
+    visit edit_course_path(@course1) 
+    
+    # add media to course 
+    visit edit_audio_path(@audio1)
+    click_on 'Add to Course Reserve List'  
+
+    #Check that changes are saved
+    expect(page).to have_content('Audio was successfully added to Course.')
+    current_path.should == edit_course_path(@course1)
+    
+    click_on 'Clone'
+    expect(page).to have_content('Course was successfully cloned.')
+    current_path.should_not == edit_course_path(@course1) 
+
+    #Check that changes are saved in new Course Reserve List
+    expect(page).to have_selector("input#course_course[value='Test Course 1']")
+    expect(page).to have_selector("input#course_instructor[value='Test Instructor 1']")
+    expect(page).to have_selector("input#course_year[value='2015']")
+    expect(page).to have_selector("select#course_quarter/option[@selected='selected'][value='Spring']")
+    expect(page).to have_content('Test Audio 1')
+    expect(page).to have_content('Audio 1')              
+  end
+    
   scenario 'wants to move one media up in Course Reserve List' do
     # set current course   
     visit edit_course_path(@course1) 
@@ -268,7 +382,7 @@ feature 'Course' do
     visit search_media_path( {:search => 'Test'} )  
     expect(page).to have_content('Test Media 1')
     expect(page).to have_content('Test Media 2')
-    expect(page).to have_content('Showing all 10 media')   
+    expect(page).to have_content('Displaying 10 results')   
         
     # add to course list    
     find("input[type='checkbox'][value='#{@media1.id}']").set(true)
@@ -284,7 +398,7 @@ feature 'Course' do
     click_on 'Add to Course Reserve List'
     
     #Check that changes are saved
-    expect(page).to have_content('Media was successfully added to Course.')
+    expect(page).to have_content('Video was successfully added to Course.')
     expect(@course1.media.size).to eq(10)  
     
     # check that media object is in order
@@ -308,7 +422,7 @@ feature 'Course' do
     visit search_media_path( {:search => 'Test'} )  
     expect(page).to have_content('Test Media 1')
     expect(page).to have_content('Test Media 2')
-    expect(page).to have_content('Showing all 10 media')   
+    expect(page).to have_content('Displaying 10 results')   
         
     # add to course list    
     find("input[type='checkbox'][value='#{@media1.id}']").set(true)
@@ -324,7 +438,7 @@ feature 'Course' do
     click_on 'Add to Course Reserve List'
     
     #Check that changes are saved
-    expect(page).to have_content('Media was successfully added to Course.')
+    expect(page).to have_content('Video was successfully added to Course.')
     expect(@course1.media.size).to eq(10)  
     
     # check that media object is in order
@@ -339,6 +453,70 @@ feature 'Course' do
     page.all('tr')[1].text.should include '1 Test Media 10'
     page.all('tr')[2].text.should include '2 Test Media 1'               
   end
+
+  scenario 'wants to move one audio up in Course Reserve List' do
+    # set current course   
+    visit edit_course_path(@course1) 
+     
+    # search for audio objects
+    visit search_audios_path( {:search => 'Test'} )  
+    expect(page).to have_content('Test Audio 1')
+    expect(page).to have_content('Test Audio 2')
+    expect(page).to have_content('Displaying 2 results')   
+        
+    # add to course list    
+    find("input[type='checkbox'][value='#{@audio1.id}']").set(true)
+    find("input[type='checkbox'][value='#{@audio2.id}']").set(true)
+    click_on 'Add to Course Reserve List'
+    
+    #Check that changes are saved
+    expect(page).to have_content('Audio was successfully added to Course.')
+    expect(@course1.audios.size).to eq(2)  
+    
+    # check that audio object is in order
+    page.all('tr')[1].text.should include '1 Test Audio 1'
+    page.all('tr')[2].text.should include '2 Test Audio 2' 
+    
+    # select 2nd audio object and click the 'Move Up One' button
+    find("input[type='checkbox'][value='#{@audio2.id}']").set(true)
+    click_on 'Move Up One' 
+    
+    # check that 2nd audio object is displayed first
+    page.all('tr')[1].text.should include '1 Test Audio 2'
+    page.all('tr')[2].text.should include '2 Test Audio 1'               
+  end
+  
+  scenario 'wants to move one audio down in Course Reserve List' do
+    # set current course   
+    visit edit_course_path(@course1) 
+     
+    # search for audio objects
+    visit search_audios_path( {:search => 'Test'} )  
+    expect(page).to have_content('Test Audio 1')
+    expect(page).to have_content('Test Audio 2')
+    expect(page).to have_content('Displaying 2 results')   
+        
+    # add to course list    
+    find("input[type='checkbox'][value='#{@audio1.id}']").set(true)
+    find("input[type='checkbox'][value='#{@audio2.id}']").set(true)
+    click_on 'Add to Course Reserve List'
+    
+    #Check that changes are saved
+    expect(page).to have_content('Audio was successfully added to Course.')
+    expect(@course1.audios.size).to eq(2)  
+    
+    # check that audio object is in order
+    page.all('tr')[1].text.should include '1 Test Audio 1'
+    page.all('tr')[2].text.should include '2 Test Audio 2' 
+    
+    # select 2nd audio object and click the 'Move Up One' button
+    find("input[type='checkbox'][value='#{@audio1.id}']").set(true)
+    click_on 'Move Down One'
+    
+    # check that 2nd audio object is displayed first
+    page.all('tr')[1].text.should include '1 Test Audio 2'
+    page.all('tr')[2].text.should include '2 Test Audio 1'            
+  end
   
   scenario 'expects to see a friendly url Course Reserve List' do
     # set current course   
@@ -348,7 +526,7 @@ feature 'Course' do
     visit search_media_path( {:search => 'Test'} )  
     expect(page).to have_content('Test Media 1')
     expect(page).to have_content('Test Media 2')
-    expect(page).to have_content('Showing all 10 media')   
+    expect(page).to have_content('Displaying 10 results')   
         
     # add to course list    
     find("input[type='checkbox'][value='#{@media1.id}']").set(true)
@@ -382,7 +560,15 @@ feature 'Course' do
     click_on 'Cancel'
     current_path.should == welcome_index_path     
   end
-    
+
+  scenario 'wants to see different order of quarter for archive course search page' do
+    visit lookup_courses_path
+    expect(page).to have_selector('option[1]', :text => 'Fall')
+    expect(page).to have_selector('option[2]', :text => 'Winter')
+    expect(page).to have_selector('option[3]', :text => 'Spring')
+    expect(page).to have_selector('option[4]', :text => 'Summer')      
+  end
+      
   scenario 'wants to archive some courses' do
     visit search_courses_path( {:search => 'Test'} )    
     expect(page).to have_content('Displaying 2 results')
@@ -404,6 +590,24 @@ feature 'Course' do
     current_path.should == "/courses/#{@course1.id}/#{report_url}"    
   end 
 
+  scenario 'wants to see a red banner when in archive search' do
+    visit lookup_courses_path
+    expect(page).to have_selector('div.ribbon')
+  end
+
+  scenario 'wants to see a red banner when in archive search results' do
+    visit search_courses_path( {:search => 'Test'} )
+    find("input[type='checkbox'][value='#{@course1.id}']").set(true)
+    find('input[value="Archive"]').click
+    expect(page).to have_content("Test Course 1 - ARCHIVE #{@course1.updated_at}")  
+    visit lookup_courses_path
+    page.select('Spring', match: :first) 
+    expect(page).to have_selector('div.ribbon')
+    click_on 'Search'
+    click_on "Test Course 1 - ARCHIVE #{@course1.updated_at}"
+    expect(page).to have_selector('div.ribbon')  
+  end
+    
   scenario 'wants to search for archived course' do
     visit search_courses_path( {:search => 'Test'} )    
     expect(page).to have_content('Displaying 2 results')
@@ -421,6 +625,7 @@ feature 'Course' do
     click_on 'Archive'
     expect(page).to have_selector('h3', :text => 'Search Courses')
     fill_in 'year_q', :with => '2015'
+    page.select('Spring', match: :first) 
     click_on 'Search'
     expect(page).to have_content('Displaying 1 results')
     expect(page).to have_content("Test Course 1 - ARCHIVE #{@course1.updated_at}")    

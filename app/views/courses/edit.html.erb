@@ -1,3 +1,8 @@
+<% if @is_archive %>
+<div class="ribbon">
+  <a href="#">Archive</a>
+</div>
+<% end %>
 <div class="container">
   <div class="row">
     <div class="col-sm-10">
@@ -15,8 +20,9 @@
 	      <%= link_to "View", course_report_path(@course), class: "btn btn-primary" , :onclick=>"window.open(this.href,'video_player', 'height=700, width=1000');return false;" %>
 	      <%= f.submit "Send List", class: "btn btn-primary"%>
 	      <%= link_to "Archive", archive_courses_path(:course_ids => ["#{@course.id}"]), class: "btn btn-primary" if !@course.course.include?('ARCHIVE')%>	      
-	    </div>
+	    </div>	    
 	    <%= render :partial => 'media_view' , :locals => {:f => f, :sorted_media => @sorted_media}%>
+	    <%= render :partial => 'audio_view' , :locals => {:f => f, :sorted_audio => @sorted_audio}%>
 	  <%end%>
     </div>
   </div>

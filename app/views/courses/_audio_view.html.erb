@@ -1,0 +1,36 @@
+<% if @course.audioreports and @course.audioreports.size > 0 %>
+  <% counter = 0 %>
+  <table class="table table-striped table-hover table-bordered">
+    <thead>
+      <tr>
+        <th class="col-xs-1" scope="col"><%= label_tag 'check_all', 'check_all', class: "hide-label"%><%= check_box_tag 'check_all',false%></th>
+        <th class="col-xs-1" scope="col">No</th>
+        <th class="col-xs-3" scope="col">Track</th>
+        <th class="col-xs-2" scope="col">Album</th>
+        <th class="col-xs-2" scope="col">Call Number</th>
+        <th class="col-xs-1" scope="col">Year</th>
+        <th class="col-xs-1" scope="col">File Name</th>
+      </tr>
+    </thead>
+    <tbody>	
+      <% sorted_audio.each do |m| %>
+        <% counter += 1 %> 
+        <tr>
+          <td><fieldset><legend class="hide-label">Type</legend><%= label_tag "media_ids_#{m.id}", 'media_ids[]', class: "hide-label"%><%= check_box_tag 'media_ids[]', m.id, false, id: "media_ids_#{m.id}"%></fieldset></td>
+          <td><%= counter %></td>          
+          <td><%= m.track %></td>
+          <td><%= m.album %></td>        
+          <td><%= m.call_number %></td>
+          <td><%= m.year %></td>
+          <td><%= m.file_name %></td>
+        </tr>
+      <% end %>  
+    <tbody>
+  </table>    
+  <div class="center-block">
+    <%= hidden_field_tag 'type', 'audio' %>
+    <%= f.submit "Remove Item(s)", class: "btn btn-primary"%>
+    <%= f.submit "Move Up One", class: "btn btn-primary"%>
+    <%= f.submit "Move Down One", class: "btn btn-primary"%>
+  </div>  
+<% end %>  	    

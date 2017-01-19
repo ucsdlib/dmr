@@ -1,0 +1,26 @@
+<%
+   wowzaURL = grab_wowza_url(obj.file_name,obj.id) if !obj.nil?
+%>
+
+<% if wowzaURL != nil %>
+
+  <div id="dmr-audio">Loading the player...</div>
+
+	<script type="text/javascript">
+		jwplayer("dmr-audio").setup({
+			playlist:
+			[{
+				sources:
+				[
+				    {file: "rtmps://<%=wowzaURL%>"},
+					{file: "https://<%=wowzaURL%>/playlist.m3u8"}					
+				]
+			}],
+			width: "100%",
+			height: "30",
+			rtmp: {bufferlength: 3},
+			analytics: {enabled: false}
+		});
+	</script>
+
+<% end %>

@@ -96,7 +96,25 @@ describe CoursesController do
         expect(@course.media.map(&:title)).to include('Test Media')  
         expect(response.status).to eq( 200 )
       end
-    end   
+    end
+    
+    describe 'with has_many through association for audio' do
+      before do
+        @audio = Fabricate(:audio)
+        @audio2 = Fabricate(:audio)
+        @course = Fabricate(:course)
+      end    
+      it 'creates a new Course with 2 Audio objects' do
+        @course.audioreports.create(audio: @audio, counter: '1')
+        @course.audioreports.create(audio: @audio2, counter: '2')
+        expect(Course.count).to eq(1)   
+        expect(Audio.count).to eq(2)    
+        expect(@course.audios.size).to eq(2)
+        expect(@course.audioreports.size).to eq(2) 
+        expect(@course.audios.map(&:track)).to include('Test Track')  
+        expect(response.status).to eq( 200 )
+      end
+    end        
   end
 
   describe 'PUT update' do
@@ -262,7 +280,7 @@ describe CoursesController do
       expect(@course.media.first.title).to eq(new_course.media.first.title)    
     end    
   end
-  
+
   describe 'GET send_mail' do
     before(:each) do
       post :create, course: Fabricate.attributes_for(:course)

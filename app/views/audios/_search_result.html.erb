@@ -1,0 +1,53 @@
+<%= bootstrap_form_for :course, url: add_to_course_courses_path do |f| %>
+  <div class="container">
+    <div class="row">
+      <div class="panel panel-default">
+        <table class="table table-striped table-hover table-bordered">
+          <thead>
+            <tr>
+              <th class="col-xs-1" scope="col"><%= label_tag 'check_all', 'check_all', class: "hide-label"%><%= check_box_tag 'check_all',false%></th>
+              <th class="col-xs-1" scope="col">Thumbnail</th>
+              <th class="col-xs-4" scope="col">Track</th>
+              <th class="col-xs-2" scope="col">Album</th>
+              <th class="col-xs-1" scope="col">Artist</th>
+              <th class="col-xs-1" scope="col">Composer</th>
+              <th class="col-xs-2" scope="col">Call Number</th>
+              <th class="col-xs-1" scope="col">Year</th>
+              <th class="col-xs-1" scope="col">File Name</th>             
+            </tr>
+          </thead>
+          <tbody>
+            <% obj.each do |m| %>
+    				<% thumbnailURL = "#{Rails.configuration.audio_file_path}#{m.file_name.gsub('.mp3','.jpg')}"%>
+                
+    			  <tr>
+                <td><fieldset><legend class="hide-label">Type</legend><%= label_tag "media_ids_#{m.id}", 'media_ids[]', class: "hide-label"%>
+                <%= check_box_tag 'media_ids[]', m.id, false, id: "media_ids_#{m.id}"%></fieldset></td>
+                <td>
+    				  <% if url_exist?(thumbnailURL) %>
+      				<%=image_tag "#{thumbnailURL}", :alt => '', :class => 'search-thumbnail' %>
+    				  <% else %>
+       				<%=image_tag "speaker.gif", :alt => '', :class => 'search-thumbnail' %>
+    				  <% end %>                
+                </td>          
+                <td><%= link_to "#{m.track}", edit_audio_path(m.id)%></td>
+                <td><%= m.album %></td>
+                <td><%= m.artist %></td>
+                <td><%= m.composer %></td>
+                <td><%= m.call_number %></td>
+                <td><%= m.year %></td>
+                <td><%= m.file_name %></td>
+              </tr>
+            <% end %>
+          <tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+ <div class="text-center">
+    <%= hidden_field_tag 'type', 'audio' %>
+    <%= f.primary "Add to Course Reserve List"%>    
+    <%= link_to "Create New Audio Record", new_audio_path, class: "btn btn-primary"%>
+    <%= f.primary "Delete Selected Records", data: { confirm: 'Are you sure?' }%>
+  </div>  
+<% end %>

@@ -41,7 +41,8 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
-  config.wowza_baseurl = 'lib-streaming-test.ucsd.edu:1935/dmr/_definst_/'
+  config.wowza_baseurl = 'lib-streaming-test.ucsd.edu:1936/dmr/_definst_/'
+  config.wowza_audio_baseurl = 'lib-streaming-test.ucsd.edu:1936/dmrmp3/_definst_/'
   config.shibboleth = false
   config.receiver_emails = 'landrews@ucsd.edu,reserves@ucsd.edu,'
   config.splunk_host = 'librarytest'

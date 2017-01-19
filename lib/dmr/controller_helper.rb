@@ -14,10 +14,11 @@ module Dmr
     #
     ##
 
-    def add_media_to_course(media_ids, current_course)
+    def add_media_to_course(media_ids, current_course, type)
       @course = Course.find_by_id(current_course.to_i) if current_course
       current_course_media_ids = @course.media.map(&:id) if @course.media
-      add_to_report(media_ids, @course, current_course_media_ids)
+      current_course_media_ids = @course.audios.map(&:id) if @course.audios
+      add_to_report(media_ids, @course, current_course_media_ids, type)
     end
 
     ##
@@ -28,15 +29,19 @@ module Dmr
     # @param filename [Array] set of Current Course Media's ids
     #
     ##
-    def add_to_report(media_ids, current_course, current_course_media_ids)
-      counter = get_next_report_counter(current_course.id)
+    def add_to_report(media_ids, current_course, current_course_media_ids, type)
+      counter = get_next_report_counter(current_course.id, type)
       return unless media_ids && current_course
       media_ids.each do |id|
-        med = Media.find_by_id(id.to_i)
+        med = get_object(id.to_i, type)
         if med && !current_course_media_ids.include?(id.to_i)
-          current_course.reports.create(media: med, counter: counter.to_s)
+          if type
+            current_course.audioreports.create(audio: med, counter: counter.to_s)
+          else
+            current_course.reports.create(media: med, counter: counter.to_s)
+          end
         end
-        counter = get_next_report_counter(current_course.id)
+        counter = get_next_report_counter(current_course.id, type)
       end
     end
 
@@ -48,9 +53,13 @@ module Dmr
     # @return next_counter [Integer] the next report counter
     #
     ##
-    def get_next_report_counter(course_id)
+    def get_next_report_counter(course_id, type)
       next_counter = 1
-      report = Report.where(course_id: course_id).order('created_at DESC')
+      if type
+        report = Audioreport.where(course_id: course_id).order('created_at DESC')
+      else
+        report = Report.where(course_id: course_id).order('created_at DESC')
+      end
       next_counter = report.first.counter.to_i + 1 if report && report.first
       next_counter
     end
@@ -65,9 +74,9 @@ module Dmr
     # @return counter [Integer] the previous report counter
     #
     ##
-    def get_counter(course_id, counter, counter_type)
+    def get_counter(course_id, counter, counter_type, type)
       next_counter = 0
-      counter_list = get_sorted_counter(Course.find(course_id))
+      counter_list = get_sorted_counter(Course.find(course_id), type)
       counter_pos = counter_list.index(counter.to_s)
       if counter_type == 'next'
         next_counter = counter_list[counter_pos + 1]
@@ -85,8 +94,12 @@ module Dmr
     # @param new_counter [Integer] the new report counter
     #
     ##
-    def update_report(course_id, current_counter, new_counter)
-      report = Report.where(course_id: course_id, counter: current_counter)
+    def update_report(course_id, current_counter, new_counter, type)
+      if type
+        report = Audioreport.where(course_id: course_id, counter: current_counter)
+      else
+        report = Report.where(course_id: course_id, counter: current_counter)
+      end
       update_report_counter(report, new_counter)
     end
 
@@ -121,6 +134,43 @@ module Dmr
     end
 
     ##
+    # Sorts the audio objects in the Course Reserve List
+    #
+    # @param course [Course] Course object
+    #
+    # @return audio_array[Array] the list of Audio object
+    #
+    ##
+
+    def get_sorted_audio(course)
+      audio_array = []
+      course.audioreports.sort { |a, b| a.counter.to_i <=> b.counter.to_i }.each do |r|
+        audio = Audio.find_by_id(r.audio_id)
+        audio_array << audio if audio
+      end
+      audio_array
+    end
+
+    ##
+    # Returns the Audio or Video object based on the type
+    #
+    # @param id [String] object id
+    # @param type [String] object type
+    #
+    # @return Audio or Video object
+    #
+    ##
+
+    def get_object(id, type)
+      if type
+        obj = Audio.find_by_id(id)
+      else
+        obj = Media.find_by_id(id)
+      end
+      obj
+    end
+
+    ##
     # Sorts the media counter in the Course Reserve List
     #
     # @param course [Course] Course object
@@ -128,10 +178,16 @@ module Dmr
     # @return counter_array[Array] the list of Media object counter
     #
     ##
-    def get_sorted_counter(course)
+    def get_sorted_counter(course, type)
       counter_array = []
-      course.reports.sort { |a, b| a.counter.to_i <=> b.counter.to_i }.each do |r|
-        counter_array << r.counter
+      if type
+        course.audioreports.sort { |a, b| a.counter.to_i <=> b.counter.to_i }.each do |r|
+          counter_array << r.counter
+        end
+      else
+        course.reports.sort { |a, b| a.counter.to_i <=> b.counter.to_i }.each do |r|
+          counter_array << r.counter
+        end
       end
       counter_array
     end
@@ -143,11 +199,16 @@ module Dmr
     # @param course [Course] Course object
     #
     ##
-    def remove_media_from_course(media_ids, course)
+    def remove_media_from_course(media_ids, course, type)
       return unless media_ids && course
       media_ids.each do |id|
-        report_tag = Report.where(course_id: course.id, media_id: id.to_i)
-        course.reports.delete(report_tag) if report_tag
+        if type
+          report_tag = Audioreport.where(course_id: course.id, audio_id: id.to_i)
+          course.audioreports.delete(report_tag) if report_tag
+        else
+          report_tag = Report.where(course_id: course.id, media_id: id.to_i)
+          course.reports.delete(report_tag) if report_tag
+        end
       end
     end
 
@@ -158,10 +219,10 @@ module Dmr
     # @param course [String] Current Course ID
     #
     ##
-    def move_up(course, current_counter, report)
+    def move_up(course, current_counter, report, type)
       return unless current_counter > 1
-      pre_counter = get_counter(course.id, current_counter, 'previous')
-      update_report(course.id, pre_counter, current_counter)
+      pre_counter = get_counter(course.id, current_counter, 'previous', type)
+      update_report(course.id, pre_counter, current_counter, type)
       update_report_counter(report, pre_counter)
     end
 
@@ -172,9 +233,9 @@ module Dmr
     # @param course [String] Current Course ID
     #
     ##
-    def move_down(course, current_counter, report)
-      next_counter = get_counter(course.id, current_counter, 'next')
-      update_report(course.id, next_counter, current_counter)
+    def move_down(course, current_counter, report, type)
+      next_counter = get_counter(course.id, current_counter, 'next', type)
+      update_report(course.id, next_counter, current_counter, type)
       update_report_counter(report, next_counter)
     end
 
@@ -186,14 +247,18 @@ module Dmr
     # @param type [String] submit type
     #
     ##
-    def change_media_order(media_ids, course, type)
+    def change_media_order(media_ids, course, type, object_type)
       return unless media_ids && course
       current_counter = 0
       media_ids.each do |id|
-        report = Report.where(course_id: course.id, media_id: id.to_i)
+        if object_type
+          report = Audioreport.where(course_id: course.id, audio_id: id.to_i)
+        else
+          report = Report.where(course_id: course.id, media_id: id.to_i)
+        end
         current_counter = report.first.counter.to_i if report && report.first
-        move_up(course, current_counter, report) if type == 'Move Up One'
-        move_down(course, current_counter, report) if type == 'Move Down One'
+        move_up(course, current_counter, report, object_type) if type == 'Move Up One'
+        move_down(course, current_counter, report, object_type) if type == 'Move Down One'
       end
     end
 
@@ -203,20 +268,25 @@ module Dmr
     # @param filename [Array] set of Media's ids
     #
     ##
-    def delete_media(media_ids)
+    def delete_media(media_ids, type)
       media_ids.each do |id|
-        media = Media.find(id.to_i)
+        media = get_object(id.to_i, type)
         report_tags = Report.where(media_id: id.to_i)
+        report_tags = Audioreport.where(audio_id: id.to_i) if type
         report_tags.each do |tag|
           course = Course.find(tag.course_id)
-          course.reports.delete(tag)
+          if type
+            course.audioreports.delete(tag)
+          else
+            course.reports.delete(tag)
+          end
         end
         media.destroy
       end
     end
 
     ##
-    # Handles search request for Media or Course object
+    # Handles search request for Media or Audio object
     #
     # @param query [String] the search query
     # @return [ActiveRecord::Relation] the resulting objects
@@ -230,6 +300,9 @@ module Dmr
           tokens = query.split(' ')
         end
         q = 'lower(title || director || year || call_number || file_name) like ?'
+        if model.to_s.include?('Audio')
+          q = 'lower(track || album || artist || composer || year || call_number || file_name) like ?'
+        end
         results = model.where(q, "%#{query.downcase}%")
         tokens.each do |token|
           results = results.union(model.where(q, "%#{token.downcase}%"))

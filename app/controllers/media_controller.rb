@@ -43,7 +43,7 @@ class MediaController < ApplicationController
   def create
     @media = Media.new(media_params)
     if @media.save
-      redirect_to edit_medium_path(@media), notice: 'Media was successfully created.'
+      redirect_to edit_medium_path(@media), notice: 'Video was successfully created.'
     else
       render :new
     end
@@ -67,7 +67,7 @@ class MediaController < ApplicationController
   #
   def update
     if @media.update_attributes(media_params)
-      redirect_to edit_medium_path(@media), notice: 'Media successfully updated.'
+      redirect_to edit_medium_path(@media), notice: 'Video successfully updated.'
     else
       render :edit
     end
@@ -80,7 +80,7 @@ class MediaController < ApplicationController
   #
   def destroy
     @media.destroy
-    redirect_to media_path, notice: 'Media was successfully destroyed.'
+    redirect_to media_path, notice: 'Video was successfully destroyed.'
   end
 
   ##
@@ -118,6 +118,10 @@ class MediaController < ApplicationController
     params[:search_option] == 'courses'
   end
 
+  def search_audio_option?
+    params[:search_option] == 'audio'
+  end
+
   def create_search_session
     session[:search] = params[:search]
     session[:search_option] = params[:search_option] if params[:search_option]
@@ -126,6 +130,9 @@ class MediaController < ApplicationController
   def perform_search
     if search_course_option?
       redirect_to controller: 'courses', action: 'search',
+                  search: params[:search], search_option: params[:search_option]
+    elsif search_audio_option?
+      redirect_to controller: 'audios', action: 'search',
                   search: params[:search], search_option: params[:search_option]
     else
       @media = full_search(params[:search], Media).order(:title).page(params[:page]).per(20)

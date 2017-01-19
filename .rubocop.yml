@@ -59,6 +59,7 @@ Style/MutableConstant:
 Style/ConditionalAssignment:
   Exclude:
     - 'lib/dmr/splunk_api_helper.rb'
+    - 'lib/dmr/controller_helper.rb'
 
 Style/AlignHash:
   Enabled: false
@@ -81,7 +82,7 @@ Metrics/ClassLength:
     - 'app/controllers/courses_controller.rb'
 
 Metrics/MethodLength:
-  Max: 14
+  Max: 17
   Exclude:
     - 'lib/dmr/course_controller_helper.rb'
 

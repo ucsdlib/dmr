@@ -69,6 +69,7 @@ class CoursesController < ApplicationController
   # @return [String] the resulting webpage with the Course object
   #
   def edit
+    @is_archive = params[:isArchive]
   end
 
   ##
@@ -81,8 +82,8 @@ class CoursesController < ApplicationController
   # @return [String] the edit Course form
   #
   def update
-    remove_media_from_course(params[:media_ids], @course) if removing_item?
-    change_media_order(params[:media_ids], @course, params[:commit])
+    remove_media_from_course(params[:media_ids], @course, params[:type]) if removing_item?
+    change_media_order(params[:media_ids], @course, params[:commit], params[:type])
     if @course.update_attributes(course_params)
       send_email
     else
@@ -167,8 +168,10 @@ class CoursesController < ApplicationController
     if deleting_media?
       remove_items
     elsif !session[:current_course].nil?
-      add_media_to_course(params[:media_ids], session[:current_course])
-      redirect_to edit_course_path(@course), notice: 'Media was successfully added to Course.'
+      add_media_to_course(params[:media_ids], session[:current_course], params[:type])
+      message = 'Video was successfully added to Course.'
+      message = 'Audio was successfully added to Course.' if params[:type]
+      redirect_to edit_course_path(@course), notice: message
     else
       redirect_to courses_path, alert: 'No current Course is set.  Set the Course first.'
     end
@@ -180,7 +183,7 @@ class CoursesController < ApplicationController
   #
   def send_email
     if send_list?
-      CourseMailer.course_email(current_user, @course, @sorted_media).deliver_now
+      CourseMailer.course_email(current_user, @course, @sorted_media, @sorted_audio).deliver_now
       redirect_to edit_course_path(@course), notice: 'The confirmation email has been sent.'
     else
       redirect_to edit_course_path(@course), notice: 'Course successfully updated.'
@@ -196,6 +199,7 @@ class CoursesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_sorted_media
+    @sorted_audio = get_sorted_audio(@course)
     @sorted_media = get_sorted_media(@course)
   end
 
@@ -227,8 +231,9 @@ class CoursesController < ApplicationController
   end
 
   def remove_items
-    delete_media(params[:media_ids])
-    redirect_to media_path, notice: 'Selected Records were successfully deleted.'
+    delete_media(params[:media_ids], params[:type])
+    path = params[:type] ? audios_path : media_path
+    redirect_to path, notice: 'Selected Records were successfully deleted.'
   end
 
   def set_current
