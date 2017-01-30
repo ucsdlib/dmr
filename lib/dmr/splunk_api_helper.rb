@@ -15,6 +15,7 @@ module Dmr
     S_HOST = Rails.configuration.splunk_host
     RAILS_HOST = Rails.configuration.rails_host
     TOTAL = '| stats count as Total'
+    AUDIO_MIN_PLAYTIME = 22_000
 
     def stats(query, start_date, end_date)
       service = Splunk.connect(host: Rails.application.secrets.splunk_uri,
@@ -46,9 +47,35 @@ module Dmr
       id_count
     end
 
+    def new_audio_count(s_date, e_date)
+      q = "search sourcetype=rails host=#{RAILS_HOST} CoursesController#add_to_course media_ids"
+      q += ' "type"=>"audio"'
+      data = stats(q, s_date, e_date)
+      id_count = 0
+      data.each do |result|
+        tmp = result['_raw'].delete('"').delete(' ')
+        tmp_result = tmp.split(/media_ids=>\[/)[1]
+        id_count += tmp_result.split(/\]/).first.split(',').length
+      end
+      id_count
+    end
+
     def new_course_count(s_date, e_date)
       q = "search sourcetype=access_common host=#{S_HOST} edu/dmr/courses/new 200 #{TOTAL}"
       data_count(q, s_date, e_date)
+    end
+
+    def audio_course_count(s_date, e_date)
+      q = "search sourcetype=rails host=#{RAILS_HOST} CoursesController#add_to_course media_ids"
+      q += ' "type"=>"audio"'
+      data = stats(q, s_date, e_date)
+      course_array = []
+      data.each do |result|
+        tmp = result['_raw'].delete('"').delete(' ')
+        tmp_course_id = tmp.split(/course_id,/)[1].split(/\]/)[0]
+        course_array << tmp_course_id if !course_array.include?(tmp_course_id)
+      end
+      course_array.length
     end
 
     def clone_course_count(s_date, e_date)
@@ -61,11 +88,27 @@ module Dmr
       data_count(q, s_date, e_date)
     end
 
+    def new_audio_record_count(s_date, e_date)
+      q = "search sourcetype=access_common host=#{S_HOST} edu/dmr/audios/new 200 #{TOTAL}"
+      data_count(q, s_date, e_date)
+    end
+
     def view_count(s_date, e_date)
       stop_time = stop_time_view(s_date, e_date)
-      q = "search sourcetype=wowza_access host=#{WOWZAHOST} play stream 200 dmr"
+      q = "search sourcetype=wowza_access host=#{WOWZAHOST} play stream 200 dmr mp4"
       data = stats(q, s_date, e_date)
       process_count(data, stop_time)
+    end
+
+    def audio_view_count(s_date, e_date)
+      q = "search sourcetype=wowza_access host=#{WOWZAHOST} stop stream 200 dmr mp3 | table x_spos"
+      data = stats(q, s_date, e_date)
+      tmp_count = 0
+      data.each do |result|
+        tmp = result.to_s.split('=>"')[1].gsub!('"}', '').to_i
+        tmp_count += 1 if tmp > AUDIO_MIN_PLAYTIME
+      end
+      tmp_count
     end
 
     def process_count(data, stop_time)

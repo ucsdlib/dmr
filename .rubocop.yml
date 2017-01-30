@@ -32,7 +32,7 @@ Metrics/LineLength:
     - 'app/controllers/users/sessions_controller.rb'  
 
 Metrics/AbcSize:
-  Max: 23
+  Max: 25
 
 Metrics/PerceivedComplexity:
   Max: 9
@@ -74,6 +74,7 @@ Style/NegatedIf:
     - 'lib/dmr/course_controller_helper.rb'
 
 Metrics/ModuleLength:
+  Max: 130
   Exclude:
     - 'lib/dmr/controller_helper.rb'
 
