@@ -25,6 +25,26 @@ module Dmr
     end
 
     ##
+    # Helper method to unarchive course objects
+    #
+    # @param courses_ids [Array] set of Course's ids
+    #
+    ##
+    def unarchive_courses?(courses_ids)
+      return false unless courses_ids
+      courses_ids.each do |id|
+        tmp = Course.find_by_id(id.to_i)
+        next unless tmp
+        tmp_title = tmp.course.include?('ARCHIVE') ? tmp.course.split(' - ARCHIVE')[0] : tmp.course
+        new_course = tmp.amoeba_dup
+        new_course.course = tmp_title.to_s
+        new_course.save!
+        tmp.destroy
+      end
+      true
+    end
+
+    ##
     # Helper method to delete archived courses
     #
     # @param courses_ids [Array] set of Course's ids

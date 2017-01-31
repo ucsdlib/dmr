@@ -9,6 +9,7 @@
         <%= submit_tag "Archive", name: 'commit', class: "btn btn-primary", data: { confirm: 'Are you sure you want to archive these courses? This operation cannot be undone.' }%>      
       <% else %>
         <%= submit_tag "Delete", name: 'commit', class: "btn btn-primary", data: { confirm: 'Are you sure you want to delete these courses? This operation cannot be undone.' }%>      
+        <%= submit_tag "UnArchive", name: 'commit', class: "btn btn-primary", data: { confirm: 'Are you sure you want to unarchive these courses? This operation cannot be undone.' }%>
       <% end %>
       <br/><br/>
       <div class="panel panel-default">
