@@ -31,6 +31,7 @@ Rails.application.routes.draw do
      get 'archive', to: 'courses#archive'
      get 'archive_search', to: 'courses#archive_search'
      get 'lookup', to: 'courses#lookup'
+     get 'unarchive', to: 'courses#unarchive'
    end
   end
   resources :analytics

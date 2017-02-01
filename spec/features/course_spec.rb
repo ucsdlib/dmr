@@ -4,7 +4,7 @@ require 'spec_helper'
 feature 'Course' do
   before(:all) do
     @course1 = Course.create course: 'Test Course 1', instructor: 'Test Instructor 1', year: '2015', quarter: 'Spring'
-    @course2 = Course.create course: 'Test Course 2', instructor: 'Test Instructor 2', year: '2015', quarter: 'Summer'
+    @course2 = Course.create course: 'Test Course 2', instructor: 'Test Instructor 2', year: '2015', quarter: 'Spring'
     @course3 = Course.create course: 'Course 3', instructor: 'Instructor 3', year: '9999', quarter: 'Summer'
     @course4 = Course.create course: 'Course 4', instructor: 'Instructor 4', year: '2015', quarter: 'Fall'
     @media1 = Media.create title: 'Test Media 1', director: 'Test Director 1', year: '2015', call_number: '11111111', file_name: 'toystory.mp4'
@@ -231,7 +231,7 @@ feature 'Course' do
 
   scenario 'wants to do search for quarter and year' do
     visit search_courses_path( {:search => 'spring 2015'} )
-    expect(page).to have_content('Displaying 1 results')
+    expect(page).to have_content('Displaying 2 results')
     expect(page).to have_content('Test Course 1')
     expect(page).to have_content('Spring')
     expect(page).to have_content('2015')
@@ -590,6 +590,31 @@ feature 'Course' do
     current_path.should == "/courses/#{@course1.id}/#{report_url}"    
   end 
 
+  scenario 'wants to unarchive some courses' do
+    visit search_courses_path( {:search => 'Test'} )    
+    expect(page).to have_content('Displaying 2 results')
+    expect(page).to have_content('Test Course 1')
+    expect(page).to have_content('Test Course 2')
+        
+    # select courses to archive   
+    find("input[type='checkbox'][value='#{@course1.id}']").set(true)
+    find("input[type='checkbox'][value='#{@course2.id}']").set(true)
+    find('input[value="Archive"]').click
+
+    # select courses to unarchive
+    visit lookup_courses_path
+    page.select('Spring', match: :first) 
+    click_on 'Search'
+    expect(page).to have_content("Test Course 1 - ARCHIVE #{@course1.updated_at}")
+    expect(page).to have_content("Test Course 2 - ARCHIVE #{@course2.updated_at}")        
+    find("input[type='checkbox'][value='#{@course1.id}']").set(true)
+    find("input[type='checkbox'][value='#{@course2.id}']").set(true)
+    find('input[value="UnArchive"]').click    
+    expect(page).to have_content('Courses were successfully unarchived.')
+    expect(page).to have_content("Test Course 1")
+    expect(page).to have_content("Test Course 2")            
+  end 
+  
   scenario 'wants to see a red banner when in archive search' do
     visit lookup_courses_path
     expect(page).to have_selector('div.ribbon')
