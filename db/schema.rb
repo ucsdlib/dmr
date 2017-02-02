@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161222000219) do
+ActiveRecord::Schema.define(version: 20170201220010) do
 
   create_table "audioreports", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20161222000219) do
     t.string   "instructor"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "end_date"
   end
 
   create_table "media", force: :cascade do |t|
@@ -54,8 +55,6 @@ ActiveRecord::Schema.define(version: 20161222000219) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
-
-  add_index "media", ["title", "director", "call_number", "year", "file_name"], name: "index_media_fields"
 
   create_table "reports", force: :cascade do |t|
     t.datetime "created_at", null: false

@@ -38,6 +38,7 @@ gem 'activesupport', '~> 4.2.7.1'
 gem 'activemodel', '~> 4.2.7.1'
 gem 'activerecord', '~> 4.2.7.1'
 gem 'sqlite3', '1.3.11'
+gem 'rufus-scheduler'
 
 group :development do
   gem 'spring', '1.7.2'
