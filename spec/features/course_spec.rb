@@ -3,7 +3,7 @@ require 'spec_helper'
 
 feature 'Course' do
   before(:all) do
-    @course1 = Course.create course: 'Test Course 1', instructor: 'Test Instructor 1', year: '2015', quarter: 'Spring'
+    @course1 = Course.create course: 'Test Course 1', instructor: 'Test Instructor 1', year: '2015', quarter: 'Spring', end_date: '11/11/2011'
     @course2 = Course.create course: 'Test Course 2', instructor: 'Test Instructor 2', year: '2015', quarter: 'Spring'
     @course3 = Course.create course: 'Course 3', instructor: 'Instructor 3', year: '9999', quarter: 'Summer'
     @course4 = Course.create course: 'Course 4', instructor: 'Instructor 4', year: '2015', quarter: 'Fall'
@@ -66,6 +66,7 @@ feature 'Course' do
     fill_in 'Year', :with => '2009'
     fill_in 'Course', :with => 'Test Course 3'
     fill_in 'Instructor', :with => 'Test Instructor 3'
+    fill_in 'End Date', :with => '11/11/2011'
     click_on 'Start Course Reserve List'
     expect(page).to have_content('Course was successfully created.')
 
@@ -74,7 +75,7 @@ feature 'Course' do
     expect(page).to have_content('Test Course 3')
     expect(page).to have_content('Test Instructor 3')
     expect(page).to have_content('Winter')
-    expect(page).to have_content('2009')                  
+    expect(page).to have_content('2009')
   end
 
   scenario 'wants to see different order of quarter for new course page' do
@@ -92,12 +93,14 @@ feature 'Course' do
     expect(page).to have_selector("input#course_instructor[value='Test Instructor 1']")
     expect(page).to have_selector("input#course_year[value='2015']")
     expect(page).to have_selector("select#course_quarter/option[@selected='selected'][value='Spring']")
+    expect(page).to have_selector("input#course_end_date[value='11/11/2011']")
     
     # Update values
     page.select('Summer', match: :first)
     fill_in 'Course', :with => 'Test Course 1 Update'
     fill_in 'Instructor', :with => 'Test Instructor 1 Update'
     fill_in 'Year', :with => '2011'
+    fill_in 'End Date', :with => '12/12/2012'
     click_on('Save')
     expect(page).to have_content('Course successfully updated.')
         
@@ -107,6 +110,7 @@ feature 'Course' do
     expect(page).to have_selector("input#course_instructor[value='Test Instructor 1 Update']")
     expect(page).to have_selector("input#course_year[value='2011']")
     expect(page).to have_selector("select#course_quarter/option[@selected='selected'][value='Summer']")
+    expect(page).to have_selector("input#course_end_date[value='12/12/2012']")
   end
   
   scenario 'wants to delete a course record' do

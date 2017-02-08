@@ -17,7 +17,7 @@ class AnalyticsController < ApplicationController
     @item_count = new_item_count(s_date, e_date) - @audio_count
     @audio_course_count = audio_course_count(s_date, e_date)
     @total_course = new_course_count(s_date, e_date) + clone_course_count(s_date, e_date)
-    @course_count = @total_course - @audio_course_count
+    @course_count = @total_course - @audio_course_count if @total_course > 0
     @audio_view_counter = audio_view_count(s_date, e_date)
   end
 end

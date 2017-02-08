@@ -25,7 +25,7 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Course Reserve List <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="<%= new_course_path%>">Create New Course Reserve List</a></li>
+   			  <li><%= link_to "Create New Course Reserve List", new_course_path, 'data-no-turbolink' => true %></li>             
               <li role="separator" class="divider"></li>
               <% if (session[:current_course] != nil)%>
                 <li><a href="<%= edit_course_path(session[:current_course].to_s)%>">View Current Course Reserve List</a></li>              

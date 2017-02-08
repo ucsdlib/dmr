@@ -8,4 +8,5 @@ Fabricator(:course) do
   year '2015'
   course 'Test Course'
   instructor 'Test Instructor'
+  end_date '11/11/2011'
 end

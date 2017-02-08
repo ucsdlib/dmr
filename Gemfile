@@ -37,6 +37,7 @@ gem 'equivalent-xml', '~> 0.6.0'
 gem 'activesupport', '~> 4.2.7.1'
 gem 'activemodel', '~> 4.2.7.1'
 gem 'activerecord', '~> 4.2.7.1'
+gem 'rufus-scheduler'
 gem 'sqlite3', '1.3.11'
 
 group :development do

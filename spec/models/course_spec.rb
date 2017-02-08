@@ -13,4 +13,5 @@ describe Course, type: :model do
   it {should allow_value('2015').for(:year)}
   it {should_not allow_value('abcd').for(:year)}
   it {should have_many(:media).through(:reports) }
+  it {should allow_value('01/23/2017').for(:end_date)}
 end
