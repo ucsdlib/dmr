@@ -12,7 +12,7 @@
 	      <%= link_to "Play File", @audio, class: "btn btn-primary", :onclick=>"window.open(this.href,'video_player', 'height=600, width=600');return false;" %>
 	      <%= link_to "Delete", @audio, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary"%>
 	      <%= link_to "Add to Course Reserve List", add_to_course_courses_path(:course, :media_ids => ["#{@audio.id}"], :type => 'audio'), :method=> :post, class: "btn btn-primary"%>	     
-	      <%#= link_to "Return to Search Results", search_media_path(:search => session[:search]), class: "btn btn-primary"%>
+	      <%= link_to "Return to Search Results", search_audios_path(:search => session[:search]), class: "btn btn-primary"%>
 	    <%end%>	    	      
 	  </div>
       <%= render :partial => 'shared/thumbnail' , :locals => {:obj => @audio}%>
