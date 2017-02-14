@@ -16,7 +16,7 @@
 	    <div class="center-block">
 	      <%= f.submit "Save", class: "btn btn-primary"%>
 	      <%= link_to "Delete", @course, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary"%>
-	      <%= link_to "Clone", clone_course_courses_path(:id => "#{@course.id}"), class: "btn btn-primary"%>
+	      <%= link_to "Clone", clone_course_courses_path(:id => "#{@course.id}"), class: "btn btn-primary", 'data-no-turbolink' => true %>
 	      <%= link_to "View", course_report_path(@course), class: "btn btn-primary" , :onclick=>"window.open(this.href,'video_player', 'height=700, width=1000');return false;" %>
 	      <%= f.submit "Send List", class: "btn btn-primary"%>
 	      <%= link_to "Archive", archive_courses_path(:course_ids => ["#{@course.id}"]), class: "btn btn-primary" if !@course.course.include?('ARCHIVE')%>	      
