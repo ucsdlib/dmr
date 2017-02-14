@@ -14,5 +14,5 @@
 <div class="form-group">
   <% e_date = @course.end_date ? @course.end_date : ""%>
   <label class="control-label" for="course_end_date">End Date</label>
-  <%= text_field_tag "course[end_date]", e_date, size: 20, placeholder: "mm/dd/yyyy", class: "enddatepicker form-control" %>
+  <input type="text" name="course[end_date]" id="course_end_date" value="<%= e_date%>" size="20" placeholder="YYYY-MM-DD" class="enddatepicker form-control" data-date-format="yyyy-mm-dd"/>
 </div>

@@ -6,7 +6,7 @@ task :autoarchive, [:filename] => :environment do
   results = Course.where(q)
   Rails.logger.info "AutoArchive Date:#{DateTime.current} - size:#{results.size}"
   results.each do |c|
-    tmp_date = DateTime.strptime(c.end_date, '%m/%d/%Y')
+    tmp_date = DateTime.strptime(c.end_date, '%Y-%m-%d')
     next unless tmp_date.to_date.to_s < current_date
     c.course = "#{c.course} - ARCHIVE #{c.updated_at}"
     c.save!
