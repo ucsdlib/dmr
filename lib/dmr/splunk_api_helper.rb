@@ -72,7 +72,7 @@ module Dmr
       course_array = []
       data.each do |result|
         tmp = result['_raw'].delete('"').delete(' ')
-        tmp_course_id = tmp.split(/course_id,/)[1].split(/\]/)[0]
+        tmp_course_id = tmp.split(/course_id,/)[1].split(/\]/)[0] if tmp.include?('course_id,')
         course_array << tmp_course_id if !course_array.include?(tmp_course_id)
       end
       course_array.length
