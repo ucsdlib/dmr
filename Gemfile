@@ -39,6 +39,7 @@ gem 'activemodel', '~> 4.2.7.1'
 gem 'activerecord', '~> 4.2.7.1'
 gem 'sqlite3', '1.3.11'
 gem 'whenever', require: false
+gem 'coveralls', require: false
 
 group :development do
   gem 'spring', '1.7.2'
@@ -58,5 +59,4 @@ end
 group :test do
   gem 'database_cleaner', '1.5.3'
   gem 'shoulda-matchers', '3.1.1'
-  gem 'codeclimate-test-reporter', '0.6.0', require: nil
 end
