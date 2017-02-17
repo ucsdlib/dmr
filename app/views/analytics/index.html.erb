@@ -1,11 +1,15 @@
-<div class="text-center"><h3>Analytics Overview</h3></div>
 <%
   s_date = params[:start_date] ? params[:start_date] : ""
   e_date = params[:end_date] ? params[:end_date] : ""
+  label = params[:type] ? 'Audio' : 'Video'
 %>
+<div class="text-center"><h3><%= label %> Analytics Overview</h3></div>
 <br>
 <did class="center-block">
 <%= form_tag analytics_path, method: "GET", class: "navbar-form" do%>
+  <% if params[:type] %>
+    <%= hidden_field_tag 'type', 'audio'%>
+  <% end %>
   <fieldset>
     <label class="hide-label" for="start_date">Start Date</label>
     <%= text_field_tag :start_date, s_date, size: 20, placeholder: "mm/dd/yyyy", class: "datepicker" %> to
@@ -17,7 +21,34 @@
 </div>
 <br/>
 <div class="container">
-    <div class="text-center"><h3>Video</h3></div>
+  <% if params[:type]%>
+    <div class="row">
+      <div class="panel panel-default">
+        <table class="table table-striped table-bordered">
+          <tbody>
+            <tr>
+              <td class="col-xs-1 center-block">
+                <h4><%= @audio_count %> items added</h4>
+                <span class="overview">This is the total number of audio objects being streamed per quarter.</span>              
+              </td>
+              <td class="col-xs-1 center-block">
+                <h4><%= @audio_course_count %> courses created</h4>
+                <span class="overview">This is the total number of audio courses being created.</span>              
+              </td>
+              <td class="col-xs-1 center-block">
+                <h4><%= @new_audio_count %> records created</h4>
+                <span class="overview">This is the total number of audio records being created.</span>              
+              </td>
+              <td class="col-xs-1 center-block">
+                <h4><%= @audio_view_counter %> views</h4>
+                <span class="overview">A view is counted every time an audio is played over 15 seconds.</span>              
+              </td>                                                                        
+            </tr>
+          <tbody>          
+        </table>
+      </div>
+    </div>    
+    <% else %>
     <div class="row">
       <div class="panel panel-default">
         <table class="table table-striped table-bordered">
@@ -44,31 +75,5 @@
         </table>
       </div>
     </div>
-    <div class="text-center"><h3>Audio</h3></div>
-    <div class="row">
-      <div class="panel panel-default">
-        <table class="table table-striped table-bordered">
-          <tbody>
-            <tr>
-              <td class="col-xs-1 center-block">
-                <h4><%= @audio_count %> audio items added</h4>
-                <span class="overview">This is the total number of audio objects being streamed per quarter.</span>              
-              </td>
-              <td class="col-xs-1 center-block">
-                <h4><%= @audio_course_count %> courses created</h4>
-                <span class="overview">This is the total number of audio courses being created.</span>              
-              </td>
-              <td class="col-xs-1 center-block">
-                <h4><%= @new_audio_count %> audio records created</h4>
-                <span class="overview">This is the total number of audio records being created.</span>              
-              </td>
-              <td class="col-xs-1 center-block">
-                <h4><%= @audio_view_counter %> views</h4>
-                <span class="overview">A view is counted every time an audio is played over 15 seconds.</span>              
-              </td>                                                                        
-            </tr>
-          <tbody>          
-        </table>
-      </div>
-    </div>    
+    <% end %>
 </div>

@@ -16,7 +16,7 @@ feature 'Analytics' do
   end    
   scenario 'is on statistic page' do
     visit analytics_path
-    expect(page).to have_selector('h3', :text => 'Analytics Overview')
+    expect(page).to have_selector('h3', :text => 'Video Analytics Overview')
     expect(@stat_new_courses).to have_content("12")
     expect(@stat_new_records).to have_content("6")
     doc = Nokogiri::XML::Document.parse(@stat_view)

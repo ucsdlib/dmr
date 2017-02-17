@@ -32,7 +32,7 @@ Metrics/LineLength:
     - 'app/controllers/users/sessions_controller.rb'  
 
 Metrics/AbcSize:
-  Max: 26
+  Max: 28
 
 Metrics/PerceivedComplexity:
   Max: 9
