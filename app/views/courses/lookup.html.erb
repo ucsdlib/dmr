@@ -12,10 +12,6 @@
            <%= text_field_tag :course_q, params[:course_q], class: "form-control"%>
          </div>       
          <div class="form-group">
-           <label class="control-label" for="quarter_q">Quarter</label><br/>
-           <%= select_tag(:quarter_q, options_for_select([["Fall", "Fall"],["Winter", "Winter"],["Spring", "Spring"],["Summer", "Summer"]])) %>
-         </div> 
-         <div class="form-group">
            <label class="control-label" for="year_q">Year</label>
            <%= text_field_tag :year_q, params[:year_query], class: "form-control"%>
          </div>

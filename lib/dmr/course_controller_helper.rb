@@ -107,7 +107,6 @@ module Dmr
         inst = params[:instructor_q]
         q = "course LIKE '%ARCHIVE%'"
         q += " AND lower(course) like '%#{params[:course_q].downcase}%'" if !params[:course_q].blank?
-        q += " AND lower(quarter) like '%#{params[:quarter_q].downcase}%'" if !params[:quarter_q].blank?
         q += " AND year like '%#{params[:year_q]}%'" if !params[:year_q].blank?
         q += " AND lower(instructor) like '%#{inst.downcase}%'" if !inst.blank?
         Course.where(q)
