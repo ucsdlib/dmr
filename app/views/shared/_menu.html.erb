@@ -35,7 +35,7 @@
             </ul>
           </li>
           <li><%= link_to "Archive", lookup_courses_path, 'data-no-turbolink' => true %></li>
-          <li><a href="https://lisn.ucsd.edu/pages/viewpage.action?pageId=47188075">Procedures and Policy</a></li>
+          <li><a href="https://lisn.ucsd.edu/display/DRG/DMR+Archive+Working+Policy">Procedures and Policy</a></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stats<span class="caret"></span></a>
             <ul class="dropdown-menu">
@@ -44,7 +44,7 @@
               <li><%= link_to "Video Stats", analytics_path, 'data-no-turbolink' => true %></li>
             </ul>
           </li>
-          <li><%= link_to "Report A Bug", "bug.html", :onclick=>"window.open(this.href,'bug', 'height=700, width=600');return false;" %></li>          
+          <li><%= link_to "Report A Bug", "#{root_url}bug.html", :onclick=>"window.open(this.href,'bug', 'height=700, width=600');return false;" %></li>          
           <li><a href="<%= destroy_user_session_path %>">Sign Out</a></li>
         </ul>
         
