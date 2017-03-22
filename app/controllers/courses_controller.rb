@@ -6,7 +6,7 @@ class CoursesController < ApplicationController
   include Dmr::CourseControllerHelper
   before_action :authorize_student, only: [:show] if Rails.configuration.shibboleth
   before_action :authorize, only: [:index, :create, :edit, :update, :new, :destroy,
-                                   :search, :archive, :archive_search]
+                                   :search, :archive, :archive_search, :unarchive]
 
   before_action :set_course, only: [:show, :edit, :update, :destroy, :clone_course, :send_email]
   before_action :set_sorted_media, only: [:show, :edit, :send_email, :update]
@@ -133,10 +133,27 @@ class CoursesController < ApplicationController
     if deleting_archive?
       delete_archive(params[:course_ids])
       redirect_to courses_path, notice: 'Courses were successfully destroyed.'
+    elsif un_archive?
+      unarchive_courses?(params[:course_ids])
+      redirect_to courses_path, notice: 'Courses were successfully unarchived.'
     elsif archive_courses?(params[:course_ids])
       redirect_to courses_path, notice: 'Courses were successfully archived.'
     else
       redirect_to courses_path, alert: 'Courses were failed to archive.'
+    end
+  end
+
+  ##
+  # UnArchive Courses
+  # /courses/unarchive
+  #
+  # @return [String] - redirect to the Courses index page
+  #
+  def unarchive
+    if unarchive_courses?(params[:course_ids])
+      redirect_to courses_path, notice: 'Courses were successfully unarchived.'
+    else
+      redirect_to courses_path, alert: 'Courses were failed to unarchive.'
     end
   end
 
@@ -205,7 +222,7 @@ class CoursesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def course_params
-    params.require(:course).permit(:quarter, :year, :course, :instructor, media_ids: [])
+    params.require(:course).permit(:quarter, :year, :course, :instructor, :end_date, media_ids: [])
   end
 
   def removing_item?
@@ -222,6 +239,10 @@ class CoursesController < ApplicationController
 
   def deleting_archive?
     params[:commit] == 'Delete'
+  end
+
+  def un_archive?
+    params[:commit] == 'UnArchive'
   end
 
   def create_search_session(courses)

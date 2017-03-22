@@ -190,5 +190,30 @@ feature 'Audio' do
     expect(page).to have_content('There were no results for the search: "Test"')  
     expect(page).to_not have_content('Test Audio 1')
     expect(page).to_not have_content('Test Audio 2')   
-  end                              
+  end
+  
+  scenario 'wants to return to search results page after viewing an Audio record' do
+    visit search_audios_path( {:search => 'Test'} )  
+    expect(page).to have_content('Test Audio 1')
+    expect(page).to have_content('Test Audio 2')
+    expect(page).to have_content('Displaying 2 results')   
+    click_on('Test Audio 1')
+    expect(page).to have_selector('h3', :text => 'Audio Record Core Data')
+    expect(page).to have_content('Return to Search Results')
+    click_on('Return to Search Results')
+    expect(page).to have_content('Test Audio 1')
+    expect(page).to have_content('Test Audio 2')
+    expect(page).to have_content('Displaying 2 results')           
+  end
+  
+  scenario 'wants to report a bug from audio search results' do      
+    # search for audio objects
+    visit search_audios_path( {:search => 'Test'} )  
+    expect(page).to have_content('Test Audio 1')
+    expect(page).to have_content('Test Audio 2')
+    expect(page).to have_content('Displaying 2 results')   
+
+    click_on 'Report A Bug'
+    expect(page).to have_selector('#mf_placeholder')
+  end                                  
 end

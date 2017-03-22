@@ -3,8 +3,8 @@ require 'spec_helper'
 
 feature 'Course' do
   before(:all) do
-    @course1 = Course.create course: 'Test Course 1', instructor: 'Test Instructor 1', year: '2015', quarter: 'Spring'
-    @course2 = Course.create course: 'Test Course 2', instructor: 'Test Instructor 2', year: '2015', quarter: 'Summer'
+    @course1 = Course.create course: 'Test Course 1', instructor: 'Test Instructor 1', year: '2015', quarter: 'Spring', end_date: '2011-11-11'
+    @course2 = Course.create course: 'Test Course 2', instructor: 'Test Instructor 2', year: '2015', quarter: 'Spring'
     @course3 = Course.create course: 'Course 3', instructor: 'Instructor 3', year: '9999', quarter: 'Summer'
     @course4 = Course.create course: 'Course 4', instructor: 'Instructor 4', year: '2015', quarter: 'Fall'
     @media1 = Media.create title: 'Test Media 1', director: 'Test Director 1', year: '2015', call_number: '11111111', file_name: 'toystory.mp4'
@@ -66,6 +66,7 @@ feature 'Course' do
     fill_in 'Year', :with => '2009'
     fill_in 'Course', :with => 'Test Course 3'
     fill_in 'Instructor', :with => 'Test Instructor 3'
+    fill_in 'End Date', :with => '11/11/2011'
     click_on 'Start Course Reserve List'
     expect(page).to have_content('Course was successfully created.')
 
@@ -74,7 +75,7 @@ feature 'Course' do
     expect(page).to have_content('Test Course 3')
     expect(page).to have_content('Test Instructor 3')
     expect(page).to have_content('Winter')
-    expect(page).to have_content('2009')                  
+    expect(page).to have_content('2009')
   end
 
   scenario 'wants to see different order of quarter for new course page' do
@@ -92,12 +93,14 @@ feature 'Course' do
     expect(page).to have_selector("input#course_instructor[value='Test Instructor 1']")
     expect(page).to have_selector("input#course_year[value='2015']")
     expect(page).to have_selector("select#course_quarter/option[@selected='selected'][value='Spring']")
+    expect(page).to have_selector("input#course_end_date[value='2011-11-11']")
     
     # Update values
     page.select('Summer', match: :first)
     fill_in 'Course', :with => 'Test Course 1 Update'
     fill_in 'Instructor', :with => 'Test Instructor 1 Update'
     fill_in 'Year', :with => '2011'
+    fill_in 'End Date', :with => '2012-12-12'
     click_on('Save')
     expect(page).to have_content('Course successfully updated.')
         
@@ -107,6 +110,7 @@ feature 'Course' do
     expect(page).to have_selector("input#course_instructor[value='Test Instructor 1 Update']")
     expect(page).to have_selector("input#course_year[value='2011']")
     expect(page).to have_selector("select#course_quarter/option[@selected='selected'][value='Summer']")
+    expect(page).to have_selector("input#course_end_date[value='2012-12-12']")
   end
   
   scenario 'wants to delete a course record' do
@@ -231,7 +235,7 @@ feature 'Course' do
 
   scenario 'wants to do search for quarter and year' do
     visit search_courses_path( {:search => 'spring 2015'} )
-    expect(page).to have_content('Displaying 1 results')
+    expect(page).to have_content('Displaying 2 results')
     expect(page).to have_content('Test Course 1')
     expect(page).to have_content('Spring')
     expect(page).to have_content('2015')
@@ -560,14 +564,6 @@ feature 'Course' do
     click_on 'Cancel'
     current_path.should == welcome_index_path     
   end
-
-  scenario 'wants to see different order of quarter for archive course search page' do
-    visit lookup_courses_path
-    expect(page).to have_selector('option[1]', :text => 'Fall')
-    expect(page).to have_selector('option[2]', :text => 'Winter')
-    expect(page).to have_selector('option[3]', :text => 'Spring')
-    expect(page).to have_selector('option[4]', :text => 'Summer')      
-  end
       
   scenario 'wants to archive some courses' do
     visit search_courses_path( {:search => 'Test'} )    
@@ -590,6 +586,31 @@ feature 'Course' do
     current_path.should == "/courses/#{@course1.id}/#{report_url}"    
   end 
 
+  scenario 'wants to unarchive some courses' do
+    visit search_courses_path( {:search => 'Test'} )    
+    expect(page).to have_content('Displaying 2 results')
+    expect(page).to have_content('Test Course 1')
+    expect(page).to have_content('Test Course 2')
+        
+    # select courses to archive   
+    find("input[type='checkbox'][value='#{@course1.id}']").set(true)
+    find("input[type='checkbox'][value='#{@course2.id}']").set(true)
+    find('input[value="Archive"]').click
+
+    # select courses to unarchive
+    visit lookup_courses_path
+    fill_in 'year_q', :with => '2015' 
+    click_on 'Search'
+    expect(page).to have_content("Test Course 1 - ARCHIVE #{@course1.updated_at}")
+    expect(page).to have_content("Test Course 2 - ARCHIVE #{@course2.updated_at}")        
+    find("input[type='checkbox'][value='#{@course1.id}']").set(true)
+    find("input[type='checkbox'][value='#{@course2.id}']").set(true)
+    find('input[value="UnArchive"]').click    
+    expect(page).to have_content('Courses were successfully unarchived.')
+    expect(page).to have_content("Test Course 1")
+    expect(page).to have_content("Test Course 2")            
+  end 
+  
   scenario 'wants to see a red banner when in archive search' do
     visit lookup_courses_path
     expect(page).to have_selector('div.ribbon')
@@ -601,7 +622,7 @@ feature 'Course' do
     find('input[value="Archive"]').click
     expect(page).to have_content("Test Course 1 - ARCHIVE #{@course1.updated_at}")  
     visit lookup_courses_path
-    page.select('Spring', match: :first) 
+    fill_in 'year_q', :with => '2015'  
     expect(page).to have_selector('div.ribbon')
     click_on 'Search'
     click_on "Test Course 1 - ARCHIVE #{@course1.updated_at}"
@@ -625,7 +646,6 @@ feature 'Course' do
     click_on 'Archive'
     expect(page).to have_selector('h3', :text => 'Search Courses')
     fill_in 'year_q', :with => '2015'
-    page.select('Spring', match: :first) 
     click_on 'Search'
     expect(page).to have_content('Displaying 1 results')
     expect(page).to have_content("Test Course 1 - ARCHIVE #{@course1.updated_at}")    

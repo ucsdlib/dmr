@@ -15,7 +15,7 @@
 		  <tbody>
 		    <% @courses.each do |course| %>
 		      <tr>
-		        <td><%= link_to "#{course.course}", edit_course_path(course.id)%></td>      
+		        <td><%= link_to "#{course.course}", edit_course_path(course.id), 'data-no-turbolink' => true%></td>      
 		        <td><%= course.quarter %></td>
 		        <td><%= course.year %></td>
 		        <td><%= course.instructor %></td>

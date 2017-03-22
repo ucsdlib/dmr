@@ -22,7 +22,7 @@
             <% obj.each do |c| %>
               <tr>
                 <td><%= check_box_tag 'course_ids[]', c.id%></td>                  
-                <td><%= link_to "#{c.course}", edit_course_path(c.id)%></td>
+                <td><%= link_to "#{c.course}", edit_course_path(c.id), 'data-no-turbolink' => true%></td>
                 <td><%= c.quarter %></td>
                 <td><%= c.year %></td>
                 <td><%= c.instructor %></td>
