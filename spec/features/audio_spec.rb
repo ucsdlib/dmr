@@ -215,5 +215,18 @@ feature 'Audio' do
 
     click_on 'Report A Bug'
     expect(page).to have_selector('#mf_placeholder')
-  end                                  
+  end
+  
+  scenario 'wants to create new audio record with space in filename field' do
+    visit new_audio_path
+    fill_in 'Track', :with => 'Test Audio'
+    fill_in 'File Name', :with => 'test space name.mp3'
+    click_on 'Save'
+    expect(page).to have_content('Audio was successfully created.')
+
+    # Check that changes are saved
+    visit audios_path
+    expect(page).to have_content('Test Audio')
+    expect(page).to have_content('testspacename.mp3')                  
+  end                                    
 end
