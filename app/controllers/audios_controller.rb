@@ -28,7 +28,7 @@ class AudiosController < ApplicationController
   # POST /audios
   def create
     @audio = Audio.new(audio_params)
-
+    @audio.file_name = params[:audio]['file_name'].delete(' ') if params[:audio]['file_name']
     if @audio.save
       redirect_to edit_audio_path(@audio), notice: 'Audio was successfully created.'
     else
@@ -39,6 +39,8 @@ class AudiosController < ApplicationController
   # PATCH/PUT /audios/1
   def update
     if @audio.update(audio_params)
+      @audio.file_name = params[:audio]['file_name'].delete(' ') if params[:audio]['file_name']
+      @audio.save
       redirect_to edit_audio_path(@audio), notice: 'Audio was successfully updated.'
     else
       render :edit
