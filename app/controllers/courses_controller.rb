@@ -106,7 +106,7 @@ class CoursesController < ApplicationController
   # Handles GET search for Course object
   #
   def search
-    return unless params[:search] && !params[:search].blank?
+    return unless params[:search] && params[:search].present?
     @courses = course_search(params[:search]).order(:course)
     create_search_session(@courses)
   end
@@ -172,8 +172,7 @@ class CoursesController < ApplicationController
   # /courses/lookup
   #
   #
-  def lookup
-  end
+  def lookup; end
 
   ##
   # Handles POST a set of media ids to be added to the current Course object

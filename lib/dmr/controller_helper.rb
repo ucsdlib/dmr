@@ -292,23 +292,22 @@ module Dmr
     # @return [ActiveRecord::Relation] the resulting objects
     #
     def full_search(query, model)
-      if query
-        tokens = []
-        if query.start_with?('"') && query.end_with?('"')
-          query = query.delete('"')
-        else
-          tokens = query.split(' ')
-        end
-        q = 'lower(title || director || year || call_number || file_name) like ?'
-        if model.to_s.include?('Audio')
-          q = 'lower(track || album || artist || composer || year || call_number || file_name) like ?'
-        end
-        results = model.where(q, "%#{query.downcase}%")
-        tokens.each do |token|
-          results = results.union(model.where(q, "%#{token.downcase}%"))
-        end
-        results
+      return unless query
+      tokens = []
+      if query.start_with?('"') && query.end_with?('"')
+        query = query.delete('"')
+      else
+        tokens = query.split(' ')
       end
+      q = 'lower(title || director || year || call_number || file_name) like ?'
+      if model.to_s.include?('Audio')
+        q = 'lower(track || album || artist || composer || year || call_number || file_name) like ?'
+      end
+      results = model.where(q, "%#{query.downcase}%")
+      tokens.each do |token|
+        results = results.union(model.where(q, "%#{token.downcase}%"))
+      end
+      results
     end
   end
 end

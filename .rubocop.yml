@@ -91,3 +91,21 @@ Style/BlockDelimiters:
   Exclude:
     - 'lib/dmr/splunk_api_helper.rb'
 
+Style/SymbolArray:
+  Exclude:
+    - 'app/controllers/*'
+    - 'Rakefile'
+
+Style/MultilineIfModifier:
+  Exclude:
+    - 'app/models/user.rb'
+
+Rails/FilePath:
+  Exclude:
+    - 'app/controllers/errors_controller.rb'
+    - 'app/controllers/users/sessions_controller.rb'
+
+Rails/DynamicFindBy:
+  Exclude:
+    - 'lib/dmr/controller_helper.rb'
+    - 'lib/dmr/course_controller_helper.rb'
