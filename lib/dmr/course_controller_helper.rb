@@ -64,35 +64,34 @@ module Dmr
     # @return [ActiveRecord::Relation] the resulting objects
     #
     def course_search(query)
-      if query
-        tokens = []
-        if query.start_with?('"') && query.end_with?('"')
-          query = query.delete('"')
-        else
-          tokens = query.split(' ')
-        end
-        fq = "course NOT LIKE '%ARCHIVE%'"
-        q = "#{fq} AND lower(course || quarter || year || instructor) like ?"
-        results = Course.where(q, "%#{query.downcase}%")
-        q_quarter = ''
-        q_year = ''
-        tokens.each do |token|
-          if token =~ /^(spring|summer|fall|winter)$/i
-            q_quarter = " lower(quarter) like '%#{token.downcase}%'"
-          elsif token =~ /^\d{4}$/
-            q_year = " year like '%#{token}%'"
-          else
-            results = results.union(Course.where(q, "%#{token.downcase}%"))
-          end
-        end
-        q_tmp = create_query(q_quarter, q_year)
-        results = results.union(Course.where("#{fq} AND #{q_tmp}")) if !q_tmp.blank?
-        results
+      return unless query
+      tokens = []
+      if query.start_with?('"') && query.end_with?('"')
+        query = query.delete('"')
+      else
+        tokens = query.split(' ')
       end
+      fq = "course NOT LIKE '%ARCHIVE%'"
+      q = "#{fq} AND lower(course || quarter || year || instructor) like ?"
+      results = Course.where(q, "%#{query.downcase}%")
+      q_quarter = ''
+      q_year = ''
+      tokens.each do |token|
+        if token =~ /^(spring|summer|fall|winter)$/i
+          q_quarter = " lower(quarter) like '%#{token.downcase}%'"
+        elsif token =~ /^\d{4}$/
+          q_year = " year like '%#{token}%'"
+        else
+          results = results.union(Course.where(q, "%#{token.downcase}%"))
+        end
+      end
+      q_tmp = create_query(q_quarter, q_year)
+      results = results.union(Course.where("#{fq} AND #{q_tmp}")) if q_tmp.present?
+      results
     end
 
     def create_query(quarter, year)
-      return "#{quarter}#{year}" unless !quarter.blank? && !year.blank?
+      return "#{quarter}#{year}" unless quarter.present? && year.present?
       "#{quarter} AND #{year}"
     end
 
@@ -103,14 +102,13 @@ module Dmr
     # @return [ActiveRecord::Relation] the resulting objects
     #
     def archive_full_search(params)
-      if params
-        inst = params[:instructor_q]
-        q = "course LIKE '%ARCHIVE%'"
-        q += " AND lower(course) like '%#{params[:course_q].downcase}%'" if !params[:course_q].blank?
-        q += " AND year like '%#{params[:year_q]}%'" if !params[:year_q].blank?
-        q += " AND lower(instructor) like '%#{inst.downcase}%'" if !inst.blank?
-        Course.where(q)
-      end
+      return unless params
+      inst = params[:instructor_q]
+      q = "course LIKE '%ARCHIVE%'"
+      q += " AND lower(course) like '%#{params[:course_q].downcase}%'" if params[:course_q].present?
+      q += " AND year like '%#{params[:year_q]}%'" if params[:year_q].present?
+      q += " AND lower(instructor) like '%#{inst.downcase}%'" if inst.present?
+      Course.where(q)
     end
   end
 end

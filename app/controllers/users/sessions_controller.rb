@@ -52,7 +52,7 @@ class Users::SessionsController < ApplicationController
   end
 
   def report_url(original_url)
-    quarters = %w(Spring Summer Fall Winter)
+    quarters = %w[Spring Summer Fall Winter]
     quarters.each do |quarter|
       return true if original_url.include?(quarter)
     end
