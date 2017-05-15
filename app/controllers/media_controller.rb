@@ -54,8 +54,7 @@ class MediaController < ApplicationController
   #
   # @return [String] the resulting webpage with the Media object
   #
-  def edit
-  end
+  def edit; end
 
   ##
   # Handles PUT update a Media object
@@ -90,7 +89,7 @@ class MediaController < ApplicationController
     return unless params[:search]
     if params[:search].blank?
       redirect_to root_path, alert: 'No text is inputted.'
-    elsif !params[:search].blank?
+    elsif params[:search].present?
       perform_search
       create_search_session
     end
