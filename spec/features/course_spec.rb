@@ -685,5 +685,14 @@ feature 'Course' do
     # view old report url
     visit "/courses/#{@course1.id}/#{report_url}"
     expect(page).to have_content('The page you were looking for doesn\'t exist')
+  end
+  
+  scenario 'wants to report a bug from course list' do      
+    visit edit_course_path(@course1)
+    click_on "View"  
+    expect(page).to have_link('Report A Bug/Issue')
+
+    click_on 'Report A Bug/Issue'
+    expect(page).to have_selector('#mf_placeholder')
   end                                                     
 end
