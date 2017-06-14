@@ -44,6 +44,16 @@ class Users::SessionsController < ApplicationController
     session[:user_name] = user.name
     session[:user_id] = user.uid
     session[:student_user] = 'true'
+    return unless Rails.configuration.shibboleth
+    session[:student_user] = 'false' if !User.in_group?(user.uid) && !course_user?(user.uid)
+  end
+
+  def course_user?(id)
+    UserDb.table_name = 'CourseUsers'
+    q = 'lower(Username) = ?'
+    result = UserDb.where(q, id.to_s.downcase)
+    course_student = !result.empty? ? true : false
+    course_student
   end
 
   def destroy_user_session

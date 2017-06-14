@@ -43,3 +43,11 @@ pontos:
   host: <%= ENV.fetch('APPS_DMR_PONTOS_DB_HOST') %>
   username: <%= ENV.fetch('APPS_DMR_PONTOS_DB_USER') %>
   password: <%= ENV.fetch('APPS_DMR_PONTOS_DB_PASS') %>
+  
+ares:
+  adapter: sqlserver
+  database: AresData
+  host: reserve.ad.ucsd.edu
+  username: lib-res
+  password: kuORQFoeR4Nw
+  

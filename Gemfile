@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'active_record_union', '~> 1.2.0'
 gem 'activemodel', '~> 4.2.7.1' # locked
 gem 'activerecord', '~> 4.2.7.1' # locked
+gem 'activerecord-sqlserver-adapter'
 gem 'activesupport', '~> 4.2.7.1' # locked
 gem 'amoeba', '3.1.0'
 gem 'bootstrap-datepicker-rails', '~> 1.6.4.1'
@@ -38,6 +39,7 @@ gem 'splunk-sdk-ruby'
 gem 'sqlite3', '1.3.13'
 gem 'thor', '0.19.4'
 gem 'time_diff'
+gem 'tiny_tds'
 gem 'turbolinks', '2.5.3' # locked
 gem 'uglifier', '3.2.0'
 gem 'whenever', require: false
