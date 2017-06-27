@@ -21,7 +21,7 @@
                 <td><fieldset><legend class="hide-label">Type</legend><%= label_tag "media_ids_#{m.id}", 'media_ids[]', class: "hide-label"%>
                 <%= check_box_tag 'media_ids[]', m.id, false, id: "media_ids_#{m.id}"%></fieldset></td>
                 <td><%=image_tag "#{thumbnailURL}", :alt => '', :class => 'search-thumbnail' %></td>          
-                <td><%= link_to "#{m.title}", edit_medium_path(m.id)%></td>
+                <td><%= link_to "#{m.title}", edit_medium_path(m.id), 'data-no-turbolink' => true %></td>
                 <td><%= m.director %></td>
                 <td><%= m.call_number %></td>
                 <td><%= m.year %></td>
