@@ -3,7 +3,7 @@ require 'spec_helper'
 
 feature 'Audio' do
   before(:all) do
-    @audio1 = Audio.create track: 'Test Audio 1', album: 'Album 1', artist: 'Artist 1', composer: 'Composer 1', year: '2015', call_number: '11111111', file_name: 'pureAwareness.mp3'
+    @audio1 = Audio.create track: 'Test Audio 1', album: 'Album 1', artist: 'Artist 1', composer: 'Composer 1', year: '2015', call_number: '11111111', file_name: 'pureAwareness.mp3', end_date: '2011-11-11'
     @audio2 = Audio.create track: 'Test Audio 2', album: 'Album 2', artist: 'Artist 2', composer: 'Composer 2', year: '2016', call_number: '77777777', file_name: 'test.mp3'    
     @audio3 = Audio.create track: 'Combined Search Title', album: 'Album 3', artist: 'Artist 3', composer: 'Composer 3', year: '1999', call_number: '88888888', file_name: 'combine.mp3'    
   end
@@ -77,6 +77,7 @@ feature 'Audio' do
     expect(page).to have_selector("input#audio_year[value='2015']")
     expect(page).to have_selector("input#audio_call_number[value='11111111']")
     expect(page).to have_selector("input#audio_file_name[value='pureAwareness.mp3']")
+    expect(page).to have_selector("input#audio_end_date[value='2011-11-11']")
     page.find('.media-thumbnail')['src'].should have_content "#{Rails.configuration.audio_file_path}#{@audio1.file_name.gsub('.mp3','.jpg')}" 
 
     # Update values
@@ -86,7 +87,8 @@ feature 'Audio' do
     fill_in 'Composer', :with => 'Composer 1 Update'
     fill_in 'Year', :with => '2017'
     fill_in 'Call Number', :with => '33333333'    
-    fill_in 'File Name', :with => 'test.mp3'   
+    fill_in 'File Name', :with => 'test.mp3'
+    fill_in 'End Date', :with => '2012-12-12'   
     click_on('Save')
     expect(page).to have_content('Audio was successfully updated.')
         
@@ -98,7 +100,8 @@ feature 'Audio' do
     expect(page).to have_selector("input#audio_composer[value='Composer 1 Update']")
     expect(page).to have_selector("input#audio_year[value='2017']")
     expect(page).to have_selector("input#audio_call_number[value='33333333']")
-    expect(page).to have_selector("input#audio_file_name[value='test.mp3']")             
+    expect(page).to have_selector("input#audio_file_name[value='test.mp3']")
+    expect(page).to have_selector("input#audio_end_date[value='2012-12-12']")             
   end
   
   scenario 'wants to delete a audio record' do

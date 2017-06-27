@@ -30,7 +30,7 @@
        				<%=image_tag "speaker.gif", :alt => '', :class => 'search-thumbnail' %>
     				  <% end %>                
                 </td>          
-                <td><%= link_to "#{m.track}", edit_audio_path(m.id)%></td>
+                <td><%= link_to "#{m.track}", edit_audio_path(m.id), 'data-no-turbolink' => true%></td>
                 <td><%= m.album %></td>
                 <td><%= m.artist %></td>
                 <td><%= m.composer %></td>

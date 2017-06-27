@@ -105,7 +105,7 @@ class MediaController < ApplicationController
   #
   def media_params
     params.require(:media).permit(:title, :director, :call_number, :year,
-                                  :file_name, course_ids: [])
+                                  :file_name, :end_date, course_ids: [])
   end
 
   # Use callbacks to share common setup or constraints between actions.

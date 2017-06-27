@@ -27,7 +27,7 @@ Style/Documentation:
     - 'spec/**/*'
 
 Metrics/LineLength:
-  Max: 106
+  Max: 113
   Exclude:
     - 'app/controllers/users/sessions_controller.rb'  
 

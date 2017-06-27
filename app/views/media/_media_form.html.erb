@@ -6,4 +6,9 @@
 <%= f.text_field :year, label: "Year" %>
 <div class="required">  
 <%= f.text_field :file_name, label: "File Name" %>
+</div>
+<div class="form-group">
+  <% e_date = @media.end_date ? @media.end_date : ""%>
+  <label class="control-label" for="media_end_date">End Date</label>
+  <input type="text" name="media[end_date]" id="media_end_date" value="<%= e_date%>" size="20" placeholder="YYYY-MM-DD" class="enddatepicker form-control" data-date-format="yyyy-mm-dd"/>
 </div> 
