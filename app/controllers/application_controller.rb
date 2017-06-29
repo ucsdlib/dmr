@@ -22,7 +22,15 @@ class ApplicationController < ActionController::Base
   end
 
   def authorize_student
+    if session[:student_user] && session[:student_user].to_s == 'false'
+      student_access_denied
+    end
     session[:student_user] ? true : access_denied
+  end
+
+  def student_access_denied
+    render file: "#{Rails.root}/public/403", formats: [:html], status: 403, layout: false
+    return false
   end
 
   def access_denied

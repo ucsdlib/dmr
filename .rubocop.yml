@@ -78,6 +78,11 @@ Metrics/ModuleLength:
   Exclude:
     - 'lib/dmr/controller_helper.rb'
 
+Rails/ApplicationRecord:
+  Exclude:
+    - 'app/models/*'
+    - 'lib/*'
+
 Metrics/ClassLength:
   Exclude:
     - 'app/controllers/courses_controller.rb'
@@ -104,6 +109,11 @@ Rails/FilePath:
   Exclude:
     - 'app/controllers/errors_controller.rb'
     - 'app/controllers/users/sessions_controller.rb'
+    - 'app/controllers/application_controller.rb'
+
+Style/RedundantReturn:
+  Exclude:
+    - 'app/controllers/application_controller.rb'
 
 Rails/DynamicFindBy:
   Exclude:
