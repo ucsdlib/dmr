@@ -10,8 +10,12 @@
 	      <%= render :partial => 'form' , :locals => {:f => f}%>
 	      <%= f.primary "Save"%>
 	      <%= link_to "Play File", @audio, class: "btn btn-primary", :onclick=>"window.open(this.href,'video_player', 'height=600, width=600');return false;" %>
+	      <% if @audio.end_date && !@audio.end_date.blank?%>
+	        <%#= link_to "URL", audio_view_path(@audio), class: "btn btn-primary", 'data-no-turbolink' => true , :onclick=>"window.open(this.href,'video_player', 'height=700, width=1000');return false;" %>
+            <%= link_to "URL", audio_view_path(@audio), class: "btn btn-primary", 'data-no-turbolink' => true, :onclick=>"alert(this.href);return false;" %>
+	      <% end %>
 	      <%= link_to "Delete", @audio, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary"%>
-	      <%= link_to "Add to Course Reserve List", add_to_course_courses_path(:course, :media_ids => ["#{@audio.id}"], :type => 'audio'), :method=> :post, class: "btn btn-primary"%>	     
+	      <%= link_to "Add to Course List", add_to_course_courses_path(:course, :media_ids => ["#{@audio.id}"], :type => 'audio'), :method=> :post, class: "btn btn-primary"%>	     
 	      <%= link_to "Return to Search Results", search_audios_path(:search => session[:search]), class: "btn btn-primary"%>
 	    <%end%>	    	      
 	  </div>

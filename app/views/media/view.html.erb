@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<%= render :partial => 'shared/report_header'%>
+<body>
+  <%= render :partial => 'shared/report_menu'%>
+  <div id="tdr_content" class="tdr_fonts" style="width:80%;margin-left:auto;margin-right:auto;">  
+    
+	<%= render :partial => 'video_viewer' , :locals => {:obj => @media}%>          
+  <%= render :partial => 'shared/report_footer'%>
+  
+</body>
+</html>
