@@ -3,8 +3,9 @@
 #
 class AudiosController < ApplicationController
   include Dmr::ControllerHelper
-  before_action :authorize
-  before_action :set_audio, only: [:show, :edit, :update, :destroy]
+  before_action :authorize, only: [:index, :show, :edit, :update, :new, :destroy,
+                                   :search]
+  before_action :set_audio, only: [:show, :edit, :update, :destroy, :view]
 
   # GET /audios
   def index
@@ -13,6 +14,12 @@ class AudiosController < ApplicationController
 
   # GET /audios/1
   def show
+    render layout: false
+  end
+
+  # GET /view/1/filename
+
+  def view
     render layout: false
   end
 

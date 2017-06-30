@@ -195,7 +195,7 @@ feature 'Video' do
     # add to course list    
     find("input[type='checkbox'][value='#{@media1.id}']").set(true)
     find("input[type='checkbox'][value='#{@media2.id}']").set(true)
-    click_on 'Add to Course Reserve List'
+    click_on 'Add to Course List'
     
     # check that Video records are added
     expect(page).to have_content('Video was successfully added to Course.')
@@ -225,5 +225,15 @@ feature 'Video' do
   scenario "wants to see the Procedures and Policy link" do
     visit root_path
     expect(page).to have_link('Procedures and Policy')
-  end                               
+  end
+  
+  scenario 'expects to see a friendly url for a video record with end_date' do
+    # set current course   
+    visit edit_medium_path(@media1) 
+    
+    expect(page).to have_link('URL', href: '2011-11-11/test_media_1' )
+    click_on 'URL'
+    
+    current_path.should == "/media/#{@media1.id}/#{@media1.end_date}/#{@media1.title.parameterize("_")}"           
+  end                                 
 end

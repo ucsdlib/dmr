@@ -231,5 +231,15 @@ feature 'Audio' do
     visit audios_path
     expect(page).to have_content('Test Audio')
     expect(page).to have_content('testspacename.mp3')                  
-  end                                    
+  end
+  
+  scenario 'expects to see a friendly url for an audio record with end_date' do
+    # set current course   
+    visit edit_audio_path(@audio1) 
+
+    expect(page).to have_link('URL', href: '2011-11-11/test_audio_1' )
+    click_on 'URL'
+    
+    current_path.should == "/audios/#{@audio1.id}/#{@audio1.end_date}/#{@audio1.track.parameterize("_")}"           
+  end                                      
 end
