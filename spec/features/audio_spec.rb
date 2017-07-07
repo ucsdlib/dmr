@@ -237,9 +237,9 @@ feature 'Audio' do
     # set current course   
     visit edit_audio_path(@audio1) 
 
-    expect(page).to have_link('URL', href: '2011-11-11/test_audio_1' )
+    expect(page).to have_link('URL', href: '2011-11-11/pureAwareness.mp3' )
     click_on 'URL'
     
-    current_path.should == "/audios/#{@audio1.id}/#{@audio1.end_date}/#{@audio1.track.parameterize("_")}"           
+    current_path.should == "/audios/#{@audio1.id}/#{@audio1.end_date}/#{@audio1.file_name}"           
   end                                      
 end

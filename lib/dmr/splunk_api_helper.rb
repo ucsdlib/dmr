@@ -35,6 +35,45 @@ module Dmr
       count.to_i
     end
 
+    def licensed_data(query, s_date, e_date)
+      count = 0
+      data = stats(query, s_date, e_date)
+
+      data.each do |result|
+        tmp = result['_raw'].delete('"').delete(' ')
+        tmp_result = tmp.split(/},commit=>Save/)[0].split(/end_date=>/)[1]
+        count += 1 if tmp_result.present?
+      end
+      count.to_i
+    end
+
+    def stop_time_licensed_view(files, s_date, e_date)
+      filenames = {}
+      files.each do |name|
+        q = "search sourcetype=wowza_access host=#{WOWZAHOST} stop stream 200 dmr #{name}"
+        data = stats(q, s_date, e_date)
+        data.each do |result|
+          tmp_result = result['_raw'].to_s.split
+          filenames[process_id(tmp_result)] = tmp_result[1]
+        end
+      end
+      filenames
+    end
+
+    def process_filename(query, s_date, e_date)
+      data = stats(query, s_date, e_date)
+      filename_array = []
+      data.each do |result|
+        tmp = result['_raw'].delete('"').delete(' ')
+        if tmp.include?('file_name=>')
+          tmp_file_name = tmp.split(/file_name=>/)[1].split(/}/)[0]
+          filename_array << tmp_file_name if !filename_array.include?(tmp_file_name)
+        end
+      end
+
+      filename_array
+    end
+
     def new_item_count(s_date, e_date)
       q = "search sourcetype=rails host=#{RAILS_HOST} CoursesController#add_to_course media_ids"
       data = stats(q, s_date, e_date)
@@ -88,6 +127,16 @@ module Dmr
       data_count(q, s_date, e_date)
     end
 
+    def licensed_audio_count(s_date, e_date)
+      q = "search sourcetype=rails host=#{RAILS_HOST} AudiosController#create"
+      licensed_data(q, s_date, e_date)
+    end
+
+    def licensed_video_count(s_date, e_date)
+      q = "search sourcetype=rails host=#{RAILS_HOST} MediaController#create"
+      licensed_data(q, s_date, e_date)
+    end
+
     def new_audio_record_count(s_date, e_date)
       q = "search sourcetype=access_common host=#{S_HOST} edu/dmr/audios/new 200 #{TOTAL}"
       data_count(q, s_date, e_date)
@@ -98,6 +147,30 @@ module Dmr
       q = "search sourcetype=wowza_access host=#{WOWZAHOST} play stream 200 dmr mp4"
       data = stats(q, s_date, e_date)
       process_count(data, stop_time)
+    end
+
+    def licensed_video_view(s_date, e_date)
+      q = "search sourcetype=rails host=#{RAILS_HOST} MediaController#view"
+      filenames = process_filename(q, s_date, e_date)
+      stop_time = stop_time_licensed_view(filenames, s_date, e_date)
+      q = "search sourcetype=wowza_access host=#{WOWZAHOST} play stream 200 dmr mp4"
+      data = stats(q, s_date, e_date)
+      process_count(data, stop_time)
+    end
+
+    def licensed_audio_view(s_date, e_date)
+      count = 0
+      q = "search sourcetype=rails host=#{RAILS_HOST} AudiosController#view"
+      filenames = process_filename(q, s_date, e_date)
+      filenames.each do |name|
+        q = "search sourcetype=wowza_access host=#{WOWZAHOST} stop stream 200 dmr mp3 #{name} | table x_spos"
+        data = stats(q, s_date, e_date)
+        data.each do |result|
+          tmp = result.to_s.split('=>"')[1].gsub!('"}', '').to_i
+          count += 1 if tmp > AUDIO_MIN_PLAYTIME
+        end
+      end
+      count
     end
 
     def audio_view_count(s_date, e_date)

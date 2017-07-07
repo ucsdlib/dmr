@@ -231,9 +231,9 @@ feature 'Video' do
     # set current course   
     visit edit_medium_path(@media1) 
     
-    expect(page).to have_link('URL', href: '2011-11-11/test_media_1' )
+    expect(page).to have_link('URL', href: '2011-11-11/toystory.mp4' )
     click_on 'URL'
     
-    current_path.should == "/media/#{@media1.id}/#{@media1.end_date}/#{@media1.title.parameterize("_")}"           
+    current_path.should == "/media/#{@media1.id}/#{@media1.end_date}/#{@media1.file_name}"           
   end                                 
 end

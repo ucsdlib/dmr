@@ -35,11 +35,12 @@ Rails.application.routes.draw do
    end
   end
   resources :analytics
+  resources :licensed_analytics
     
   get 'media/:id/:ds', :to => 'file#show', :constraints => { :ds => /[^\/]+/ }, :as => 'file'  
   get 'courses/:id/:quarter/:year/:course', :to => 'courses#show', constraints: CourseConstraint.new, :as => :course_report
-  get 'media/:id/:end_date/:title', :to => 'media#view', :as => 'video_view'
-  get 'audios/:id/:end_date/:track', :to => 'audios#view', :as => 'audio_view'
+  get 'media/:id/:end_date/:file_name', :to => 'media#view', :as => 'video_view'
+  get 'audios/:id/:end_date/:file_name', :to => 'audios#view', :as => 'audio_view'
 
  
   get '/auth/shibboleth', as: :shibboleth

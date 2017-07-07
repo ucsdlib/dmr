@@ -42,6 +42,10 @@
    			  <li><%= link_to "Audio Stats", analytics_path(:type => 'audio'), 'data-no-turbolink' => true %></li>             
               <li role="separator" class="divider"></li>
               <li><%= link_to "Video Stats", analytics_path, 'data-no-turbolink' => true %></li>
+              <li role="separator" class="divider"></li>
+              <li><%= link_to "Licensed Media Audio Stats", licensed_analytics_path(:type => 'audio'), 'data-no-turbolink' => true %></li>
+              <li role="separator" class="divider"></li>
+              <li><%= link_to "Licensed Media Video Stats", licensed_analytics_path, 'data-no-turbolink' => true %></li>
             </ul>
           </li>
           <li><%= link_to "Report A Bug", "#{root_url}bug.html", :onclick=>"window.open(this.href,'bug', 'height=750, width=600');return false;" %></li>          
