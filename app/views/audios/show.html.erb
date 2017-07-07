@@ -3,7 +3,6 @@
 <%= render :partial => 'shared/head'%>
 <body>
 <div class="container-fluid">
-  <h3><%= @audio.track%></h3>
   <%= render :partial => 'audio_viewer' , :locals => {:obj => @audio}%>  
 </div>
 </body>

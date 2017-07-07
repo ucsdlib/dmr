@@ -14,10 +14,14 @@ module CoursesHelper
   end
 
   def video_view_path(media)
-    "#{media.end_date}/#{media.title.parameterize('_')}"
+    view_url(media)
   end
 
   def audio_view_path(audio)
-    "#{audio.end_date}/#{audio.track.parameterize('_')}"
+    view_url(audio)
+  end
+
+  def view_url(obj)
+    "#{obj.end_date}/#{obj.file_name}"
   end
 end
