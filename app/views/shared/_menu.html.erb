@@ -7,7 +7,7 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Audio <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="<%= new_audio_path%>">Create New Audio Record</a></li>
+              <li><%= link_to "Create New Audio Record", new_audio_path, 'data-no-turbolink' => true %></li>
               <li role="separator" class="divider"></li>
               <li><a href="<%= audios_path%>">View Last 10 Audio Records</a></li>
             </ul>
@@ -15,7 +15,7 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Video <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="<%= new_medium_path%>">Create New Video Record</a></li>
+              <li><%= link_to "Create New Video Record", new_medium_path, 'data-no-turbolink' => true %></li>
               <li role="separator" class="divider"></li>
               <li><a href="<%= media_path%>">View Last 10 Video Records</a></li>
             </ul>
@@ -42,6 +42,10 @@
    			  <li><%= link_to "Audio Stats", analytics_path(:type => 'audio'), 'data-no-turbolink' => true %></li>             
               <li role="separator" class="divider"></li>
               <li><%= link_to "Video Stats", analytics_path, 'data-no-turbolink' => true %></li>
+              <li role="separator" class="divider"></li>
+              <li><%= link_to "Licensed Media Audio Stats", licensed_analytics_path(:type => 'audio'), 'data-no-turbolink' => true %></li>
+              <li role="separator" class="divider"></li>
+              <li><%= link_to "Licensed Media Video Stats", licensed_analytics_path, 'data-no-turbolink' => true %></li>
             </ul>
           </li>
           <li><%= link_to "Report A Bug", "#{root_url}bug.html", :onclick=>"window.open(this.href,'bug', 'height=750, width=600');return false;" %></li>          

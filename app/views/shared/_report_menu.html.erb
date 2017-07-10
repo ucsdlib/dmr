@@ -49,9 +49,11 @@
 		</div><!-- /tdr_search -->
 			<div id="tdr_crumbs">
 		<div id="tdr_crumbs_content">
+		  <% if @course %>
 			<ul>
-				<li><a href="http://libraries.ucsd.edu/index.html">Home</a></li>
-				<li>Digital Media Reserves - <%= @course.course + " " + @course.quarter + " " + @course.year %></li>
+				<li><a href="http://libraries.ucsd.edu/index.html">Home</a></li>				
+				<li>Digital Media Reserves - <%= @course.course + " " + @course.quarter + " " + @course.year %></li>				
 			</ul>
+		  <% end %>
 		</div><!-- /tdr_crumbs_content -->
 	</div><!-- /tdr_crumbs -->

@@ -3,8 +3,9 @@
 #
 class MediaController < ApplicationController
   include Dmr::ControllerHelper
-  before_action :authorize
-  before_action :set_media, only: [:show, :edit, :update, :destroy]
+  before_action :authorize, only: [:index, :show, :edit, :update, :new, :destroy,
+                                   :search]
+  before_action :set_media, only: [:show, :edit, :update, :destroy, :view]
   ##
   # Handles GET index request to display the last 10 Media from database
   #
@@ -20,6 +21,16 @@ class MediaController < ApplicationController
   # @return [String] the resulting webpage of a single object
   #
   def show
+    render layout: false
+  end
+
+  ##
+  # Handles GET show request to display the details of a single Media object
+  # GET /view/1/filename
+  #
+  # @return [String] the resulting webpage of a single object
+  #
+  def view
     render layout: false
   end
 
@@ -105,7 +116,7 @@ class MediaController < ApplicationController
   #
   def media_params
     params.require(:media).permit(:title, :director, :call_number, :year,
-                                  :file_name, course_ids: [])
+                                  :file_name, :end_date, course_ids: [])
   end
 
   # Use callbacks to share common setup or constraints between actions.

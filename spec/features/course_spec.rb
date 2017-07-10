@@ -125,7 +125,7 @@ feature 'Course' do
 
   scenario 'wants to add a media object to the current Course Reserve List when no current course is set' do
     visit edit_medium_path(@media1)
-    click_on 'Add to Course Reserve List'
+    click_on 'Add to Course List'
     expect(page).to have_content('No current Course is set.  Set the Course first.')     
   end  
     
@@ -135,7 +135,7 @@ feature 'Course' do
     
     #add to course list  
     visit edit_medium_path(@media1)
-    click_on 'Add to Course Reserve List'
+    click_on 'Add to Course List'
     
     #Check that changes are saved
     expect(page).to have_content('Video was successfully added to Course.')
@@ -151,7 +151,7 @@ feature 'Course' do
     
     #add to course list  
     visit edit_audio_path(@audio1)
-    click_on 'Add to Course Reserve List'
+    click_on 'Add to Course List'
     
     #Check that changes are saved
     expect(page).to have_content('Audio was successfully added to Course.')
@@ -174,7 +174,7 @@ feature 'Course' do
     # add to course list    
     find("input[type='checkbox'][value='#{@media1.id}']").set(true)
     find("input[type='checkbox'][value='#{@media2.id}']").set(true)
-    click_on 'Add to Course Reserve List'
+    click_on 'Add to Course List'
     
     #Check that changes are saved
     expect(page).to have_content('Video was successfully added to Course.')
@@ -199,7 +199,7 @@ feature 'Course' do
     # add to course list    
     find("input[type='checkbox'][value='#{@audio1.id}']").set(true)
     find("input[type='checkbox'][value='#{@audio2.id}']").set(true)
-    click_on 'Add to Course Reserve List'
+    click_on 'Add to Course List'
     
     #Check that changes are saved
     expect(page).to have_content('Audio was successfully added to Course.')
@@ -269,7 +269,7 @@ feature 'Course' do
     # add to course list    
     find("input[type='checkbox'][value='#{@media1.id}']").set(true)
     find("input[type='checkbox'][value='#{@media2.id}']").set(true)
-    click_on 'Add to Course Reserve List'
+    click_on 'Add to Course List'
     
     #Check that changes are saved
     expect(page).to have_content('Video was successfully added to Course.')
@@ -305,7 +305,7 @@ feature 'Course' do
     # add to course list    
     find("input[type='checkbox'][value='#{@audio1.id}']").set(true)
     find("input[type='checkbox'][value='#{@audio2.id}']").set(true)
-    click_on 'Add to Course Reserve List'
+    click_on 'Add to Course List'
     
     #Check that changes are saved
     expect(page).to have_content('Audio was successfully added to Course.')
@@ -334,7 +334,7 @@ feature 'Course' do
     
     # add media to course 
     visit edit_medium_path(@media1)
-    click_on 'Add to Course Reserve List'  
+    click_on 'Add to Course List'  
 
     #Check that changes are saved
     expect(page).to have_content('Video was successfully added to Course.')
@@ -359,7 +359,7 @@ feature 'Course' do
     
     # add media to course 
     visit edit_audio_path(@audio1)
-    click_on 'Add to Course Reserve List'  
+    click_on 'Add to Course List'  
 
     #Check that changes are saved
     expect(page).to have_content('Audio was successfully added to Course.')
@@ -399,7 +399,7 @@ feature 'Course' do
     find("input[type='checkbox'][value='#{@media8.id}']").set(true)
     find("input[type='checkbox'][value='#{@media9.id}']").set(true)
     find("input[type='checkbox'][value='#{@media10.id}']").set(true)    
-    click_on 'Add to Course Reserve List'
+    click_on 'Add to Course List'
     
     #Check that changes are saved
     expect(page).to have_content('Video was successfully added to Course.')
@@ -439,7 +439,7 @@ feature 'Course' do
     find("input[type='checkbox'][value='#{@media8.id}']").set(true)
     find("input[type='checkbox'][value='#{@media9.id}']").set(true)
     find("input[type='checkbox'][value='#{@media10.id}']").set(true)       
-    click_on 'Add to Course Reserve List'
+    click_on 'Add to Course List'
     
     #Check that changes are saved
     expect(page).to have_content('Video was successfully added to Course.')
@@ -471,7 +471,7 @@ feature 'Course' do
     # add to course list    
     find("input[type='checkbox'][value='#{@audio1.id}']").set(true)
     find("input[type='checkbox'][value='#{@audio2.id}']").set(true)
-    click_on 'Add to Course Reserve List'
+    click_on 'Add to Course List'
     
     #Check that changes are saved
     expect(page).to have_content('Audio was successfully added to Course.')
@@ -503,7 +503,7 @@ feature 'Course' do
     # add to course list    
     find("input[type='checkbox'][value='#{@audio1.id}']").set(true)
     find("input[type='checkbox'][value='#{@audio2.id}']").set(true)
-    click_on 'Add to Course Reserve List'
+    click_on 'Add to Course List'
     
     #Check that changes are saved
     expect(page).to have_content('Audio was successfully added to Course.')
@@ -535,7 +535,7 @@ feature 'Course' do
     # add to course list    
     find("input[type='checkbox'][value='#{@media1.id}']").set(true)
     find("input[type='checkbox'][value='#{@media2.id}']").set(true)
-    click_on 'Add to Course Reserve List'
+    click_on 'Add to Course List'
     
     # check the friendly url for view button
     expect(page).to have_link('View', href: 'Spring/2015/test_course_1' )

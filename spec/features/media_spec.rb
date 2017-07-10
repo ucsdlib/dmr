@@ -4,7 +4,7 @@ require 'spec_helper'
 feature 'Video' do
   before(:all) do
     @course1 = Course.create course: 'Test Course 1', instructor: 'Test Instructor 1', year: '2015', quarter: 'Spring'
-    @media1 = Media.create title: 'Test Media 1', director: 'Test Director 1', year: '2015', call_number: '11111111', file_name: 'toystory.mp4'
+    @media1 = Media.create title: 'Test Media 1', director: 'Test Director 1', year: '2015', call_number: '11111111', file_name: 'toystory.mp4', end_date: '2011-11-11'
     @media2 = Media.create title: 'Test Media 2', director: 'Test Director 2', year: '2016', call_number: '77777777', file_name: 'file2.mp4'    
     @media3 = Media.create title: 'Combined Search Title', director: 'Director 3', year: '9999', call_number: '22222222', file_name: 'file3.mp4'    
 
@@ -73,6 +73,7 @@ feature 'Video' do
     expect(page).to have_selector("input#media_year[value='2015']")
     expect(page).to have_selector("input#media_call_number[value='11111111']")
     expect(page).to have_selector("input#media_file_name[value='toystory.mp4']")
+    expect(page).to have_selector("input#media_end_date[value='2011-11-11']")
     page.find('.media-thumbnail')['src'].should have_content "/media/#{@media1.id}/#{@media1.file_name.gsub('.mp4','.jpg')}" 
 
     # Update values
@@ -80,7 +81,8 @@ feature 'Video' do
     fill_in 'Director', :with => 'Test Director 1 Update'
     fill_in 'Year', :with => '2017'
     fill_in 'Call Number', :with => '33333333'    
-    fill_in 'File Name', :with => 'toystoryUpdate.mp4'   
+    fill_in 'File Name', :with => 'toystoryUpdate.mp4'
+    fill_in 'End Date', :with => '2012-12-12'   
     click_on('Save')
     expect(page).to have_content('Video successfully updated.')
         
@@ -90,7 +92,8 @@ feature 'Video' do
     expect(page).to have_selector("input#media_director[value='Test Director 1 Update']")
     expect(page).to have_selector("input#media_year[value='2017']")
     expect(page).to have_selector("input#media_call_number[value='33333333']")
-    expect(page).to have_selector("input#media_file_name[value='toystoryUpdate.mp4']")             
+    expect(page).to have_selector("input#media_file_name[value='toystoryUpdate.mp4']")
+    expect(page).to have_selector("input#media_end_date[value='2012-12-12']")             
   end
   
   scenario 'wants to delete a Video record' do
@@ -192,7 +195,7 @@ feature 'Video' do
     # add to course list    
     find("input[type='checkbox'][value='#{@media1.id}']").set(true)
     find("input[type='checkbox'][value='#{@media2.id}']").set(true)
-    click_on 'Add to Course Reserve List'
+    click_on 'Add to Course List'
     
     # check that Video records are added
     expect(page).to have_content('Video was successfully added to Course.')
@@ -222,5 +225,15 @@ feature 'Video' do
   scenario "wants to see the Procedures and Policy link" do
     visit root_path
     expect(page).to have_link('Procedures and Policy')
-  end                               
+  end
+  
+  scenario 'expects to see a friendly url for a video record with end_date' do
+    # set current course   
+    visit edit_medium_path(@media1) 
+    
+    expect(page).to have_link('URL', href: '2011-11-11/toystory.mp4' )
+    click_on 'URL'
+    
+    current_path.should == "/media/#{@media1.id}/#{@media1.end_date}/#{@media1.file_name}"           
+  end                                 
 end

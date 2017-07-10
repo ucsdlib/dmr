@@ -12,14 +12,18 @@ class AnalyticsController < ApplicationController
     @audio_count = new_audio_count(s_date, e_date)
     @audio_course_count = audio_course_count(s_date, e_date)
     if params[:type]
-      @new_audio_count = new_audio_record_count(s_date, e_date)
-      @audio_view_counter = audio_view_count(s_date, e_date)
+      total_audio_view = audio_view_count(s_date, e_date)
+      total_audio_new = new_audio_record_count(s_date, e_date)
+      @new_audio_count = total_audio_new - licensed_audio_count(s_date, e_date)
+      @audio_view_counter = total_audio_view - licensed_audio_view(s_date, e_date)
     else
-      @record_count = new_record_count(s_date, e_date)
-      @view_counter = view_count(s_date, e_date)
+      total_view = view_count(s_date, e_date)
+      total_new = new_record_count(s_date, e_date)
+      @record_count = total_new - licensed_video_count(s_date, e_date)
+      @view_counter = total_view - licensed_video_view(s_date, e_date)
       @item_count = new_item_count(s_date, e_date) - @audio_count
       @total_course = new_course_count(s_date, e_date) + clone_course_count(s_date, e_date)
-      @course_count = @total_course - @audio_course_count if @total_course > 0
+      @course_count = @total_course - @audio_course_count
     end
   end
 end
