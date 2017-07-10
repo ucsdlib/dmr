@@ -28,7 +28,7 @@
           <tbody>
             <tr>
               <td class="col-xs-1 center-block">
-                <h4><%= @audio_count %> items added</h4>
+                <h4><%= @audio_count if @audio_count && @audio_count > 0%> items added</h4>
                 <span class="overview">This is the total number of audio objects being streamed per quarter.</span>              
               </td>
               <td class="col-xs-1 center-block">
@@ -36,11 +36,11 @@
                 <span class="overview">This is the total number of audio courses being created.</span>              
               </td>
               <td class="col-xs-1 center-block">
-                <h4><%= @new_audio_count %> records created</h4>
+                <h4><%= @new_audio_count if @new_audio_count && @new_audio_count > 0 %> records created</h4>
                 <span class="overview">This is the total number of audio records being created.</span>              
               </td>
               <td class="col-xs-1 center-block">
-                <h4><%= @audio_view_counter %> views</h4>
+                <h4><%= @audio_view_counter if @audio_view_counter && @audio_view_counter > 0%> views</h4>
                 <span class="overview">A view is counted every time an audio is played over 15 seconds.</span>              
               </td>                                                                        
             </tr>
@@ -55,19 +55,19 @@
           <tbody>
             <tr>
               <td class="col-xs-1 center-block">
-                <h4><%= @item_count %> items added</h4>
+                <h4><%= @item_count if @item_count && @item_count > 0%> items added</h4>
                 <span class="overview">This is the total number of objects being streamed per quarter.</span>              
               </td>
               <td class="col-xs-1 center-block">
-                <h4><%= @course_count %> courses created</h4>
+                <h4><%= @course_count if @course_count && @course_count > 0%> courses created</h4>
                 <span class="overview">This is the total number of courses being created.</span>              
               </td>
               <td class="col-xs-1 center-block">
-                <h4><%= @record_count %> records created</h4>
+                <h4><%= @record_count if @record_count && @record_count >0%> records created</h4>
                 <span class="overview">This is the total number of records being created.</span>              
               </td>
               <td class="col-xs-1 center-block">
-                <h4><%= @view_counter %> views</h4>
+                <h4><%= @view_counter if @view_counter && @view_counter > 0 %> views</h4>
                 <span class="overview">A view is counted every time a video is played after 5 minutes.</span>              
               </td>                                                                        
             </tr>
