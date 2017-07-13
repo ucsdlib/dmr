@@ -10,10 +10,9 @@ end
 
 class MediaConstraint
   def matches?(request)
-    obj = request.fullpath.split(/\//)[1].capitalize
-    obj = obj.singularize if !obj.include? 'Media'
+    obj = request.fullpath.include?('media') ? Media : Audio
     params = request.path_parameters
-    tmp = obj.constantize.find(params[:id])
+    tmp = obj.find(params[:id])
     return false if params[:end_date] != tmp.end_date
     true
   end  
