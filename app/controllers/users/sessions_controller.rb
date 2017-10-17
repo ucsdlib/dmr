@@ -20,7 +20,10 @@ class Users::SessionsController < ApplicationController
 
   def find_or_create_user(auth_type, origin)
     @user = lookup_user(auth_type)
-    if Rails.configuration.shibboleth && !User.in_group?(request.env['omniauth.auth'].uid) && report_url(origin) == false
+    if Rails.configuration.shibboleth && !User.in_group?(request.env['omniauth.auth'].uid) && !course_user?(request.env['omniauth.auth'].uid) && report_url(origin) == false
+      Rails.logger.info("AD user login info - #{request.env['omniauth.auth'].uid}")
+      Rails.logger.info("AD user in group? - #{User.in_group?(request.env['omniauth.auth'].uid)}")
+      Rails.logger.info("AD user is in courseuser group? - #{course_user?(request.env['omniauth.auth'].uid)}")
       render file: "#{Rails.root}/public/403", formats: [:html], status: 403, layout: false
     else
       create_user_session(@user) if @user
@@ -45,6 +48,8 @@ class Users::SessionsController < ApplicationController
     session[:user_id] = user.uid
     session[:student_user] = 'true'
     return unless Rails.configuration.shibboleth
+    Rails.logger.info("create usersession in group? - #{User.in_group?(user.uid)}")
+    Rails.logger.info("create usersession is in courseuser group? - #{course_user?(user.uid)}")
     session[:student_user] = 'false' if !User.in_group?(user.uid) && !course_user?(user.uid)
   end
 
@@ -53,6 +58,7 @@ class Users::SessionsController < ApplicationController
     q = 'lower(Username) = ?'
     result = UserDb.where(q, id.to_s.downcase)
     course_student = !result.empty? ? true : false
+    Rails.logger.info("create course_user is empty? - #{result.empty?}")
     course_student
   end
 
