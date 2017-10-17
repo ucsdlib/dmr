@@ -35,6 +35,7 @@ Metrics/AbcSize:
   Max: 28
   Exclude:
     - 'app/controllers/analytics_controller.rb'
+    - 'app/controllers/users/sessions_controller.rb'
 
 Metrics/PerceivedComplexity:
   Max: 10
