@@ -1,6 +1,6 @@
 # encoding: utf-8
 set :stage, :pontos
-set :branch, 'develop'
+set :branch, 'feature/email_lookup'
 server 'pontos.ucsd.edu', user: 'conan', roles: %w{app db}
 set :rails_env, 'pontos'
 
