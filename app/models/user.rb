@@ -19,11 +19,13 @@ class User < ActiveRecord::Base
       email = access_token['info']['email'] || "#{uid}@ucsd.edu"
       provider = access_token.provider
       name = access_token['info']['name']
+      Rails.logger.info("shibboleth login uid #{uid} email:#{email} provider:#{provider} name:#{name}")
+      Rails.logger.info("shibboleth other email:#{access_token['info']['email']}")
     rescue StandardError => e
       logger.warn "shibboleth: #{e}"
     end
 
-    User.find_by(email: email) || User.create(uid: uid, provider: provider,
+    User.find_by(uid: uid, provider: provider) || User.create(uid: uid, provider: provider,
                                                               email: email, name: name) unless uid.nil?
   end
 
