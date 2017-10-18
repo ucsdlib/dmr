@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
       logger.warn "shibboleth: #{e}"
     end
 
-    User.find_by(uid: uid, provider: provider) || User.create(uid: uid, provider: provider,
+    User.find_by(email: email) || User.create(uid: uid, provider: provider,
                                                               email: email, name: name) unless uid.nil?
   end
 
