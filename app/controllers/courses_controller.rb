@@ -206,6 +206,16 @@ class CoursesController < ApplicationController
     end
   end
 
+  ##
+  # Handles GET sort the course list
+  # GET /courses/sort
+  #
+  def sort
+    course = Course.find(params[:course_id])
+    sorting(course, params[:type], params[:column]) if course
+    redirect_to edit_course_path(course), notice: 'Course List was successfully updated.'
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

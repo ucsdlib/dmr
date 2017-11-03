@@ -95,6 +95,22 @@ module Dmr
       "#{quarter} AND #{year}"
     end
 
+    def sorting(course, type, column)
+      tmp_array = type == 'video' ? get_sorted_media(course) : get_sorted_audio(course)
+      sort_column(tmp_array, column, course.id, type)
+    end
+
+    def sort_column(sorted_array, name, course_id, type)
+      tmp_report = nil
+      count = 1
+      sorted_array.sort { |a, b| a.instance_eval(name) <=> b.instance_eval(name) }.each do |m|
+        tmp_report = Report.where(course_id: course_id, media_id: m.id) if type == 'video'
+        tmp_report = Audioreport.where(course_id: course_id, audio_id: m.id) if type == 'audio'
+        update_report_counter(tmp_report, count)
+        count += 1
+      end
+    end
+
     ##
     # Handles search request for Archived Course object
     #
