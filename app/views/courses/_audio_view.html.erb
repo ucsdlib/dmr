@@ -5,11 +5,11 @@
       <tr>
         <th class="col-xs-1" scope="col"><%= label_tag 'check_all', 'check_all', class: "hide-label"%><%= check_box_tag 'check_all',false%></th>
         <th class="col-xs-1" scope="col">No</th>
-        <th class="col-xs-3" scope="col">Track</th>
-        <th class="col-xs-2" scope="col">Album</th>
-        <th class="col-xs-2" scope="col">Call Number</th>
-        <th class="col-xs-1" scope="col">Year</th>
-        <th class="col-xs-1" scope="col">File Name</th>
+        <th class="col-xs-3" scope="col">Track<%=link_to (image_tag "sorting_icon.png",  alt: '', class: 'sorting'), sort_courses_path(course_id: @course, type: 'audio', column: 'track'), 'data-no-turbolink' => true  %></th>
+        <th class="col-xs-2" scope="col">Album<%=link_to (image_tag "sorting_icon.png",  alt: '', class: 'sorting'), sort_courses_path(course_id: @course, type: 'audio', column: 'album'), 'data-no-turbolink' => true  %></th>
+        <th class="col-xs-2" scope="col">Call Number<%=link_to (image_tag "sorting_icon.png",  alt: '', class: 'sorting'), sort_courses_path(course_id: @course, type: 'audio', column: 'call_number'), 'data-no-turbolink' => true  %></th>
+        <th class="col-xs-1" scope="col">Year<%=link_to (image_tag "sorting_icon.png",  alt: '', class: 'sorting'), sort_courses_path(course_id: @course, type: 'audio', column: 'year'), 'data-no-turbolink' => true  %></th>
+        <th class="col-xs-1" scope="col">File Name<%=link_to (image_tag "sorting_icon.png",  alt: '', class: 'sorting'), sort_courses_path(course_id: @course, type: 'audio', column: 'file_name'), 'data-no-turbolink' => true  %></th>
       </tr>
     </thead>
     <tbody>	

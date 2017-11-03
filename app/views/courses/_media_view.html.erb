@@ -5,11 +5,11 @@
       <tr>
         <th class="col-xs-1" scope="col"><%= label_tag 'check_all', 'check_all', class: "hide-label"%><%= check_box_tag 'check_all',false%></th>
         <th class="col-xs-1" scope="col">No</th>
-        <th class="col-xs-3" scope="col">Title</th>
-        <th class="col-xs-2" scope="col">Director</th>
-        <th class="col-xs-2" scope="col">Call Number</th>
-        <th class="col-xs-1" scope="col">Year</th>
-        <th class="col-xs-1" scope="col">File Name</th>
+        <th class="col-xs-3" scope="col">Title<%=link_to (image_tag "sorting_icon.png", alt: '', class: 'sorting'), sort_courses_path(course_id: @course, type: 'video', column: 'title'), 'data-no-turbolink' => true  %></th>
+        <th class="col-xs-2" scope="col">Director<%=link_to (image_tag "sorting_icon.png",  alt: '', class: 'sorting'), sort_courses_path(course_id: @course, type: 'video', column: 'director'), 'data-no-turbolink' => true  %></th>
+        <th class="col-xs-2" scope="col">Call Number<%=link_to (image_tag "sorting_icon.png",  alt: '', class: 'sorting'), sort_courses_path(course_id: @course, type: 'video', column: 'call_number'), 'data-no-turbolink' => true  %></th>
+        <th class="col-xs-1" scope="col">Year<%=link_to (image_tag "sorting_icon.png",  alt: '', class: 'sorting'), sort_courses_path(course_id: @course, type: 'video', column: 'year'), 'data-no-turbolink' => true  %></th>
+        <th class="col-xs-1" scope="col">File Name<%=link_to (image_tag "sorting_icon.png",  alt: '', class: 'sorting'), sort_courses_path(course_id: @course, type: 'video', column: 'file_name'), 'data-no-turbolink' => true  %></th>
       </tr>
     </thead>
     <tbody>		    
