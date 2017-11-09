@@ -97,18 +97,38 @@ module Dmr
 
     def sorting(course, type, column)
       tmp_array = type == 'video' ? get_sorted_media(course) : get_sorted_audio(course)
-      sort_column(tmp_array, column, course.id, type)
+      if ascending?(tmp_array, column)
+        sort_descending(tmp_array, column, course.id, type, 1)
+      else
+        sort_ascending(tmp_array, column, course.id, type, 1)
+      end
     end
 
-    def sort_column(sorted_array, name, course_id, type)
-      tmp_report = nil
-      count = 1
+    def sort_ascending(sorted_array, name, course_id, type, count)
       sorted_array.sort { |a, b| a.instance_eval(name) <=> b.instance_eval(name) }.each do |m|
-        tmp_report = Report.where(course_id: course_id, media_id: m.id) if type == 'video'
-        tmp_report = Audioreport.where(course_id: course_id, audio_id: m.id) if type == 'audio'
-        update_report_counter(tmp_report, count)
+        update_sorted_report(course_id, m.id, count, type)
         count += 1
       end
+    end
+
+    def sort_descending(sorted_array, name, course_id, type, count)
+      sorted_array.sort { |a, b| -(a.instance_eval(name) <=> b.instance_eval(name)) }.each do |m|
+        update_sorted_report(course_id, m.id, count, type)
+        count += 1
+      end
+    end
+
+    def update_sorted_report(course_id, media_id, count, type)
+      tmp_report = Report.where(course_id: course_id, media_id: media_id) if type == 'video'
+      tmp_report = Audioreport.where(course_id: course_id, audio_id: media_id) if type == 'audio'
+      update_report_counter(tmp_report, count)
+    end
+
+    def ascending?(arr, name)
+      return false unless arr.length > 1
+      temp_array = []
+      arr.each { |x| temp_array << x.instance_eval(name) }
+      temp_array == temp_array.sort
     end
 
     ##

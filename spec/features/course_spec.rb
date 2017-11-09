@@ -470,7 +470,7 @@ feature 'Course' do
     page.all('tr')[2].text.should include '2 Test Media 1'               
   end
 
-  scenario 'wants to sort by Director for Video Course Reserve List' do
+  scenario 'wants to sort Video Course List in ascending and descending order' do
     # set current course   
     visit edit_course_path(@course1) 
      
@@ -498,13 +498,20 @@ feature 'Course' do
 
     find("a[href='#{sort_courses_path(course_id: @course1, type: 'video', column: 'director')}']").click
     
-    # check that media object is sorted by director
+    # check that media object is sorted by director in ascending order
     page.all('tr')[1].text.should include 'Test Director a'
     page.all('tr')[2].text.should include 'Test Director b' 
-    page.all('tr')[3].text.should include 'Test Director c'             
+    page.all('tr')[3].text.should include 'Test Director c'
+    
+    find("a[href='#{sort_courses_path(course_id: @course1, type: 'video', column: 'director')}']").click
+    
+    # check that media object is sorted by director in descending order
+    page.all('tr')[1].text.should include 'Test Director c'
+    page.all('tr')[2].text.should include 'Test Director b' 
+    page.all('tr')[3].text.should include 'Test Director a'                  
   end
 
-  scenario 'wants to sort by Call Number for Audio Course Reserve List' do
+  scenario 'wants to sort Audio Course List in ascending and descending order' do
     # set current course   
     visit edit_course_path(@course1) 
      
@@ -532,10 +539,17 @@ feature 'Course' do
 
     find("a[href='#{sort_courses_path(course_id: @course1, type: 'audio', column: 'call_number')}']").click
     
-    # check that audio object is sorted by call number
+    # check that audio object is sorted by call number in ascending
     page.all('tr')[1].text.should include '77777777'
     page.all('tr')[2].text.should include '88888888' 
-    page.all('tr')[3].text.should include '99999999'         
+    page.all('tr')[3].text.should include '99999999'
+    
+    find("a[href='#{sort_courses_path(course_id: @course1, type: 'audio', column: 'call_number')}']").click
+    
+    # check that audio object is sorted by call number in ascending
+    page.all('tr')[1].text.should include '99999999'
+    page.all('tr')[2].text.should include '88888888' 
+    page.all('tr')[3].text.should include '77777777'             
   end
  
   scenario 'wants to move one audio up in Course Reserve List' do
