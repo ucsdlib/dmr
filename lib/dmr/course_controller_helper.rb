@@ -1,6 +1,10 @@
 #
 # @author Vivian <tchu@ucsd.edu>
 #
+
+require 'natural_sort'
+include NaturalSort
+
 module Dmr
   #
   # Collection of methods to support the Course Controller
@@ -105,14 +109,14 @@ module Dmr
     end
 
     def sort_ascending(sorted_array, name, course_id, type, count)
-      sorted_array.sort { |a, b| a.instance_eval(name) <=> b.instance_eval(name) }.each do |m|
+      sorted_array.sort { |a, b| NaturalSort.comparator(a.instance_eval(name), b.instance_eval(name)) }.each do |m|
         update_sorted_report(course_id, m.id, count, type)
         count += 1
       end
     end
 
     def sort_descending(sorted_array, name, course_id, type, count)
-      sorted_array.sort { |a, b| -(a.instance_eval(name) <=> b.instance_eval(name)) }.each do |m|
+      sorted_array.sort { |a, b| -NaturalSort.comparator(a.instance_eval(name), b.instance_eval(name)) }.each do |m|
         update_sorted_report(course_id, m.id, count, type)
         count += 1
       end
@@ -128,7 +132,7 @@ module Dmr
       return false unless arr.length > 1
       temp_array = []
       arr.each { |x| temp_array << x.instance_eval(name) }
-      temp_array == temp_array.sort
+      temp_array == temp_array.natural_sort
     end
 
     ##

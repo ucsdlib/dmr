@@ -13,13 +13,13 @@ feature 'Course' do
     @media4 = Media.create title: 'Test Media 4', director: 'Test Director 2', year: '2016', call_number: '77777777', file_name: 'file2.mp4'  
     @media5 = Media.create title: 'Test Media 5', director: 'Test Director 1', year: '2015', call_number: '11111111', file_name: 'toystory.mp4'
     @media6 = Media.create title: 'Test Media 6', director: 'Test Director 2', year: '2016', call_number: '77777777', file_name: 'file2.mp4' 
-    @media7 = Media.create title: 'Test Media 7', director: 'Test Director 2', year: '2016', call_number: '77777777', file_name: 'file2.mp4'         
-    @media8 = Media.create title: 'Test Media 8', director: 'Test Director 1', year: '2015', call_number: '11111111', file_name: 'toystory.mp4'
-    @media9 = Media.create title: 'Test Media 9', director: 'Test Director 2', year: '2016', call_number: '77777777', file_name: 'file2.mp4'
+    @media7 = Media.create title: 'Test Media 7', director: 'Test Director 2', year: '2016', call_number: '1 FVLD', file_name: 'file2.mp4'         
+    @media8 = Media.create title: 'Test Media 8', director: 'Test Director 1', year: '2015', call_number: '10 FVLD', file_name: 'toystory.mp4'
+    @media9 = Media.create title: 'Test Media 9', director: 'Test Director 2', year: '2016', call_number: '2 FVLD', file_name: 'file2.mp4'
     @media10 = Media.create title: 'Test Media 10', director: 'Test Director 1', year: '2015', call_number: '11111111', file_name: 'toystory.mp4'
-    @media11 = Media.create title: 'Toy Story Sorting', director: 'Test Director b', year: '2014', call_number: '3333333', file_name: 'toystory.mp4'
-    @media12 = Media.create title: 'The Matrix Sorting', director: 'Test Director a', year: '1999', call_number: '4444444', file_name: 'thematrix.mp4'
-    @media13 = Media.create title: 'Angel Sorting', director: 'Test Director c', year: '2019', call_number: '11111111', file_name: 'angel.mp4'
+    @media11 = Media.create title: 'Toy Story Sorting', director: 'Test Director b', year: '2014', call_number: '2 FVLD', file_name: 'toystory.mp4'
+    @media12 = Media.create title: 'The Matrix Sorting', director: 'Test Director a', year: '1999', call_number: '10 FVLD', file_name: 'thematrix.mp4'
+    @media13 = Media.create title: 'Angel Sorting', director: 'Test Director c', year: '2019', call_number: '1 FVLD', file_name: 'angel.mp4'
     @audio1 = Audio.create track: 'Test Audio 1', album: 'Album 1', artist: 'Artist 1', composer: 'Composer 1', year: '2015', call_number: '11111111', file_name: 'pureAwareness.mp3'
     @audio2 = Audio.create track: 'Test Audio 2', album: 'Album 2', artist: 'Artist 2', composer: 'Composer 2', year: '2016', call_number: '77777777', file_name: 'test.mp3'   
     @audio3 = Audio.create track: 'Test Audio 3 Sorting', album: 'Album 1', artist: 'Artist 1', composer: 'Composer 1', year: '2015', call_number: '99999999', file_name: 'pureAwareness.mp3'
@@ -509,6 +509,47 @@ feature 'Course' do
     page.all('tr')[1].text.should include 'Test Director c'
     page.all('tr')[2].text.should include 'Test Director b' 
     page.all('tr')[3].text.should include 'Test Director a'                  
+  end
+
+  scenario 'wants to sort in alpha numeric ascending order' do
+    # set current course   
+    visit edit_course_path(@course1) 
+     
+    # search for media objects
+    visit search_media_path( {:search => 'Sorting'} )  
+    expect(page).to have_content('1 FVLD')
+    expect(page).to have_content('10 FVLD')
+    expect(page).to have_content('2 FVLD')
+    expect(page).to have_content('Displaying 3 results')   
+        
+    # add to course list    
+    find("input[type='checkbox'][value='#{@media11.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media12.id}']").set(true)
+    find("input[type='checkbox'][value='#{@media13.id}']").set(true)
+    click_on 'Add to Course List'
+    
+    # check that changes are saved
+    expect(page).to have_content('Video was successfully added to Course.')
+    expect(@course1.media.size).to eq(3)  
+    
+    # check that media object is in order
+    page.all('tr')[1].text.should include '1 FVLD'
+    page.all('tr')[2].text.should include '10 FVLD' 
+    page.all('tr')[3].text.should include '2 FVLD'    
+
+    find("a[href='#{sort_courses_path(course_id: @course1, type: 'video', column: 'call_number')}']").click
+    
+    # check that media object is sorted by call number in ascending order
+    page.all('tr')[1].text.should include '1 FVLD'
+    page.all('tr')[2].text.should include '2 FVLD' 
+    page.all('tr')[3].text.should include '10 FVLD'
+    
+    find("a[href='#{sort_courses_path(course_id: @course1, type: 'video', column: 'call_number')}']").click
+    
+    # check that media object is sorted by director in descending order
+    page.all('tr')[1].text.should include '10 FVLD'
+    page.all('tr')[2].text.should include '2 FVLD' 
+    page.all('tr')[3].text.should include '1 FVLD'                  
   end
 
   scenario 'wants to sort Audio Course List in ascending and descending order' do
