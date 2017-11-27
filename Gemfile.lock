@@ -149,6 +149,7 @@ GEM
     mini_portile2 (2.3.0)
     minitest (5.10.2)
     multi_json (1.12.1)
+    naturalsort (1.2.0)
     net-ldap (0.16.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -317,6 +318,7 @@ DEPENDENCIES
   launchy (~> 2.4.3)
   letter_opener (= 1.4.1)
   mail (= 2.7.0.rc1)
+  naturalsort
   net-ldap (= 0.16.0)
   newrelic_rpm (= 4.2.0.334)
   nokogiri (= 1.8.1)
