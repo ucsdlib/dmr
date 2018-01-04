@@ -31,7 +31,7 @@ gem 'naturalsort'
 gem 'net-ldap', '0.16.0'
 gem 'newrelic_rpm', '4.2.0.334'
 gem 'nokogiri', '1.8.1'
-gem 'omniauth', '1.6.1'
+gem 'omniauth', '1.8.1'
 gem 'omniauth-shibboleth', '1.2.1'
 gem 'pg', '0.20.0'
 gem 'rails', '4.2.7.1' # locked
