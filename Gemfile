@@ -62,6 +62,6 @@ group :development, :test do
 end
 
 group :test do
-  gem 'database_cleaner', '1.6.1'
+  gem 'database_cleaner', '1.6.2'
   gem 'shoulda-matchers', '3.1.1'
 end
