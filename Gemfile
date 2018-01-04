@@ -24,7 +24,7 @@ gem 'fabrication', '2.16.1'
 gem 'inch', '0.7.1', require: false
 gem 'jbuilder', '2.7.0'
 gem 'jquery-rails', '4.3.1'
-gem 'kaminari', '1.0.1'
+gem 'kaminari', '1.1.1'
 gem 'letter_opener', '1.4.1'
 gem 'mail', '2.7.0.rc1'
 gem 'naturalsort'
