@@ -57,7 +57,7 @@ GEM
       sass (>= 3.3.4)
     bootstrap_form (2.7.0)
     builder (3.2.3)
-    byebug (9.0.6)
+    byebug (9.1.0)
     capistrano (3.8.1)
       airbrussh (>= 1.0.0)
       i18n
@@ -303,7 +303,7 @@ DEPENDENCIES
   bootstrap-datepicker-rails (~> 1.7.1.1)
   bootstrap-sass (= 3.3.7)
   bootstrap_form (= 2.7.0)
-  byebug (= 9.0.6)
+  byebug (= 9.1.0)
   capistrano (~> 3.8.1)
   capistrano-bundler (= 1.2.0)
   capistrano-rails (~> 1.2.3)
