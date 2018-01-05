@@ -10,6 +10,7 @@ class Users::SessionsController < ApplicationController
     end
   end
 
+  # I'm documenting a developer session to avoid shib
   def developer
     find_or_create_user('developer', params[:origin])
   end

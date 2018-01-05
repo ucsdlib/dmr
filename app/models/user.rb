@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
                                                                name: 'developer')
   end
 
+  # I'm documenting findings or creating a user based on a shibboleth session
   def self.find_or_create_for_shibboleth(access_token)
     begin
       uid = access_token.uid
