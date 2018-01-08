@@ -280,8 +280,7 @@ GEM
       activesupport
       i18n
     tins (1.13.2)
-    tiny_tds (1.3.0)
-      mini_portile2 (~> 2.0)
+    tiny_tds (2.1.0)
     turbolinks (2.5.3)
       coffee-rails
     tzinfo (1.2.4)
