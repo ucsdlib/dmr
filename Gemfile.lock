@@ -157,7 +157,7 @@ GEM
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (4.2.0)
-    newrelic_rpm (4.2.0.334)
+    newrelic_rpm (4.7.1.340)
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
     omniauth (1.8.1)
@@ -323,7 +323,7 @@ DEPENDENCIES
   mail (= 2.7.0)
   naturalsort
   net-ldap (= 0.16.0)
-  newrelic_rpm (= 4.2.0.334)
+  newrelic_rpm (= 4.7.1.340)
   nokogiri (= 1.8.1)
   omniauth (= 1.8.1)
   omniauth-shibboleth (= 1.2.1)
