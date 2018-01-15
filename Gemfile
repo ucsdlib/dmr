@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'active_record_union', '~> 1.2.0'
+gem 'active_record_union', '~> 1.3.0'
 gem 'activemodel', '~> 4.2.7.1' # locked
 gem 'activerecord', '~> 4.2.7.1' # locked
 gem 'activerecord-sqlserver-adapter'
