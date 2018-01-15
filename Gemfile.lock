@@ -151,7 +151,7 @@ GEM
     minitest (5.11.1)
     multi_json (1.12.1)
     naturalsort (1.2.0)
-    net-ldap (0.16.0)
+    net-ldap (0.16.1)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (4.2.0)
@@ -325,7 +325,7 @@ DEPENDENCIES
   letter_opener (= 1.4.1)
   mail (= 2.7.0)
   naturalsort
-  net-ldap (= 0.16.0)
+  net-ldap (= 0.16.1)
   newrelic_rpm (= 4.7.1.340)
   nokogiri (= 1.8.1)
   omniauth (= 1.8.1)
