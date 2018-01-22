@@ -19,7 +19,7 @@ gem 'capistrano-rbenv', '~> 2.1.1'
 gem 'coffee-rails', '4.2.2'
 gem 'coveralls', '0.8.21', require: false
 gem 'equivalent-xml', '~> 0.6.0'
-gem 'fabrication', '2.16.1'
+gem 'fabrication', '2.20.1'
 # gem 'google-api-client', '0.8.2', require: 'google/api_client'
 gem 'inch', '0.7.1', require: false
 gem 'jbuilder', '2.7.0'
