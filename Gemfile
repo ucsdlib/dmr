@@ -57,7 +57,7 @@ group :development, :test do
   gem 'pry', '0.11.3'
   gem 'rspec-rails', '3.7.2'
   gem 'rubocop', '0.49.1', require: false
-  gem 'rubocop-rspec', '1.15.1'
+  gem 'rubocop-rspec', '1.16.0'
   gem 'unicorn', '~> 5.4.0'
 end
 
