@@ -138,7 +138,7 @@ GEM
     kgio (2.11.1)
     launchy (2.4.3)
       addressable (~> 2.3)
-    letter_opener (1.4.1)
+    letter_opener (1.6.0)
       launchy (~> 2.2)
     loofah (2.1.1)
       crass (~> 1.0.2)
@@ -322,7 +322,7 @@ DEPENDENCIES
   jquery-rails (= 4.3.1)
   kaminari (= 1.1.1)
   launchy (~> 2.4.3)
-  letter_opener (= 1.4.1)
+  letter_opener (= 1.6.0)
   mail (= 2.7.0)
   naturalsort
   net-ldap (= 0.16.1)
