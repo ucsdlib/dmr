@@ -33,7 +33,7 @@ gem 'newrelic_rpm', '4.7.1.340'
 gem 'nokogiri', '1.8.1'
 gem 'omniauth', '1.8.1'
 gem 'omniauth-shibboleth', '1.3.0'
-gem 'pg', '0.20.0'
+gem 'pg', '1.0.0'
 gem 'rails', '4.2.7.1' # locked
 gem 'sass-rails', '5.0.7'
 gem 'splunk-sdk-ruby'
