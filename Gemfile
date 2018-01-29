@@ -63,5 +63,5 @@ end
 
 group :test do
   gem 'database_cleaner', '1.6.2'
-  gem 'shoulda-matchers', '3.1.1'
+  gem 'shoulda-matchers', '3.1.2'
 end
