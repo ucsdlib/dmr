@@ -14,7 +14,7 @@ gem 'bootstrap_form', '2.7.0'
 gem 'capistrano', '~> 3.8.1'
 gem 'capistrano-bundler', '1.3.0'
 gem 'capistrano-rails', '~> 1.3.1'
-gem 'capistrano-rbenv', '~> 2.1.1'
+gem 'capistrano-rbenv', '~> 2.1.3'
 
 gem 'coffee-rails', '4.2.2'
 gem 'coveralls', '0.8.21', require: false
