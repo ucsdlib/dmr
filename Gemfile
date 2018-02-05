@@ -11,7 +11,7 @@ gem 'bootstrap-sass', '3.3.7'
 gem 'bootstrap_form', '2.7.0'
 
 # Deploy with Capistrano
-gem 'capistrano', '~> 3.8.1'
+gem 'capistrano', '~> 3.10.1'
 gem 'capistrano-bundler', '1.3.0'
 gem 'capistrano-rails', '~> 1.3.1'
 gem 'capistrano-rbenv', '~> 2.1.3'
