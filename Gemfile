@@ -42,7 +42,7 @@ gem 'thor', '0.19.4'
 gem 'time_diff'
 gem 'tiny_tds'
 gem 'turbolinks', '2.5.3' # locked
-gem 'uglifier', '4.1.7'
+gem 'uglifier', '4.1.8'
 gem 'whenever', require: false
 gem 'yard' # locked
 
