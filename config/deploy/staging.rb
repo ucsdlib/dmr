@@ -1,6 +1,6 @@
 # encoding: utf-8
 set :stage, :staging
-set :branch, 'staging'
+set :branch, ENV['DEPLOY_BRANCH'] if ENV['DEPLOY_BRANCH']
 server 'lib-hydrahead-staging.ucsd.edu', user: 'conan', roles: %w{web app db sitemap_noping}
 set :rails_env, 'staging'
 if ENV['CAP_SSHKEY_STAGING']
