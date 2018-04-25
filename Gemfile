@@ -21,7 +21,7 @@ gem 'coveralls', '0.8.21', require: false
 gem 'equivalent-xml', '~> 0.6.0'
 gem 'fabrication', '2.20.1'
 # gem 'google-api-client', '0.8.2', require: 'google/api_client'
-gem 'inch', '0.7.1', require: false
+gem 'inch', '0.8.0', require: false
 gem 'jbuilder', '2.7.0'
 gem 'jquery-rails', '4.3.3'
 gem 'kaminari', '1.1.1'
