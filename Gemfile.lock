@@ -110,11 +110,11 @@ GEM
     hashie (3.5.7)
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
-    inch (0.7.1)
+    inch (0.8.0)
       pry
       sparkr (>= 0.2.0)
       term-ansicolor
-      yard (~> 0.8.7.5)
+      yard (~> 0.9.12)
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
@@ -274,7 +274,7 @@ GEM
     time_diff (0.3.0)
       activesupport
       i18n
-    tins (1.13.2)
+    tins (1.16.3)
     tiny_tds (1.3.0)
       mini_portile2 (~> 2.0)
     turbolinks (2.5.3)
@@ -291,7 +291,7 @@ GEM
       chronic (>= 0.6.3)
     xpath (3.0.0)
       nokogiri (~> 1.8)
-    yard (0.8.7.6)
+    yard (0.9.12)
 
 PLATFORMS
   ruby
@@ -317,7 +317,7 @@ DEPENDENCIES
   database_cleaner (= 1.7.0)
   equivalent-xml (~> 0.6.0)
   fabrication (= 2.20.1)
-  inch (= 0.7.1)
+  inch (= 0.8.0)
   jbuilder (= 2.7.0)
   jquery-rails (= 4.3.3)
   kaminari (= 1.1.1)
