@@ -1,6 +1,6 @@
 # encoding: utf-8
 set :stage, :production
-set :branch, 'master'
+set :branch, (ENV['BRANCH'] || fetch(:branch, 'master'))
 server 'lib-hydrahead-prod.ucsd.edu', user: 'conan', roles: %w{web app db}
 set :rails_env, 'production'
 if ENV['CAP_SSHKEY_PRODUCTION']
