@@ -27,7 +27,7 @@ Style/Documentation:
     - 'spec/**/*'
 
 Metrics/LineLength:
-  Max: 118
+  Max: 140
   Exclude:
     - 'app/controllers/users/sessions_controller.rb'  
 
@@ -63,6 +63,10 @@ Style/ConditionalAssignment:
   Exclude:
     - 'lib/dmr/splunk_api_helper.rb'
     - 'lib/dmr/controller_helper.rb'
+
+Rails/OutputSafety:
+  Exclude:
+    - 'app/helpers/media_helper.rb'
 
 Style/AlignHash:
   Enabled: false

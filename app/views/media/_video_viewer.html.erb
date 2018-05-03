@@ -1,10 +1,13 @@
 <div id="tdr_content_content" style="width:100%;max-width:100%;">
 <h3><%= obj.title%></h3>
 <%
-   wowzaURL = grab_wowza_url(obj.file_name,obj.id) if !obj.nil?
+  if obj
+    secure_token = grab_secure_token_url(obj.file_name, Rails.configuration.secure_token_video_baseurl)
+    video_base_url = "#{Rails.configuration.secure_token_video_baseurl}#{obj.file_name}"
+  end
 %>
 
-<% if wowzaURL != nil %>
+<% if secure_token %>
 
   <video controls="controls" id="dar-video">Loading the player...</video>
 
@@ -14,8 +17,8 @@
 			[{
 				sources:
 				[
-					{file: "https://<%=wowzaURL%>/playlist.m3u8"},				
-					{file: "https://<%=wowzaURL%>/manifest.mpd"}
+					{file: "https://<%=video_base_url%>/playlist.m3u8?<%=secure_token%>"},				
+					{file: "https://<%=video_base_url%>/manifest.mpd?<%=secure_token%>"}
 				]
 			}],
 			width: "100%",
