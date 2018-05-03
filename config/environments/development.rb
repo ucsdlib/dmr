@@ -43,6 +43,10 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
   config.wowza_baseurl = 'lib-streaming.ucsd.edu:1936/dmr/_definst_/'
   config.wowza_audio_baseurl = 'lib-streaming.ucsd.edu:1936/dmrmp3/_definst_/'
+  config.secure_token_audio_baseurl = 'lib-streaming.ucsd.edu:1936/dmr-securetoken/_definst_/mp3:MP3_Archive/'
+  config.secure_token_video_baseurl = 'lib-streaming.ucsd.edu:1936/dmr-securetoken/_definst_/mp4:MP4_Archive/'
+  config.secure_token_name = ENV.fetch('APPS_DMR_SECURE_TOKEN_NAME') {'default'}
+  config.secure_token_secret = ENV.fetch('APPS_DMR_SECURE_TOKEN_SECRET') {'default'}
   config.shibboleth = false
   config.receiver_emails = 'landrews@ucsd.edu,reserves@ucsd.edu,'
   config.splunk_host = 'librarytest'

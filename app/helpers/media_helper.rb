@@ -28,6 +28,29 @@ module MediaHelper
     end
   end
 
+  def grab_secure_token_url(filename, base_url)
+    return unless filename
+    token_end_time = wowza_token_end_time
+    token_hash = wowza_token_hash(token_end_time, filename, base_url)
+    "#{Rails.configuration.secure_token_name}endtime=#{token_end_time}&#{Rails.configuration.secure_token_name}hash=#{token_hash}".html_safe
+  end
+
+  def wowza_token_hash(end_time, filename, base_url)
+    token_params = []
+    token_params << Rails.configuration.secure_token_secret
+    token_params << "#{Rails.configuration.secure_token_name}endtime=#{end_time}"
+    token_params = token_params.sort
+    stream = base_url.sub(%r{.*?\/}, '')
+    hash_in = "#{stream}#{filename}?#{token_params.join('&')}"
+    hash_out = Digest::SHA2.new(256).digest(hash_in.to_s)
+    base64_encode(hash_out).gsub('+/', '-_').to_s
+  end
+
+  def wowza_token_end_time
+    Time.zone = 'America/Los_Angeles'
+    Time.now.to_i + 48.hours
+  end
+
   ##
   # Video stream name encryption
   #
