@@ -41,7 +41,7 @@ gem 'sqlite3', '1.3.13'
 gem 'thor', '0.19.4'
 gem 'time_diff'
 gem 'tiny_tds'
-gem 'turbolinks', '2.5.3' # locked
+gem 'turbolinks', '2.5.4' # locked
 gem 'uglifier', '4.1.10'
 gem 'whenever', require: false
 gem 'yard' # locked
