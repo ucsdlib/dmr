@@ -17,7 +17,7 @@ gem 'capistrano-rails', '~> 1.3.1'
 gem 'capistrano-rbenv', '~> 2.1.3'
 
 gem 'coffee-rails', '4.2.2'
-gem 'coveralls', '0.8.21', require: false
+gem 'coveralls', '0.8.22', require: false
 gem 'equivalent-xml', '~> 0.6.0'
 gem 'fabrication', '2.20.1'
 # gem 'google-api-client', '0.8.2', require: 'google/api_client'
