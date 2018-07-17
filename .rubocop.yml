@@ -22,6 +22,12 @@ Style/StringLiterals:
   Enabled: true
   EnforcedStyle: single_quotes
 
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/SafeNavigation:
+  Enabled: false
+
 Style/Documentation:
   Exclude:
     - 'spec/**/*'
