@@ -5,6 +5,8 @@
 
 <% if @course.audioreports and @course.audioreports.size > 0 %> 
   <script type="text/javascript">
+    let newWidth = 1;
+    let parent = document.getElementById('player').parentElement;  
     jwplayer("player").setup({
       playlist: [{
       <% @sorted_audio.each do |m| %>
@@ -34,17 +36,21 @@
 	
       }],
       visualplaylist:false,
+      width: 300 ,
       height: 40,
-      width: '100%',
       skin: 'vapor',
       rtmp: {bufferlength: 3},
     });
-    jwplayer().onReady(function(){
+    jwplayer().on('ready', function() {
+      resize();
+      window.onresize = function() {
+        resize();
+      };
       var myVideos = jwplayer().getPlaylist();
       for (var i = 0; i < myVideos.length; i++) {
         document.getElementById('listbar').innerHTML += '<div style="margin:10px 0 0 0;" class=listbar_item id=video'+ i +' onClick="javascript:playThis('+i+')"><a href="javascript:playThis('+i+')"><img style="float: left; height: 50px; width: 50px; margin-right: 10px; margin-left:10px;" src="' + myVideos[i].image + '"></a><b>' + myVideos[i].title + '</b><br>' + myVideos[i].description + '</div><div class="jwplaylistdivider"></div>';
-    }});jwplayer().onPlaylist(function(){});
-    jwplayer().onPlay(function(){updateActiveDiv(jwplayer().getPlaylistItem().index);});
+    }});
+    jwplayer().on('play', function(){updateActiveDiv(jwplayer().getPlaylistItem().index);});
     function playThis(index) {
       jwplayer().playlistItem(index);
       updateActiveDiv(index);   
@@ -57,6 +63,11 @@
       }
       var div = document.getElementById( 'video'+index );
       div.className += " active";    
+    }
+    
+    function resize() {
+      let currentWidth = parent.offsetWidth;
+      jwplayer().resize(currentWidth * newWidth, 40);
     }    	
   </script>
 <% end %>
