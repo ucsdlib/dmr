@@ -6,6 +6,8 @@
 
 <% if @course.reports and @course.reports.size > 0 %> 
   <script type="text/javascript">
+    let newWidth = 1;
+    let parent = document.getElementById('player').parentElement;
     jwplayer("player").setup({
       playlist: [{
         <% @sorted_media.each do |m| %>
@@ -38,23 +40,17 @@
       rtmp: {
         bufferlength: 5,
       },
-	  //listbar: {
-      //  position: 'right',
-      //  size: "25%",
-      //},
-	  width: "100%",
-	  height: "100%",
-	  aspectratio: "16:6",
-	  skin: 'glow'
+	    width: "100%",
+	    height: "100%",
+	    aspectratio: "16:6",
+	    skin: 'glow'
     });
-	jwplayer().onReady(function(){
+    jwplayer().on('ready', function() {
       var myVideos = jwplayer().getPlaylist();
       for (var i = 0; i < myVideos.length; i++) {
         document.getElementById('list').innerHTML += '<li><span class="dropt" title="'+myVideos[i].title+'"><a href="javascript:playThis('+i+')"><img class="img-responsive" src="'+myVideos[i].image+'" <="" img="" height="75" width="auto"><br>'+myVideos[i].title+'<br/>'+myVideos[i].description+'</a><br><span style="width:500px;" <="" span=""></span></span></li>';
-	  } 
-	});
-	jwplayer().onPlaylist(function(){		
-	});
+      }      
+    });
     function playThis(index) {
       jwplayer().playlistItem(index);
     }	
