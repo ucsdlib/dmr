@@ -100,7 +100,7 @@ module Dmr
     end
 
     def new_course_count(s_date, e_date)
-      q = "search sourcetype=access_common host=#{S_HOST} edu/dmr/courses/new 200 #{TOTAL}"
+      q = "search sourcetype=access_common host=#{S_HOST} uri=/dmr/courses/new 200 #{TOTAL}"
       data_count(q, s_date, e_date)
     end
 
@@ -123,7 +123,7 @@ module Dmr
     end
 
     def new_record_count(s_date, e_date)
-      q = "search sourcetype=access_common host=#{S_HOST} edu/dmr/media/new 200 #{TOTAL}"
+      q = "search sourcetype=access_common host=#{S_HOST} uri=/dmr/media/new 200 #{TOTAL}"
       data_count(q, s_date, e_date)
     end
 
@@ -138,7 +138,7 @@ module Dmr
     end
 
     def new_audio_record_count(s_date, e_date)
-      q = "search sourcetype=access_common host=#{S_HOST} edu/dmr/audios/new 200 #{TOTAL}"
+      q = "search sourcetype=access_common host=#{S_HOST} uri=/dmr/audios/new 200 #{TOTAL}"
       data_count(q, s_date, e_date)
     end
 
@@ -159,29 +159,19 @@ module Dmr
     end
 
     def licensed_audio_view(s_date, e_date)
-      count = 0
       q = "search sourcetype=rails host=#{RAILS_HOST} AudiosController#view"
       filenames = process_filename(q, s_date, e_date)
-      filenames.each do |name|
-        q = "search sourcetype=wowza_access host=#{WOWZAHOST} stop stream 200 dmr mp3 #{name} | table x_spos"
-        data = stats(q, s_date, e_date)
-        data.each do |result|
-          tmp = result.to_s.split('=>"')[1].gsub!('"}', '').to_i
-          count += 1 if tmp > AUDIO_MIN_PLAYTIME
-        end
-      end
-      count
+      stop_time = stop_time_licensed_view(filenames, s_date, e_date)
+      q = "search sourcetype=wowza_access host=#{WOWZAHOST} play stream 200 dmr mp3"
+      data = stats(q, s_date, e_date)
+      process_audio_count(data, stop_time)
     end
 
     def audio_view_count(s_date, e_date)
-      q = "search sourcetype=wowza_access host=#{WOWZAHOST} stop stream 200 dmr mp3 | table x_spos"
+      stop_time = stop_time_view(s_date, e_date)
+      q = "search sourcetype=wowza_access host=#{WOWZAHOST} play stream 200 dmr mp3"
       data = stats(q, s_date, e_date)
-      tmp_count = 0
-      data.each do |result|
-        tmp = result.to_s.split('=>"')[1].gsub!('"}', '').to_i
-        tmp_count += 1 if tmp > AUDIO_MIN_PLAYTIME
-      end
-      tmp_count
+      process_audio_count(data, stop_time)
     end
 
     def process_count(data, stop_time)
@@ -191,6 +181,18 @@ module Dmr
         if stop_time.key?(process_id(tmp))
           time_diff = Time.diff(tmp[1], stop_time[process_id(tmp)])[:minute]
           tmp_view[process_id(tmp)] = time_diff if time_diff >= 5
+        end
+      end
+      unique_count(tmp_view)
+    end
+
+    def process_audio_count(data, stop_time)
+      tmp_view = {}
+      data.each do |result|
+        tmp = result['_raw'].to_s.split
+        if stop_time.key?(process_id(tmp))
+          time_diff = Time.diff(tmp[1], stop_time[process_id(tmp)])[:second]
+          tmp_view[process_id(tmp)] = time_diff if time_diff >= 1
         end
       end
       unique_count(tmp_view)
