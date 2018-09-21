@@ -54,6 +54,10 @@ Rails.application.configure do
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
+  # Set to :debug to see everything in the log.
+  config.log_level = :info
+  config.log_formatter = ::Logger::Formatter.new
+
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
   config.wowza_baseurl = 'lib-streaming.ucsd.edu:1936/dmrnew/_definst_/'

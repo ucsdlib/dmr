@@ -10,8 +10,13 @@
     jwplayer("player").setup({
       playlist: [{
       <% @sorted_audio.each do |m| %>
-        <%  wowzaURL = grab_wowza_url(m.file_name,m.id) if !m.nil?%>
-        <% if wowzaURL != nil %>
+        <%
+          if m
+            secure_token = grab_secure_token_url(m.file_name, Rails.configuration.secure_token_audio_baseurl)
+            audio_base_url = "#{Rails.configuration.secure_token_audio_baseurl}#{m.file_name}"
+          end
+        %>
+        <% if secure_token != nil %>
           <% 
             thumbnailURL = "#{Rails.configuration.audio_file_path}#{m.file_name.gsub('.mp3','.jpg')}"
             if !url_exist?(thumbnailURL)
@@ -19,7 +24,7 @@
             end          
           %>
           sources: [
-	        {file: "https://<%=wowzaURL%>/playlist.m3u8"}
+	        {file: "https://<%=audio_base_url%>/playlist.m3u8?<%=secure_token%>"}
 	      ],
 	      <!--title of media file-->
 	      title: "<%= m.track %>",
