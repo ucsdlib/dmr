@@ -2,11 +2,12 @@
 <h3><%= obj.track%></h3>
 <%
   if obj
-    secure_token = grab_secure_token_url(obj.file_name, Rails.configuration.secure_token_audio_baseurl) if !obj.nil?
-    audio_base_url = "#{Rails.configuration.secure_token_audio_baseurl}#{obj.file_name}"
+    #secure_token = grab_secure_token_url(obj.file_name, Rails.configuration.secure_token_audio_baseurl) if !obj.nil?
+    #audio_base_url = "#{Rails.configuration.secure_token_audio_baseurl}#{obj.file_name}"
+    wowzaURL = "#{Rails.configuration.wowza_audio_baseurl}#{obj.file_name}"
   end
 %>
-<% if secure_token %>
+<% if wowzaURL %>
 
   <div id="dmr-audio">Loading the player...</div>
 
@@ -18,7 +19,7 @@
 			[{
 				sources:
 				[
-					{file: "https://<%=audio_base_url%>/playlist.m3u8?<%=secure_token%>"}					
+					{file: "https://<%=wowzaURL%>/playlist.m3u8"}					
 				]
 			}],
       height: 40,
