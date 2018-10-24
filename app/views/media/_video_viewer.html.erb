@@ -2,12 +2,13 @@
 <h3><%= obj.title%></h3>
 <%
   if obj
-    secure_token = grab_secure_token_url(obj.file_name, Rails.configuration.secure_token_video_baseurl)
-    video_base_url = "#{Rails.configuration.secure_token_video_baseurl}#{obj.file_name}"
+    #secure_token = grab_secure_token_url(obj.file_name, Rails.configuration.secure_token_video_baseurl)
+    #video_base_url = "#{Rails.configuration.secure_token_video_baseurl}#{obj.file_name}"
+    wowzaURL = "#{Rails.configuration.wowza_baseurl}#{obj.file_name}"
   end
 %>
 
-<% if secure_token %>
+<% if wowzaURL %>
 
   <video controls="controls" id="dar-video">Loading the player...</video>
 
@@ -17,8 +18,8 @@
 			[{
 				sources:
 				[
-					{file: "https://<%=video_base_url%>/playlist.m3u8?<%=secure_token%>"},				
-					{file: "https://<%=video_base_url%>/manifest.mpd?<%=secure_token%>"}
+					{file: "https://<%=wowzaURL%>/playlist.m3u8"},				
+					{file: "https://<%=wowzaURL%>/manifest.mpd"}
 				]
 			}],
 			width: "100%",

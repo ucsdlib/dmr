@@ -13,15 +13,16 @@
         <% @sorted_media.each do |m| %>
         <%
           if m
-            secure_token = grab_secure_token_url(m.file_name, Rails.configuration.secure_token_video_baseurl)
-            video_base_url = "#{Rails.configuration.secure_token_video_baseurl}#{m.file_name}"
+            #secure_token = grab_secure_token_url(m.file_name, Rails.configuration.secure_token_video_baseurl)
+            #video_base_url = "#{Rails.configuration.secure_token_video_baseurl}#{m.file_name}"
+            wowzaURL = "#{Rails.configuration.wowza_baseurl}#{m.file_name}"
           end
         %>        
-        <% if secure_token %>
+        <% if wowzaURL %>
           <% thumbnailURL = "#{Rails.configuration.file_path}#{m.file_name.gsub('.mp4','.jpg')}"%>      
         sources: [
-          {file: "https://<%=video_base_url%>/playlist.m3u8?<%=secure_token%>"},        
-          {file: "https://<%=video_base_url%>/manifest.mpd?<%=secure_token%>"}
+          {file: "https://<%=wowzaURL%>/playlist.m3u8"},        
+          {file: "https://<%=wowzaURL%>/manifest.mpd"}
         ],
 	      <!--title of media file-->
 	      title: "<%= m.title %>",
