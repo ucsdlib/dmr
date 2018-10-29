@@ -55,7 +55,7 @@ group :development, :test do
   gem 'capybara', '~> 2.18.0'
   gem 'launchy', '~> 2.4.3'
   gem 'pry', '0.11.3'
-  gem 'rspec-rails', '3.8.0'
+  gem 'rspec-rails', '3.8.1'
   gem 'rubocop', '0.49.1', require: false
   gem 'rubocop-rspec', '1.16.0'
   gem 'unicorn', '~> 5.4.1'
