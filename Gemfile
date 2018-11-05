@@ -1,14 +1,14 @@
 source 'https://rubygems.org'
 
 gem 'active_record_union', '~> 1.3.0'
-gem 'activemodel', '~> 4.2.7.1' # locked
-gem 'activerecord', '~> 4.2.7.1' # locked
+gem 'activemodel', '~> 5.1.6' # locked
+gem 'activerecord', '~> 5.1.6' # locked
 gem 'activerecord-sqlserver-adapter'
-gem 'activesupport', '~> 4.2.7.1' # locked
+gem 'activesupport', '~> 5.1.6' # locked
 gem 'amoeba', '3.1.0'
 gem 'bootstrap-datepicker-rails', '~> 1.8.0.1'
 gem 'bootstrap-sass', '3.3.7'
-gem 'bootstrap_form', '2.7.0'
+gem 'bootstrap_form', '4.0.0'
 
 # Deploy with Capistrano
 gem 'capistrano', '~> 3.10.2'
@@ -34,7 +34,7 @@ gem 'nokogiri', '1.8.5'
 gem 'omniauth', '1.8.1'
 gem 'omniauth-shibboleth', '1.3.0'
 gem 'pg', '0.20.0'
-gem 'rails', '4.2.7.1' # locked
+gem 'rails', '5.1.6' # locked
 gem 'sass-rails', '5.0.7'
 gem 'splunk-sdk-ruby'
 gem 'sqlite3', '1.3.13'
