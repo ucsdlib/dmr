@@ -25,7 +25,7 @@ gem 'inch', '0.8.0', require: false
 gem 'jbuilder', '2.8.0'
 gem 'jquery-rails', '4.3.3'
 gem 'kaminari', '1.1.1'
-gem 'letter_opener', '1.6.0'
+gem 'letter_opener', '1.7.0'
 gem 'mail', '2.7.1'
 gem 'naturalsort'
 gem 'net-ldap', '0.16.1'
