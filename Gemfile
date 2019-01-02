@@ -12,7 +12,7 @@ gem 'bootstrap_form', '2.7.0'
 
 # Deploy with Capistrano
 gem 'capistrano', '~> 3.10.2'
-gem 'capistrano-bundler', '1.4.0'
+gem 'capistrano-bundler', '1.5.0'
 gem 'capistrano-rails', '~> 1.3.1'
 gem 'capistrano-rbenv', '~> 2.1.4'
 
