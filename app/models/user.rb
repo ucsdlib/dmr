@@ -19,6 +19,11 @@ class User < ActiveRecord::Base
       email = access_token['info']['email'] || "#{uid}@ucsd.edu"
       provider = access_token.provider
       name = access_token['info']['name']
+      temp_user = User.find_by_email(email.strip)
+      if temp_user && temp_user.uid != uid
+        Rails.logger.info("Delete user: email #{email} - UID: #{temp_user.uid} - #{uid}")
+        temp_user.delete
+      end
     rescue StandardError => e
       logger.warn "shibboleth: #{e}"
     end

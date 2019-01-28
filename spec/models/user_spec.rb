@@ -40,5 +40,27 @@ describe User do
       user.name.should == 'test_user'
       user.email.should == 'test_user@ucsd.edu'
     end
+    it 'should delete a User if a user has the same email but different uid' do
+      token = { 'info' => { 'email' => 'test_user@ucsd.edu', 'name' => 'test_user'} }
+      token.stub(:uid => 'test_user', :provider => 'shibboleth')
+
+      user = User.find_or_create_for_shibboleth(token)    
+      
+      user.should be_persisted
+      user.provider.should == 'shibboleth'
+      user.uid.should == 'test_user'
+      user.name.should == 'test_user'
+      user.email.should == 'test_user@ucsd.edu'
+      
+      token = { 'info' => { 'email' => 'test_user@ucsd.edu', 'name' => 'test_user'} }
+      token.stub(:uid => 'test_user2', :provider => 'shibboleth')
+      user = User.find_or_create_for_shibboleth(token)    
+      
+      user.should be_persisted
+      user.provider.should == 'shibboleth'
+      user.uid.should == 'test_user2'
+      user.name.should == 'test_user'
+      user.email.should == 'test_user@ucsd.edu'
+    end
   end
 end

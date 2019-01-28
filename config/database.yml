@@ -46,8 +46,8 @@ pontos:
   
 ares:
   adapter: sqlserver
-  database: AresData
-  host: reserve.ad.ucsd.edu
-  username: lib-res
-  password: kuORQFoeR4Nw
+  database: <%= ENV.fetch('APPS_DMR_ARES_DB') {'default'} %>
+  host: <%= ENV.fetch('APPS_DMR_ARES_DB_HOST') {'default'} %>
+  username: <%= ENV.fetch('APPS_DMR_ARES_DB_USER') {'default'} %>
+  password: <%= ENV.fetch('APPS_DMR_ARES_DB_PASS') {'default'} %>
   
