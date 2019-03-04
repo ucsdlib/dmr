@@ -37,7 +37,7 @@ gem 'pg', '0.21.0'
 gem 'rails', '4.2.7.1' # locked
 gem 'sass-rails', '5.0.7'
 gem 'splunk-sdk-ruby'
-gem 'sqlite3', '1.3.13'
+gem 'sqlite3', '1.4.0'
 gem 'thor', '0.19.4'
 gem 'time_diff'
 gem 'tiny_tds'
