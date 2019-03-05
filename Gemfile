@@ -7,7 +7,7 @@ gem 'activerecord-sqlserver-adapter'
 gem 'activesupport', '~> 4.2.7.1' # locked
 gem 'amoeba', '3.1.0'
 gem 'bootstrap-datepicker-rails', '~> 1.8.0.1'
-gem 'bootstrap-sass', '3.4.1'
+gem 'bootstrap-sass', '3.3.7'
 gem 'bootstrap_form', '2.7.0'
 
 # Deploy with Capistrano
