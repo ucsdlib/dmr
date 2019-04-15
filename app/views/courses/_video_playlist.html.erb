@@ -49,7 +49,7 @@
     jwplayer().on('ready', function() {
       var myVideos = jwplayer().getPlaylist();
       for (var i = 0; i < myVideos.length; i++) {
-        document.getElementById('list').innerHTML += '<li><span class="dropt" title="'+myVideos[i].title+'"><a href="javascript:playThis('+i+')"><img class="img-responsive" src="'+myVideos[i].image+'" <="" img="" height="75" width="auto"><br>'+myVideos[i].title+'<br/>'+myVideos[i].description+'</a><br><span style="width:500px;" <="" span=""></span></span></li>';
+        document.getElementById('list').innerHTML += '<li><span class="dropt" title="'+myVideos[i].title+'"><a href="javascript:playThis('+i+')"><img class="img-responsive" src="'+myVideos[i].image+'" <="" img="" height="100%" width="auto"><br>'+myVideos[i].title+'<br/>'+myVideos[i].description+'</a><br><span style="width:500px;" <="" span=""></span></span></li>';
       }      
     });
     function playThis(index) {
