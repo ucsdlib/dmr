@@ -12,7 +12,7 @@
 
 common: &default_settings
   # Required license key associated with your New Relic account.
-  license_key: <%= ENV.fetch('APPS_DMR_RELIC_KEY') %>
+  license_key: <%= ENV['APPS_DMR_RELIC_KEY'] %>
 
   # Your application name. Renaming here affects where data displays in New
   # Relic.  For more details, see https://docs.newrelic.com/docs/apm/new-relic-apm/maintenance/renaming-applications
@@ -40,7 +40,7 @@ pontos:
   <<: *default_settings
   app_name: Pontos dmr
   developer_mode: true
-  
+
 test:
   <<: *default_settings
   # It doesn't make sense to report to New Relic from automated test runs.
