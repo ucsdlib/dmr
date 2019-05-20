@@ -23,7 +23,7 @@ gem 'fabrication', '2.20.2'
 # gem 'google-api-client', '0.8.2', require: 'google/api_client'
 gem 'honeycomb-beeline'
 gem 'inch', '0.8.0', require: false
-gem 'jbuilder', '2.8.0'
+gem 'jbuilder', '2.9.1'
 gem 'jquery-rails', '4.3.3'
 gem 'kaminari', '1.1.1'
 gem 'letter_opener', '1.7.0'

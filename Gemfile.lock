@@ -133,9 +133,8 @@ GEM
       sparkr (>= 0.2.0)
       term-ansicolor
       yard (~> 0.9.12)
-    jbuilder (2.8.0)
+    jbuilder (2.9.1)
       activesupport (>= 4.2.0)
-      multi_json (>= 1.2)
     jquery-rails (4.3.3)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
@@ -170,7 +169,6 @@ GEM
     mini_mime (1.0.1)
     mini_portile2 (2.4.0)
     minitest (5.11.3)
-    multi_json (1.13.1)
     naturalsort (1.2.0)
     net-ldap (0.16.1)
     net-scp (1.2.1)
@@ -344,7 +342,7 @@ DEPENDENCIES
   fabrication (= 2.20.2)
   honeycomb-beeline
   inch (= 0.8.0)
-  jbuilder (= 2.8.0)
+  jbuilder (= 2.9.1)
   jquery-rails (= 4.3.3)
   kaminari (= 1.1.1)
   launchy (~> 2.4.3)
