@@ -24,7 +24,7 @@ gem 'fabrication', '2.20.2'
 gem 'honeycomb-beeline'
 gem 'inch', '0.8.0', require: false
 gem 'jbuilder', '2.9.1'
-gem 'jquery-rails', '4.3.3'
+gem 'jquery-rails', '4.3.5'
 gem 'kaminari', '1.1.1'
 gem 'letter_opener', '1.7.0'
 gem 'mail', '2.7.1'
