@@ -47,7 +47,7 @@ gem 'whenever', require: false
 gem 'yard' # locked
 
 group :development do
-  gem 'spring', '2.0.2'
+  gem 'spring', '2.1.0'
 end
 
 group :development, :test do
