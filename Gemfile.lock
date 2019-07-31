@@ -331,7 +331,7 @@ DEPENDENCIES
   database_cleaner (= 1.7.0)
   equivalent-xml (~> 0.6.0)
   fabrication (= 2.20.2)
-  honeycomb-beeline
+  honeycomb-beeline (= 1.0.0)
   inch (= 0.8.0)
   jbuilder (= 2.9.1)
   jquery-rails (= 4.3.5)
