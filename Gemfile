@@ -35,7 +35,7 @@ gem 'omniauth', '1.9.0'
 gem 'omniauth-shibboleth', '1.3.0'
 gem 'pg', '0.21.0'
 gem 'rails', '4.2.11.1' # locked
-gem 'sass-rails', '5.0.7'
+gem 'sass-rails', '6.0.0'
 gem 'splunk-sdk-ruby'
 gem 'sqlite3', '1.3.13'
 gem 'thor', '0.20.3'
