@@ -7,7 +7,7 @@ DMR is a Digital Media Reserves Tool to manage videos created for the UCSD campu
 ## Requirements 
 
 * Ruby 2.2.3+
-* git
+* git 
 
 ## Installation
 
