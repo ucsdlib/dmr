@@ -134,3 +134,8 @@ Rails/DynamicFindBy:
   Exclude:
     - 'lib/dmr/controller_helper.rb'
     - 'lib/dmr/course_controller_helper.rb'
+
+Performance/RegexpMatch:
+  Exclude:
+    - 'lib/dmr/course_controller_helper.rb'
+
