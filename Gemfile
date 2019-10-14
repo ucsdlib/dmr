@@ -21,7 +21,7 @@ gem 'coveralls', '0.8.23', require: false
 gem 'equivalent-xml', '~> 0.6.0'
 gem 'fabrication', '2.20.2'
 # gem 'google-api-client', '0.8.2', require: 'google/api_client'
-gem 'honeycomb-beeline', '1.0.1'
+gem 'honeycomb-beeline', '1.1.1'
 gem 'inch', '0.8.0', require: false
 gem 'jbuilder', '2.9.1'
 gem 'jquery-rails', '4.3.5'
