@@ -11,7 +11,7 @@ module Dmr
   # Collection of methods to support the Analytics Controller
   #
   module SplunkApiHelper
-    WOWZAHOST = Rails.configuration.wowza_baseurl.split(':')[0]
+    WOWZAHOST = Rails.configuration.wowza_baseurl.split('/')[0]
     S_HOST = Rails.configuration.splunk_host
     RAILS_HOST = Rails.configuration.rails_host
     TOTAL = '| stats count as Total'
