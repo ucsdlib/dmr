@@ -51,7 +51,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'byebug', '11.0.1'
+  gem 'byebug', '11.1.0'
   gem 'capybara', '~> 2.18.0'
   gem 'launchy', '~> 2.4.3'
   gem 'pry', '0.12.2'
