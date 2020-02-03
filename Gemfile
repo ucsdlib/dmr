@@ -25,7 +25,7 @@ gem 'honeycomb-beeline', '1.3.0'
 gem 'inch', '0.8.0', require: false
 gem 'jbuilder', '2.9.1'
 gem 'jquery-rails', '4.3.5'
-gem 'kaminari', '1.1.1'
+gem 'kaminari', '1.2.0'
 gem 'letter_opener', '1.7.0'
 gem 'mail', '2.7.1'
 gem 'naturalsort'
