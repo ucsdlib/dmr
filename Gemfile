@@ -6,7 +6,7 @@ gem 'activerecord', '~> 4.2.11.1' # locked
 gem 'activerecord-sqlserver-adapter'
 gem 'activesupport', '~> 4.2.11.1' # locked
 gem 'amoeba', '3.1.0'
-gem 'bootstrap-datepicker-rails', '~> 1.8.0.1'
+gem 'bootstrap-datepicker-rails', '~> 1.9.0.1'
 gem 'bootstrap-sass', '3.3.7'
 gem 'bootstrap_form', '2.7.0'
 
