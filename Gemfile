@@ -55,7 +55,7 @@ end
 group :development, :test do
   gem 'byebug', '11.0.1'
   gem 'capybara', '~> 2.18.0'
-  gem 'launchy', '~> 2.4.3'
+  gem 'launchy', '~> 2.5.0'
   gem 'pry', '0.12.2'
   gem 'rspec-rails', '3.9.0'
   gem 'rubocop', '0.49.1', require: false
