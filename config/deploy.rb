@@ -54,3 +54,6 @@ namespace :deploy do
   after :finishing, 'deploy:restart'
 
 end
+
+# Invoke rbenv install before validation
+before "rbenv:validate", "rbenv:install"

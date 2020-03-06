@@ -8,6 +8,7 @@ AllCops:
   Exclude:
     - 'vendor/**/*'
     - 'bin/**/*'
+    - 'lib/capistrano/tasks/*'
     - 'db/**/*'
     - 'app/assets/**/*'
     - 'config/**/*'
@@ -36,7 +37,7 @@ Style/Documentation:
 Metrics/LineLength:
   Max: 140
   Exclude:
-    - 'app/controllers/users/sessions_controller.rb'  
+    - 'app/controllers/users/sessions_controller.rb'
 
 Metrics/AbcSize:
   Max: 28
