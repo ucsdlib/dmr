@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.3.7-jessie-node
+      - image: circleci/ruby:2.3.8-jessie-node
     environment:
       RAILS_ENV: test
     steps:
