@@ -55,5 +55,10 @@ namespace :deploy do
 
 end
 
+# WIP: get rbenv to install before validation
+Capistrano::DSL.stages.each do |stage|
+  before stage, 'rbenv:install'
+end
+
 # Invoke rbenv install before validation
-before "rbenv:validate", "rbenv:install"
+# before "rbenv:validate", "rbenv:install"
