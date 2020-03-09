@@ -33,7 +33,7 @@ gem 'mail', '2.7.1'
 gem 'naturalsort'
 gem 'net-ldap', '0.16.2'
 gem 'nokogiri', '1.10.9'
-gem 'omniauth', '1.9.0'
+gem 'omniauth', '1.9.1'
 gem 'omniauth-shibboleth', '1.3.0'
 gem 'pg', '0.21.0'
 gem 'rails', '4.2.11.1' # locked
